@@ -4,11 +4,11 @@ chickApp.config(["$routeProvider", "$locationProvider", function($routeProvider,
     $routeProvider.
         when("/", {
             templateUrl: "/views/index.html",
-            controller: "InputControl"
+            controller: "InputController"
         }).
         when("/admin", {
             templateUrl: "/views/admin.html",
-            controller: "AdminControl"
+            controller: "AdminController"
         }).
         otherwise({
             redirectTo: '/'
