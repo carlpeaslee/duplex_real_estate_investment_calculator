@@ -9,8 +9,7 @@ router.get("/", function(req, res, next){
 router.get("/name", function(req, res, next){
   console.log("In routes admin.js ", req.isAuthenticated());
   var resAdmin = {
-    username: req.admin.username,
-    datecreated: req.user.lastlogin
+    username: req.admin.username
   };
   res.json(resAdmin);
 });
