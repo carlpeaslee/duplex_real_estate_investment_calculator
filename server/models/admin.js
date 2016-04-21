@@ -9,7 +9,7 @@ var Admin = new Schema({
 
 });
 
-AdminSchema.pre('save', function(next){
+Admin.pre('save', function(next){
    var admin = this;
    if(!admin.isModified('password')) return next;
    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
@@ -21,7 +21,7 @@ AdminSchema.pre('save', function(next){
        });
    });
 });
-AdminSchema.methods.comparePassword = function(canidatePassword, cb){
+Admin.methods.comparePassword = function(canidatePassword, cb){
    bcrypt.compare(canidatePassword, this.password, function(err, isMatch){
        if(err) return cb(err);
      });

@@ -1,22 +1,94 @@
 // INITIAL VARS
 var express = require('express');
 var app = express();
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
 var localStrategy = require('passport-local');
 var mongoose = require('mongoose');
+
+// MODELS
 var adminModel = require('./models/admin.js');
 var contactModel = require('./models/contact.js');
 var defaultModel = require('./models/default.js');
+
+// ROUTES
+var admin = require('./routes/admin.js');
+var submit = require('./routes/submit.js');
+var index = require('./routes/index.js');
 
 // DATABASE VARS
 var mongoURI = 'mongodb://localhost/duplexdb';
 var mongoDB = mongoose.connect(mongoURI).connection;
 
+    // DATABASE SETUP
+    mongoDB.on('error', function(err){
+        console.log('Mongo connection: ', err);
+    });
+    mongoDB.once('open', function(err){
+        if(!err) {console.log('Mongo connection open');}
+        else if(err) {console.log('There was an error opening Mongo connection: ', err);}
+    });
+
 // SET PORT
 app.set('port', (process.env.PORT) || 5000);
 
 // SET MIDDLEWARE
+app.use(session({
+    saveUninitialized: true,
+    secret: 'secret',
+    key: 'user',
+    resave: true,
+    s: false,
+    cookie: {maxAge: null, secure: true}
+}));
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// PASSPORT SESSION
+passport.serializeUser(function(user, done){
+    done(null, user.id);
+});
+passport.deserializeUser(function(id, done){
+    Admin.findById(id, function(err, user){
+        if(err) done(err);
+        done(null, user);
+    });
+});
+passport.use('local', new localStrategy({
+    passReqToCallback: true,
+    usernameFeild: 'username'
+    },
+    function(req, username, password, done){
+        Admin.findOne({username: username}, function(err, user){
+            if(err) throw err;
+            if(!user){
+                return done(null, false);
+            }
+            user.comparePassword(password, function(err, isMatch){
+                if(err) throw err;
+                if(isMatch){
+                    return done(null, user);
+                }else{
+                    done(null, false);
+                }
+            });
+        });
+    }
+));
+
+// CALL CATCHES
+app.use('/submit', submit);
+app.use('/admin', admin);
+app.use('/', index);
+
+// LISTENER
+app.listen(app.get('port'), function(){
+    console.log('Listening on port #', app.get('port'));
+});
+
+module.export = app;
