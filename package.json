@@ -1,0 +1,17 @@
+{
+  "name": "duplexchicks",
+  "version": "1.0.0",
+  "description": "Calculator for rent vs buy vs duplex",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tommy, Carl, Enrique, Jeremy, Miles",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "express": "^4.13.4",
+    "mongo": "^0.1.0",
+    "mongoose": "^4.4.12"
+  }
+}
