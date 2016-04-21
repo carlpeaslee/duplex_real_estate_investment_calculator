@@ -36,6 +36,7 @@ app.set('port', (process.env.PORT) || 5000);
 
 // SET MIDDLEWARE
 app.use(session({
+    saveUninitialized: true,
     secret: 'secret',
     key: 'user',
     resave: true,

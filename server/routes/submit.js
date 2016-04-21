@@ -11,3 +11,5 @@ router.post("/submit", function(req, res){
   });
 
 });
+
+module.exports = router;
