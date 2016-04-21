@@ -4,7 +4,8 @@
   "description": "Calculator for rent vs buy vs duplex",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "grunt && node server/app.js"
   },
   "author": "Tommy, Carl, Enrique, Jeremy, Miles",
   "license": "ISC",
