@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var Default_Values = new Schema({
-  zip_code: { type: Number, min: 5, max: 5 },
+  zip_code: { type: Number, min: 5, max: 10 },
   monthly_rent: { type: Number },
   buying_budget: { type: Number },
   estimated_rental_income: { type: Number },
@@ -18,4 +18,4 @@ var Default_Values = new Schema({
   auto_calc_depreciation: { type: Number }
 });
 
-console.exports = mongoose.model("Default_Values", Default_Values);
+module.exports = mongoose.model("Default_Values", Default_Values);
