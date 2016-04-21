@@ -6,7 +6,8 @@ var path = require("path");
 router.post("/", passport.authenticate("local", {
   //We do not have this page built yet. Should send logged in admin to admin page
   successRedirect: "/views/partials/admin.html",
-  failureRedirect: "/"
+  //TODO success/failure Flash()
+  failureRedirect: "/views/index.html"
 }));
 
 //catch-all
