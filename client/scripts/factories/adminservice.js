@@ -1,5 +1,5 @@
 chickApp.factory("AdminService", ["$http", function($http){
-    var admin = {};
+
 
     var getDefaults = function(){
         $http.get("/admin/defaults").then(function(response){
@@ -13,6 +13,7 @@ chickApp.factory("AdminService", ["$http", function($http){
         });
     };
 
+    var admin = {};
     return {
         admin: admin,
         getDefaults: getDefaults,

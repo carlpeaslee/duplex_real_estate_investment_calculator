@@ -14,7 +14,7 @@ chickApp.factory("ClientService", ["$http", function($http){
     };
 
     return {
-        admin: admin,
+        client: client,
         getDefaults: getDefaults,
         submitEmail: submitEmail
     };
