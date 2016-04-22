@@ -56,7 +56,7 @@ $scope.taxBracket=.28;
 
 
   //
-
+  $scope.taxPaidOrSaved=(-1)*$scope.taxBracket*(($scope.targetPrice-$scope.downPaymentValue)+($scope.totalOperatingExpenses+$scope.grossOperatingIncome)+$scope.totalDepreciation)
 
 
 
