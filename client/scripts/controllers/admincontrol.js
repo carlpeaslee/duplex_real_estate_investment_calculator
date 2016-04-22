@@ -7,3 +7,17 @@ chickApp.controller('AdminController',  ['$scope', '$http', '$window', 'ClientSe
   };
 
 }]);
+
+
+chickApp.controller('EmailController',  ['$scope', '$http', '$window', 'ClientService','AdminService',function($scope, $http, $window, ClientService, AdminService) {
+
+
+
+}]);
+
+
+chickApp.controller('SetVariablesController',  ['$scope', '$http', '$window', 'ClientService','AdminService',function($scope, $http, $window, ClientService, AdminService) {
+
+  
+
+}]);

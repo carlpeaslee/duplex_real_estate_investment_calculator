@@ -7,7 +7,7 @@ chickApp.config(["$routeProvider", "$locationProvider", function($routeProvider,
     //         controller: "InputController"
         // }).
         when("/admin", {
-            templateUrl: "/views/index.html",
+            templateUrl: "/views/admin.html",
             controller: "AdminController"
         }).
         when("/emailList", {

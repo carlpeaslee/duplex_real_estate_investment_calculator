@@ -2,7 +2,7 @@
 <html ng-app="chickApp">
   <head>
     <meta charset="utf-8">
-    <title>Duplex Chick Calculator</title>
+    <title>Duplex Chick Admin Page</title>
 
     <!-- package manager scripts -->
     <script type="text/javascript" src="../vendors/angular/angular.min.js"></script>
@@ -19,24 +19,25 @@
     <link rel="stylesheet" href="../styles/style.css">
   </head>
   <body>
-    <div ng-controller="InputController">
+    <div ng-controller="AdminController">
 
 
-    <md-toolbar>
-      <h1>Duplex Chick Rent Vs Buy Vs Buy Duplex</h1>
-    </md-toolbar>
-
-      <!-- Keeps main content next to one another -->
-      <div layout="row">
-        <ng-include src="'/views/partials/input.html'"></ng-include>
-
-        <ng-include src="'/views/partials/results.html'"></ng-include>
-
-      </div>
+      <md-toolbar>
+        <h1>Duplex Chick Admin Page</h1>
+        <md-tabs>
+          <md-tab label="Email List" ng-click="toEmailList()"></md-tab>
+          <md-tab label="Default Values" ng-click="toDefaultValues()"></md-tab>
+        </md-tabs>
+      </md-toolbar>
 
 
-      <!-- Container #4 -->
+    </div>
+    <main ng-view>
 
-      </div>
+    </main>
   </body>
+
+
+
+
 </html>
