@@ -18,18 +18,22 @@
     <link rel="stylesheet" href="../vendors/angular-material/angular-material.min.css">
     <link rel="stylesheet" href="../styles/style.css">
   </head>
-  <body layout="column">
-    <md-toolbar layout="row">
-      <h1>Duplex Chick</h1>
+  <body>
+    <md-toolbar>
+      <h1>Duplex Chick Rent Vs Buy Vs Buy Duplex</h1>
     </md-toolbar>
 
-    <div flex layout="row">
-      <!-- Container #3 -->
+      <!-- Keeps main content next to one another -->
+      <div layout="row">
+        <ng-include src="'/views/partials/input.html'"></ng-include>
 
-      <ng-include src="'/views/partials/input.html'"></ng-include>
+        <ng-include src="'/views/partials/results.html'"></ng-include>
+
+      </div>
+
 
       <!-- Container #4 -->
-      <md-content flex id="content"></md-content>
-    </div>
+
+
   </body>
 </html>

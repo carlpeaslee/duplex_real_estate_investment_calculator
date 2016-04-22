@@ -1,6 +1,7 @@
-
+<div flex="100" layout-padding class="userForm" layout="column">
   <md-sidenav md-is-locked-open="true" class="md-whiteframe-z2">
-    <form name="userForm">
+
+    <form layout-padding name="userForm">
         <md-input-container>
           <label>Location</label>
           <input ng-model="user.company">
@@ -8,11 +9,63 @@
 
         <md-slider-container>
           <md-input-container>
-            <label>Target Property Price</label>
-            <input flex type="number" ng-model="color.red" aria-label="red" aria-controls="red-slider" placeholder="150000">
+            <label>Monthly Rent</label>
+            <input flex type="number" ng-model="monthlyRent" aria-label="monthlyRent" aria-controls="monthlyRent" value="1500">
           </md-input-container>
-          <md-slider flex min="0" max="1000000" ng-model="color.red" aria-label="red" id="red-slider">
+
+          <md-slider flex min="0" max="50000" ng-model="monthlyRent" aria-label="monthlyRent" id="monthlyRent">
+          </md-slider>
+        </md-slider-container>
+
+        <md-slider-container>
+          <md-input-container>
+            <label>Target Property Price</label>
+            <input flex type="number" ng-model="targetPrice" aria-label="targetPrice" aria-controls="targetPrice" value="150000">
+          </md-input-container>
+
+          <md-slider flex min="0" max="1000000" ng-model="targetPrice" aria-label="targetPrice" id="targetPrice">
+          </md-slider>
+        </md-slider-container>
+
+        <md-slider-container>
+          <md-input-container>
+            <label>Down Payment</label>
+            <input flex type="number" ng-model="downPayment" aria-label="downPayment" aria-controls="downPayment" value="150000">
+          </md-input-container>
+
+          <md-slider flex min="0" max="1000000" ng-model="downPayment" aria-label="downPayment" id="downPayment">
+          </md-slider>
+        </md-slider-container>
+
+        <md-slider-container>
+          <md-input-container>
+            <label>Mortage Price</label>
+            <input flex type="number" ng-model="mortagePrice" aria-label="mortagePrice" aria-controls="mortagePrice" value="150000">
+          </md-input-container>
+
+          <md-slider flex min="0" max="1000000" ng-model="mortagePrice" aria-label="mortagePrice" id="mortagePrice">
+          </md-slider>
+        </md-slider-container>
+
+        <md-slider-container>
+          <md-input-container>
+            <label>How Many Years Ammorized</label>
+            <input flex type="number" ng-model="yearsAmmorized" aria-label="yearsAmmorized" aria-controls="yearsAmmorized" value="150000">
+          </md-input-container>
+
+          <md-slider flex min="0" max="150" ng-model="yearsAmmorized" aria-label="yearsAmmorized" id="yearsAmmorized">
+          </md-slider>
+        </md-slider-container>
+
+        <md-slider-container>
+          <md-input-container>
+            <label>Income</label>
+            <input flex type="number" ng-model="income" aria-label="income" aria-controls="income" value="150000">
+          </md-input-container>
+
+          <md-slider flex min="0" max="1000000" ng-model="income" aria-label="income" id="income">
           </md-slider>
         </md-slider-container>
     </form>
   </md-sidenav>
+</div>
