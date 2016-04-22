@@ -10,6 +10,7 @@
     <script type="text/javascript" src="../vendors/angular-aria/angular-aria.min.js"></script>
     <script type="text/javascript" src="../vendors/angular-material/angular-material.min.js"></script>
     <script type="text/javascript" src="../vendors/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="../vendors/angular-route/angular-route.min.js"></script>
 
     <!-- custom scripts -->
     <script type="text/javascript" src="../scripts/app.min.js"></script>
@@ -23,10 +24,10 @@
 
       <md-toolbar>
         <h1>Duplex Chick Admin Page</h1>
-        <!-- <md-tabs>
-          <md-tab label="Email List"></md-tab>
-          <md-tab label="Default Values"></md-tab>
-        </md-tabs> -->
+        <md-tabs>
+          <md-tab label="Email List" ng-click="toEmailList()"></md-tab>
+          <md-tab label="Default Values" ng-click="toDefaultValues()"></md-tab>
+        </md-tabs>
       </md-toolbar>
 
 
@@ -34,6 +35,9 @@
     <main ng-view>
 
     </main>
-
   </body>
+
+
+
+
 </html>
