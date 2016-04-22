@@ -1,4 +1,4 @@
-var chickApp = angular.module("chickApp", ['ngMaterial', 'ngMessages', 'ngRoute']);
+var chickApp = angular.module("chickApp", ['ngMaterial', 'ngMessages', 'ngRoute', 'googlechart']);
 
 chickApp.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider){
     // $routeProvider.
