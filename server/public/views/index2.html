@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html ng-app="chickApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Duplex Chick Calculator</title>
+
+    <!-- package manager scripts -->
+    <script type="text/javascript" src="../vendors/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../vendors/angular-animate/angular-animate.min.js"></script>
+    <script type="text/javascript" src="../vendors/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="../vendors/angular-material/angular-material.min.js"></script>
+    <script type="text/javascript" src="../vendors/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="../vendors/angular-route/angular-route.min.js"></script>
+
+    <!-- custom scripts -->
+    <script type="text/javascript" src="../scripts/app.min.js"></script>
+    <!-- styles -->
+    <link rel="stylesheet" href="../vendors/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
+  </head>
+  <body>
+    <div ng-controller="InputController">
+
+
+    <md-toolbar>
+      <h1>Duplex Chick Rent Vs Buy Vs Buy Duplex</h1>
+    </md-toolbar>
+
+      <!-- Keeps main content next to one another -->
+      <div layout="row">
+        <ng-include src="'/views/partials/input.html'"></ng-include>
+
+        <ng-include src="'/views/partials/results.html'"></ng-include>
+
+      </div>
+
+
+      <!-- Container #4 -->
+
+      </div>
+  </body>
+</html>
