@@ -2,9 +2,17 @@ chickApp.factory("AdminService", ["$http", function($http){
 
 
     var getDefaults = function(){
+        admin.defaults = {};
         $http.get("/admin/defaults").then(function(response){
             admin.defaults = response.data;
         });
+    };
+
+    //Going to need this post in order to send variables to database.
+    var postDefaults = function(defaultVariables){
+      // $http.post("/admin/defaults", defaultVariables).then(function(request){
+        console.log(defaultVariables);
+      // });
     };
 
     var getContacts = function(){
@@ -17,6 +25,7 @@ chickApp.factory("AdminService", ["$http", function($http){
     return {
         admin: admin,
         getDefaults: getDefaults,
+        postDefaults : postDefaults,
         getContacts: getContacts
     };
 }]);
