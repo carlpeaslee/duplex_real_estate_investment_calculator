@@ -17,6 +17,7 @@ $scope.insuranceRate=.01;  //max min default
 $scope.utilsRate=.009;  //max min default
 $scope.legalAccounting=100;  //max min default
 $scope.taxBracket=.28;
+$scope.maritalStatus = false;
 
 //Dependent variables
   //basics
@@ -95,5 +96,7 @@ $scope.taxBracket=.28;
     $scope.myChartObject.options = {
         'title': 'Buy vs Rent vs Buy & Rent-out'
     };
+
+
 
 }]);

@@ -72,6 +72,15 @@
           </md-slider>
         </md-slider-container>
       </md-input-container>
+
+      <md-input-container>
+        <md-switch ng-model="maritalStatus" aria-label="maritalStatus" ng-true-value="'Married'" ng-false-value="'Single'">
+          Marital Status: {{ maritalStatus }}
+        </md-switch>
+        <!-- <p>
+          {{ maritalStatus }}
+        </p> -->
+      </md-input-container>
     </form>
   </md-sidenav>
 </div>
