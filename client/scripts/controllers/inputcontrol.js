@@ -56,9 +56,44 @@ $scope.taxBracket=.28;
 
 
   //
-  $scope.taxPaidOrSaved=(-1)*$scope.taxBracket*(($scope.targetPrice-$scope.downPaymentValue)+($scope.totalOperatingExpenses+$scope.grossOperatingIncome)+$scope.totalDepreciation)
+  $scope.taxPaidOrSaved=(-1)*$scope.taxBracket*(($scope.targetPrice-$scope.downPaymentValue)+($scope.totalOperatingExpenses+$scope.grossOperatingIncome)+$scope.totalDepreciation);
 
 
+    ///chart stuffff
 
+    $scope.myChartObject = {};
+
+    $scope.myChartObject.type = "BarChart";
+
+    $scope.buy = [
+        {v: "Buy"},
+        {v: 600},
+    ];
+
+    $scope.rent = [
+        {v: "Rent"},
+        {v: 600},
+    ];
+
+    $scope.buyAndRent = [
+        {v: "Buy & Rent-out"},
+        {v: 600},
+    ];
+
+    $scope.myChartObject.data = {
+        "cols": [
+            {id: "t", label: "Topping", type: "string"},
+            {id: "s", label: "Slices", type: "number"}
+        ],
+        "rows": [
+            {c: $scope.buy},
+            {c: $scope.rent},
+            {c: $scope.buyAndRent}
+        ]
+    };
+
+    $scope.myChartObject.options = {
+        'title': 'Buy vs Rent vs Buy & Rent-out'
+    };
 
 }]);
