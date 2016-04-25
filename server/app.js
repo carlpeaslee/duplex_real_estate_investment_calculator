@@ -17,6 +17,7 @@ var defaultModel = require('./models/default.js');
 var admin = require('./routes/admin.js');
 var submit = require('./routes/submit.js');
 var index = require('./routes/index.js');
+var default_value = require('./routes/default.js');
 
 // DATABASE VARS
 var mongoURI = 'mongodb://localhost/duplexdb';
@@ -82,6 +83,7 @@ passport.use('local', new localStrategy({
 ));
 
 // CALL CATCHES
+app.use('/defaults', default_value)
 app.use('/submit', submit);
 app.use('/admin', admin);
 app.use('/', index);
