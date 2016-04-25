@@ -1,45 +1,68 @@
 {
-  "name": "angular-route",
-  "version": "1.5.5",
-  "description": "AngularJS router module",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/angular/angular.js.git"
-  },
-  "keywords": [
-    "angular",
-    "framework",
-    "browser",
-    "router",
-    "client-side"
+  "_args": [
+    [
+      "angular-route",
+      "/Users/poodle/Desktop/duplexchickcalculator"
+    ]
   ],
-  "author": {
-    "name": "Angular Core Team",
-    "email": "angular-core+npm@google.com"
+  "_from": "angular-route@latest",
+  "_id": "angular-route@1.5.5",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/angular-route",
+  "_nodeVersion": "4.2.6",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/angular-route-1.5.5.tgz_1460978633330_0.7876270534470677"
   },
-  "license": "MIT",
+  "_npmUser": {
+    "email": "angular-core+npm@google.com",
+    "name": "angularcore"
+  },
+  "_npmVersion": "2.14.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "angular-route",
+    "raw": "angular-route",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-route/-/angular-route-1.5.5.tgz",
+  "_shasum": "69349369209b1f34724a58145dc7ec6a4987a1e7",
+  "_shrinkwrap": null,
+  "_spec": "angular-route",
+  "_where": "/Users/poodle/Desktop/duplexchickcalculator",
+  "author": {
+    "email": "angular-core+npm@google.com",
+    "name": "Angular Core Team"
+  },
   "bugs": {
     "url": "https://github.com/angular/angular.js/issues"
   },
-  "homepage": "http://angularjs.org",
-  "gitHead": "642a2dfc05f869f4a56733e182393536184ed4fa",
-  "_id": "angular-route@1.5.5",
-  "_shasum": "69349369209b1f34724a58145dc7ec6a4987a1e7",
-  "_from": "angular-route@*",
-  "_npmVersion": "2.14.12",
-  "_nodeVersion": "4.2.6",
-  "_npmUser": {
-    "name": "angularcore",
-    "email": "angular-core+npm@google.com"
-  },
+  "dependencies": {},
+  "description": "AngularJS router module",
+  "devDependencies": {},
+  "directories": {},
   "dist": {
     "shasum": "69349369209b1f34724a58145dc7ec6a4987a1e7",
     "tarball": "https://registry.npmjs.org/angular-route/-/angular-route-1.5.5.tgz"
   },
+  "gitHead": "642a2dfc05f869f4a56733e182393536184ed4fa",
+  "homepage": "http://angularjs.org",
+  "keywords": [
+    "angular",
+    "browser",
+    "client-side",
+    "framework",
+    "router"
+  ],
+  "license": "MIT",
+  "main": "index.js",
   "maintainers": [
     {
       "name": "angularcore",
@@ -50,10 +73,15 @@
       "email": "pete@bacondarwin.com"
     }
   ],
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/angular-route-1.5.5.tgz_1460978633330_0.7876270534470677"
+  "name": "angular-route",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angular/angular.js.git"
   },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/angular-route/-/angular-route-1.5.5.tgz"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.5.5"
 }
