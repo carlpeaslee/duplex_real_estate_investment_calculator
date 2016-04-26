@@ -3,7 +3,7 @@ chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientSe
 $scope.monthlyRentPersonal=1500; //max min default
 $scope.monthlyRentTenant=1600; //max min default
 $scope.targetPrice=300000;  //max min default
-$scope.downPaymentPercentage=.5;  //max min default
+$scope.downPaymentPercentage=20;  //max min default
 $scope.mortgageRate=1000;  //max min default
 $scope.yearsAmmoritized=500; //max min default
 $scope.income=100;  //max min default
@@ -17,6 +17,8 @@ $scope.insuranceRate=.01;  //max min default
 $scope.utilsRate=.009;  //max min default
 $scope.legalAccounting=100;  //max min default
 $scope.taxBracket=.28;
+
+$scope.years=5;
 
 //Dependent variables
   //basics
@@ -60,6 +62,7 @@ $scope.taxBracket=.28;
 
 
     ///chart stuffff
+    $scope.$watch.years=3;
 
     $scope.myChartObject = {};
 
@@ -67,17 +70,17 @@ $scope.taxBracket=.28;
 
     $scope.buy = [
         {v: "Buy"},
-        {v: 600},
+        {v: 10*$scope.years},
     ];
 
     $scope.rent = [
         {v: "Rent"},
-        {v: 600},
+        {v: 7},
     ];
 
     $scope.buyAndRent = [
         {v: "Buy & Rent-out"},
-        {v: 600},
+        {v: 5},
     ];
 
     $scope.myChartObject.data = {

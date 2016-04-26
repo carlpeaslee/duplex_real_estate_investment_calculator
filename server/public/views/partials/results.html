@@ -1,10 +1,21 @@
 <div layout="column">
     <div flex="100">
 
+
 <div google-chart chart="myChartObject" style="height:600px; width:600px;"></div>
 <p>
     {{buy}}
 </p>
+
+<md-input-container>
+  <label>butt</label>
+  <input flex type="number"  ng-model="years">
+  <br>
+  <md-slider-container>
+    <md-slider flex min="0" max="60" ng-model="years">
+    </md-slider>
+  </md-slider-container>
+</md-input-container>
 
 <md-input-container>
   <label>Onions</label>

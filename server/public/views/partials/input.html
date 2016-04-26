@@ -24,7 +24,7 @@
           <label>Target Property Price</label>
           <input flex type="number" ng-model="targetPrice">
           <br>
-          <md-slider flex min="0" max="1000000" ng-model="targetPrice">
+          <md-slider flex step="1000" min="0" max="1000000" ng-model="targetPrice">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -32,10 +32,10 @@
 
       <md-input-container>
         <label>Down Payment</label>
-        <input flex type="number" ng-model="downPaymentPercentage">
-<br>
+        <input flex type="number" ng-model="downPaymentPercentage" >
+        <br>
         <md-slider-container>
-          <md-slider flex min="0" max="1000000" ng-model="downPaymentPercentage">
+          <md-slider step=".1" flex min="0" max="100" ng-model="downPaymentPercentage">
           </md-slider>
         </md-slider-container>
       </md-input-container>
