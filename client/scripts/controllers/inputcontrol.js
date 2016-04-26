@@ -1,22 +1,50 @@
-chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientService',function($scope, $http, $window, ClientService) {
+chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', 'ClientService',function($scope, $log, $http, $window, ClientService) {
 //Independent Variables
-$scope.monthlyRentPersonal=1500; //max min default
-$scope.monthlyRentTenant=1600; //max min default
-$scope.targetPrice=300000;  //max min default
-$scope.downPaymentPercentage=.5;  //max min default
-$scope.mortgageRate=1000;  //max min default
-$scope.yearsAmmoritized=500; //max min default
-$scope.income=100;  //max min default
-$scope.mortgageYears=30;  //max min default
-$scope.vacancy=.05;  //max min default
-$scope.propertyTaxPercentage=.0165  //max min default
-$scope.assocDues=0;  //max min default
-$scope.management=0; //max min default
-$scope.misc=1000;  //max min default
-$scope.insuranceRate=.01;  //max min default
-$scope.utilsRate=.009;  //max min default
-$scope.legalAccounting=100;  //max min default
-$scope.taxBracket=.28;
+$scope.inputData = {};
+$scope.inputData.monthlyRentPersonal=1500; //max min default
+$scope.inputData.monthlyRentTenant=1600; //max min default
+$scope.inputData.targetPrice=300000;  //max min default
+$scope.inputData.downPaymentPercentage=.5;  //max min default
+$scope.inputData.mortgageRate=1000;  //max min default
+$scope.inputData.yearsAmmoritized=500; //max min default
+$scope.inputData.income=100;  //max min default
+$scope.inputData.mortgageYears=30;  //max min default
+$scope.inputData.vacancy=.05;  //max min default
+$scope.inputData.propertyTaxPercentage=.0165  //max min default
+$scope.inputData.assocDues=0;  //max min default
+$scope.inputData.management=0; //max min default
+$scope.inputData.misc=1000;  //max min default
+$scope.inputData.insuranceRate=.01;  //max min default
+$scope.inputData.utilsRate=.009;  //max min default
+$scope.inputData.legalAccounting=100;  //max min default
+$scope.inputData.taxBracket=.28;
+
+var service = ClientService;
+
+// $scope.inputData = 10;
+// $scope.outputData = $scope.inputData * 5;
+
+$scope.rentBar = 500;
+$scope.buyBar = 500;
+$scope.buyAndRentBar = 500;
+
+$scope.$watchCollection('inputData', function(newVal, oldVal){
+    console.log('Changed', newVal, oldVal);
+
+
+
+
+
+
+
+    
+    $scope.buy[1].v = $scope.buyBar;
+    $scope.rent[1].v = $scope.rentBar;
+    $scope.buyAndRent[1].v = $scope.buyAndRentBar;
+})
+
+
+
 
 //Dependent variables
   //basics
@@ -63,27 +91,35 @@ $scope.taxBracket=.28;
 
     $scope.myChartObject = {};
 
-    $scope.myChartObject.type = "BarChart";
+    $scope.myChartObject.type = "ColumnChart";
 
     $scope.buy = [
         {v: "Buy"},
-        {v: 600},
+        {v: $scope.outputData},
+        {v: 'red'}
     ];
+
+    // $scope.$watch('monthlyRentPersonal', function(newVal, oldVal) {
+    //     $log.info newVal
+    // });
 
     $scope.rent = [
         {v: "Rent"},
-        {v: 600},
+        {v: 200},
+        {v: 'green'}
     ];
 
     $scope.buyAndRent = [
         {v: "Buy & Rent-out"},
         {v: 600},
+        {v: 'purple'}
     ];
 
     $scope.myChartObject.data = {
         "cols": [
-            {id: "t", label: "Topping", type: "string"},
-            {id: "s", label: "Slices", type: "number"}
+            {id: "options", label: "Options", type: "string"},
+            {id: "dollars", label: "Dollars", type: "number"},
+            {role: "style", type: "string"}
         ],
         "rows": [
             {c: $scope.buy},
@@ -93,7 +129,10 @@ $scope.taxBracket=.28;
     };
 
     $scope.myChartObject.options = {
-        'title': 'Buy vs Rent vs Buy & Rent-out'
+        'title': 'Buy vs Rent vs Buy & Rent-out',
+        animation:{
+            duration: 3000,
+            easing: 'out',
+        }
     };
-
 }]);
