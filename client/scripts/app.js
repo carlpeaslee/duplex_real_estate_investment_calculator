@@ -1,4 +1,4 @@
-var chickApp = angular.module("chickApp", ['ngMaterial', 'ngMessages', 'ngRoute', 'googlechart']);
+var chickApp = angular.module("chickApp", ['ngMaterial', 'ngMessages', 'ngRoute', 'googlechart', 'md.data.table']);
 
 chickApp.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider){
     $routeProvider.
@@ -7,7 +7,7 @@ chickApp.config(["$routeProvider", "$locationProvider", function($routeProvider,
     //         controller: "InputController"
         // }).
         when("/admin", {
-            templateUrl: "/views/admin.html",
+            templateUrl: "/views/index.html",
             controller: "AdminController"
         }).
         when("/emailList", {

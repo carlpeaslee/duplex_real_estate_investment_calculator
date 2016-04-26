@@ -10,7 +10,25 @@ chickApp.controller('AdminController',  ['$scope', '$http', '$window', 'ClientSe
 
 
 chickApp.controller('EmailController',  ['$scope', '$http', '$window', 'ClientService','AdminService',function($scope, $http, $window, ClientService, AdminService) {
+  'use strict';
 
+  AdminService.getContacts();
+  // $scope.selected = [];
+
+  $scope.query = {
+    order: 'date',
+    limit: 5,
+    page: 1
+  };
+
+  function success(emailList) {
+    $scope.emailList = admin.contacts;
+  }
+
+  $scope.getEmailList = function () {
+    // $scope.promise = $nutrition.desserts.get($scope.query, success).$promise;
+    console.log("Geting Email List!");
+  };
 
 
 }]);
