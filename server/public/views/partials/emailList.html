@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody md-body>
-      <tr md-row md-select="item" md-select-id="name" md-auto-select ng-repeat="item in emailList.data">
+      <tr md-row ng-repeat="item in emailList">
         <td md-cell>{{item.date}}</td>
         <td md-cell>{{item.email}}</td>
         <td md-cell>{{item.zipCode}}</td>

@@ -17,10 +17,10 @@ chickApp.factory("AdminService", ["$http", function($http){
 
     var getContacts = function(){
       admin.contacts = {};
-      // console.log("Running getContacts!");
-      $http.get("/admin/contacts").then(function(response){
-          admin.contacts = response.data;
-      });
+      console.log("Running getContacts!");
+      // $http.get("/admin/contacts").then(function(response){
+      //     admin.contacts = response.data;
+      // });
     };
 
     var admin = {};
