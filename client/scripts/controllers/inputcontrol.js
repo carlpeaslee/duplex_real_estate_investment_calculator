@@ -4,8 +4,8 @@ $scope.inputData = {};
 $scope.inputData.monthlyRentPersonal=1500; //max min default
 $scope.inputData.monthlyRentTenant=1600; //max min default
 $scope.inputData.targetPrice=300000;  //max min default
-$scope.inputData.downPaymentPercentage=.5;  //max min default
-$scope.inputData.mortgageRate=1000;  //max min default
+$scope.inputData.downPaymentPercentage=5;  //max min default  putting 5% down would be 5 not .05
+$scope.inputData.mortgageRate=4.25;  //max min default
 $scope.inputData.yearsAmmoritized=500; //max min default
 $scope.inputData.income=100;  //max min default
 $scope.inputData.mortgageYears=30;  //max min default
@@ -18,73 +18,40 @@ $scope.inputData.insuranceRate=.01;  //max min default
 $scope.inputData.utilsRate=.009;  //max min default
 $scope.inputData.legalAccounting=100;  //max min default
 $scope.inputData.taxBracket=.28;
+$scope.inputData.years=5;
 
 var service = ClientService;
 
 // $scope.inputData = 10;
 // $scope.outputData = $scope.inputData * 5;
-
-$scope.rentBar = 500;
 $scope.buyBar = 500;
 $scope.buyAndRentBar = 500;
 
 $scope.$watchCollection('inputData', function(newVal, oldVal){
     console.log('Changed', newVal, oldVal);
+    //effects all options
 
 
+    //Buying not duplex
+      //after down value
+      $scope.owedAfterDown=newVal.targetPrice*(1-newVal.downPaymentPercentage/100)
+      //mortgageRate
+      $scope.mortgageRateDecimal=newVal.mortgageRate/100
+      //monthlyCost
+      $scope.montlyBuyTotal=$scope.owedAfterDown*($scope.mortgageRateDecimal/12)*Math.pow((1-$scope.mortgageRateDecimal/12),newVal.years)
+
+      $scope.buy[1].v = s;
+    //Renting related
+    $scope.rent[1].v = newVal.monthlyRentPersonal;
 
 
-
-
-
-    
-    $scope.buy[1].v = $scope.buyBar;
-    $scope.rent[1].v = $scope.rentBar;
+    //duplex related
     $scope.buyAndRent[1].v = $scope.buyAndRentBar;
 })
 
 
 
 
-//Dependent variables
-  //basics
-  $scope.downPaymentValue=$scope.targetPrice*($scope.downPaymentPercentage/100);
-  $scope.monthlyCost=($scope.targetPrice-$scope.downPaymentValue)*($scope.mortgageRate/12)*Math.pow((1+$scope.mortgageRate/12),($scope.mortgageYears*12))/(Math.pow((1+$scope.mortgageRate/12),($scope.mortgageYears*12))-1);
-  $scope.annualCost=$scope.monthlyCost*12;
-  //predepreciation
-  $scope.landValue=$scope.targetPrice*0.25;
-  $scope.personalPropertyValue=$scope.targetPrice*0.05;
-  $scope.buildingValue=$scope.targetPrice*0.5;
-  $scope.landImprovementValue=$scope.targetPrice*0.2;
-
-  //decpreciation
-  $scope.personalPropertyDepreciation=$scope.personalPropertyValue*0.2;
-  $scope.buildingDepreciation=$scope.buildingValue*0.0348;
-  $scope.landImprovementDeprecation=$scope.landImprovementValue*0.05;
-  $scope.totalDepreciation=$scope.personalPropertyDepreciation+$scope.buildingDepreciation+$scope.landImprovementDeprecation;
-
-  //rent stuff
-  $scope.annualRent=$scope.monthlyRentTenant*12;
-  $scope.propertyTaxesActual=$scope.targetPrice*$scope.propertyTaxPercentage;
-
-  //annual operation expenses
-  $scope.realEstateTax=$scope.targetPrice*$scope.propertyTaxPercentage;
-  $scope.repairs=$scope.targetPrice*.0165;
-  $scope.insurance=$scope.targetPrice*$scope.insuranceRate;
-  $scope.utils=$scope.targetPrice*$scope.utilsRate;
-  $scope.totalOperatingExpenses=$scope.utils+$scope.insurance+$scope.repairs+$scope.realEstateTax+$scope.misc+$scope.management+$scope.assocDues;
-
-  //Operating income
-  $scope.grossOperatingIncome=$scope.annualRent*(1-$scope.vacancy);
-  $scope.afterExpenseOperatinIncome=$scope.grossOperatingIncome-$scope.totalOperatingExpenses;
-
-
-  //debt Service
-  $scope.principalReduction=$scope.annualCost-(($scope.targetPrice-$scope.downPaymentValue)*$scope.mortgageRate);
-
-
-  //
-  $scope.taxPaidOrSaved=(-1)*$scope.taxBracket*(($scope.targetPrice-$scope.downPaymentValue)+($scope.totalOperatingExpenses+$scope.grossOperatingIncome)+$scope.totalDepreciation);
 
 
     ///chart stuffff
