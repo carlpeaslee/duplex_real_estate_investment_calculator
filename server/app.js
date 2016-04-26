@@ -20,7 +20,7 @@ var index = require('./routes/index.js');
 var default_value = require('./routes/default.js');
 
 // DATABASE VARS
-var startUpDbForFirstTime = require('./utils/db.js');
+// var startUpDbForFirstTime = require('./utils/db.js');
 var mongoURI = 'mongodb://localhost/duplexdb';
 var mongoDB = mongoose.connect(mongoURI).connection;
 var populateDB = function(){
@@ -35,11 +35,11 @@ var populateDB = function(){
         console.log('Mongo connection: ', err);
     });
     mongoDB.once('open', function(err){
-        collection.count(function (err, count) {
-            if(!err && count === 0){
-                populateDB();
-            }
-        });
+        // collection.count(function (err, count) {
+        //     if(!err && count === 0){
+        //         populateDB();
+        //     }
+        //});
         if(!err) {console.log('Mongo connection open');}
         else if(err) {console.log('There was an error opening Mongo connection: ', err);}
     });
