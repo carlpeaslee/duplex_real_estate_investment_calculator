@@ -6,7 +6,7 @@ router.get("/", function(req, res, next){
   res.json(req.isAuthenticated());
 });
 
-router.get("/name", function(req, res, next){
+router.get("/contacts", function(req, res, next){
   console.log("In routes admin.js ", req.isAuthenticated());
   var resAdmin = {
     username: req.admin.username

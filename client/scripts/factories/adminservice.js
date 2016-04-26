@@ -3,7 +3,7 @@ chickAppAdmin.factory("AdminService", ["$http", function($http){
 
     var getDefaults = function(){
         admin.defaults = {};
-        $http.get("/admin/defaults").then(function(response){
+        $http.get("/defaults").then(function(response){
             admin.defaults = response.data;
         });
     };
