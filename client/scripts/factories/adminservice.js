@@ -1,4 +1,4 @@
-chickApp.factory("AdminService", ["$http", function($http){
+chickAppAdmin.factory("AdminService", ["$http", function($http){
 
 
     var getDefaults = function(){

@@ -1,41 +1,48 @@
 <!DOCTYPE html>
-<html ng-app="chickApp">
+<html ng-app="chickAppAdmin">
   <head>
     <meta charset="utf-8">
-    <title>Duplex Chick Calculator</title>
+    <title>Duplex Chick Admin Page</title>
 
     <!-- package manager scripts -->
-
     <script type="text/javascript" src="../vendors/angular/angular.min.js"></script>
     <script type="text/javascript" src="../vendors/angular-animate/angular-animate.min.js"></script>
     <script type="text/javascript" src="../vendors/angular-aria/angular-aria.min.js"></script>
     <script type="text/javascript" src="../vendors/angular-material/angular-material.min.js"></script>
     <script type="text/javascript" src="../vendors/angular-messages/angular-messages.min.js"></script>
     <script type="text/javascript" src="../vendors/angular-route/angular-route.min.js"></script>
-    <script type="text/javascript" src="../vendors/angular-google-chart/ng-google-chart.min.js"></script>
+    <script type="text/javascript" src="../vendors/angular-material-data-table/dist/md-data-table.min.js"></script>
+
+
+
 
     <!-- custom scripts -->
     <script type="text/javascript" src="../scripts/app.min.js"></script>
     <!-- styles -->
     <link rel="stylesheet" href="../vendors/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="../vendors/angular-material-data-table/dist/md-data-table.min.css">
     <link rel="stylesheet" href="../styles/style.css">
   </head>
   <body>
-    <div ng-controller="InputController">
+    <div ng-controller="AdminController">
 
 
-        <md-toolbar>
-          <h1>Duplex Chick Rent Vs Buy Vs Buy Duplex</h1>
-        </md-toolbar>
+      <md-toolbar>
+        <h1>Duplex Chick Admin Page</h1>
+        <md-tabs>
+          <md-tab label="Email List" ng-click="toEmailList()"></md-tab>
+          <md-tab label="Default Values" ng-click="toDefaultValues()"></md-tab>
+        </md-tabs>
+      </md-toolbar>
 
-          <!-- Keeps main content next to one another -->
-          <div layout="row">
-            <ng-include src="'/views/partials/input.html'"></ng-include>
 
-            <ng-include src="'/views/partials/results.html'"></ng-include>
+    </div>
+    <main ng-view>
 
-          </div>
-
-      </div>
+    </main>
   </body>
+
+
+
+
 </html>

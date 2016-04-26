@@ -1,4 +1,4 @@
-chickApp.controller('AdminController',  ['$scope', '$http', '$window', 'ClientService','AdminService',function($scope, $http, $window, ClientService, AdminService) {
+chickAppAdmin.controller('AdminController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, ClientService, AdminService) {
   $scope.toEmailList = function(){
     $window.location.href = '#emailList';
   };
@@ -9,7 +9,7 @@ chickApp.controller('AdminController',  ['$scope', '$http', '$window', 'ClientSe
 }]);
 
 
-chickApp.controller('EmailController',  ['$scope', '$http', '$window', 'ClientService','AdminService',function($scope, $http, $window, ClientService, AdminService) {
+chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, ClientService, AdminService) {
   'use strict';
 
   AdminService.getContacts();
@@ -105,7 +105,7 @@ chickApp.controller('EmailController',  ['$scope', '$http', '$window', 'ClientSe
 }]);
 
 
-chickApp.controller('SetVariablesController',  ['$scope', '$http', '$window', 'ClientService','AdminService',function($scope, $http, $window, ClientService, AdminService) {
+chickAppAdmin.controller('SetVariablesController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, ClientService, AdminService) {
   AdminService.getDefaults();
   $scope.defaultVariables = {};
   $scope.defaultVariables = AdminService.admin.defaults;
