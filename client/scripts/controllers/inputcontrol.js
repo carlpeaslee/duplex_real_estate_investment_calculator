@@ -1,23 +1,42 @@
 chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientService',function($scope, $http, $window, ClientService) {
-//Independent Variables
-$scope.monthlyRentPersonal=1500; //max min default
-$scope.monthlyRentTenant=1600; //max min default
-$scope.targetPrice=300000;  //max min default
-$scope.downPaymentPercentage=.5;  //max min default
-$scope.mortgageRate=1000;  //max min default
-$scope.yearsAmmoritized=500; //max min default
-$scope.income=100;  //max min default
-$scope.mortgageYears=30;  //max min default
-$scope.vacancy=.05;  //max min default
-$scope.propertyTaxPercentage=.0165  //max min default
-$scope.assocDues=0;  //max min default
-$scope.management=0; //max min default
-$scope.misc=1000;  //max min default
-$scope.insuranceRate=.01;  //max min default
-$scope.utilsRate=.009;  //max min default
-$scope.legalAccounting=100;  //max min default
-$scope.taxBracket=.28;
-$scope.maritalStatus = false;
+  //Independent Variables
+  $scope.monthlyRentPersonal=1500; //max min default
+  $scope.monthlyRentTenant=1600; //max min default
+  $scope.targetPrice=300000;  //max min default
+  $scope.downPaymentPercentage=.5;  //max min default
+  $scope.mortgageRate=1000;  //max min default
+  $scope.yearsAmmoritized=500; //max min default
+  $scope.income=100;  //max min default
+  $scope.mortgageYears=30;  //max min default
+  $scope.vacancy=.05;  //max min default
+  $scope.propertyTaxPercentage=.0165  //max min default
+  $scope.assocDues=0;  //max min default
+  $scope.management=0; //max min default
+  $scope.misc=1000;  //max min default
+  $scope.insuranceRate=.01;  //max min default
+  $scope.utilsRate=.009;  //max min default
+  $scope.legalAccounting=100;  //max min default
+  $scope.taxBracket=.28;
+
+  // $scope.maritalStatusBool = false;
+  $scope.maritalStatus = false;
+
+  // Sets the bool value for marital status to be sent to the DB
+  // $scope.setStatus = function(){
+  //   console.log("I are tommy");
+  //   console.log($scope.maritalStatus);
+  //
+  //   if ($scope.maritalStatus == 'Single'){
+  //     $scope.maritalStatusBool = false;
+  //     console.log("we are false");
+  //     console.log($scope.maritalStatus);
+  //   } else {
+  //     $scope.maritalStatusBool = true;
+  //     console.log("we are true");
+  //     console.log($scope.maritalStatus);
+  //   }
+  // };
+
 
 //Dependent variables
   //basics
@@ -96,6 +115,7 @@ $scope.maritalStatus = false;
     $scope.myChartObject.options = {
         'title': 'Buy vs Rent vs Buy & Rent-out'
     };
+
 
 
 
