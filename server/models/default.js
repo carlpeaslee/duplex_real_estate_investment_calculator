@@ -29,7 +29,7 @@ var Default_Values = new Schema({
   property_taxes_min: { type: Number },
   property_taxes_max: { type: Number },
 
-  toggle_married_or_single: { type: Boolean },
+  toggle_married_or_single: { type: String },
 
   annual_income_def: {type: Number },
   annual_income_min: { type: Number },
