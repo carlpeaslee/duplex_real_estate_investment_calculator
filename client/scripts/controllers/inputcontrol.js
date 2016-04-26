@@ -19,23 +19,24 @@ chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientSe
   $scope.taxBracket=.28;
 
   // $scope.maritalStatusBool = false;
-  $scope.maritalStatus = false;
+  $scope.maritalStatus = "Single";
+
 
   // Sets the bool value for marital status to be sent to the DB
-  // $scope.setStatus = function(){
-  //   console.log("I are tommy");
-  //   console.log($scope.maritalStatus);
-  //
-  //   if ($scope.maritalStatus == 'Single'){
-  //     $scope.maritalStatusBool = false;
-  //     console.log("we are false");
-  //     console.log($scope.maritalStatus);
-  //   } else {
-  //     $scope.maritalStatusBool = true;
-  //     console.log("we are true");
-  //     console.log($scope.maritalStatus);
-  //   }
-  // };
+  $scope.setStatus = function(){
+    console.log("I are tommy");
+    console.log($scope.maritalStatus);
+
+    // if ($scope.maritalStatus == 'Single'){
+    //   $scope.maritalStatusBool = false;
+    //   console.log("we are false");
+    //   console.log($scope.maritalStatus);
+    // } else {
+    //   $scope.maritalStatusBool = true;
+    //   console.log("we are true");
+    //   console.log($scope.maritalStatus);
+    // }
+  };
 
 
 //Dependent variables

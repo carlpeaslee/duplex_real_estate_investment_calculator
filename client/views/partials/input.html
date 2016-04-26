@@ -74,12 +74,16 @@
       </md-input-container>
 
       <md-input-container>
-        <md-switch ng-model="maritalStatus" aria-label="maritalStatus" ng-true-value="'married'" ng-false-value="'single'">
-          <p>
-            Marital Status: <span ng-show="maritalStatus">{{maritalStatus}}</span>
-          </p>
-        </md-switch>
+        <md-radio-group ng-model="maritalStatus" ng-init="maritalStatus">
+          <md-radio-button value="Single">Single</md-radio-button>
+          <md-radio-button value="Married">Married</md-radio-button>
+        </md-radio-group>
       </md-input-container>
+
+      <p>
+        {{ maritalStatus }}
+      </p>
+
     </form>
   </md-sidenav>
 </div>
