@@ -37,13 +37,11 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
 
 
-    
+
     $scope.buy[1].v = $scope.buyBar;
     $scope.rent[1].v = $scope.rentBar;
     $scope.buyAndRent[1].v = $scope.buyAndRentBar;
 })
-
-
 
 
 //Dependent variables

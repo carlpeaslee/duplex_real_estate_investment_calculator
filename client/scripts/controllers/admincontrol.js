@@ -17,8 +17,13 @@ chickApp.controller('EmailController',  ['$scope', '$http', '$window', 'ClientSe
 
 
 chickApp.controller('SetVariablesController',  ['$scope', '$http', '$window', 'ClientService','AdminService',function($scope, $http, $window, ClientService, AdminService) {
-  $scope.setDefaultValues = function(){
-    console.log("Submitting default values");
+  AdminService.getDefaults();
+  $scope.defaultVariables = {};
+  $scope.defaultVariables = AdminService.admin.defaults;
+
+  $scope.setDefaultValues = function(defaultVariables){
+    // console.log("Submitting default values: ", defaultVariables);
+    AdminService.postDefaults(defaultVariables);
   };
 
 
