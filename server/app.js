@@ -20,29 +20,31 @@ var index = require('./routes/index.js');
 var default_value = require('./routes/default.js');
 
 // DATABASE VARS
-// var startUpDbForFirstTime = require('./utils/db.js');
 var mongoURI = 'mongodb://localhost/duplexdb';
 var mongoDB = mongoose.connect(mongoURI).connection;
-var populateDB = function(){
-    app.route('/defaults').post(function(req, res){
-
-    });
-};
-
+var defaultsExist = null;
 
     // DATABASE SETUP
     mongoDB.on('error', function(err){
         console.log('Mongo connection: ', err);
     });
     mongoDB.once('open', function(err){
-        // collection.count(function (err, count) {
-        //     if(!err && count === 0){
-        //         populateDB();
-        //     }
-        //});
         if(!err) {console.log('Mongo connection open');}
         else if(err) {console.log('There was an error opening Mongo connection: ', err);}
     });
+/************* THIS CODE DOES THE ACTUAL DB CHECK FOR EXISTING COLLECTIONS *****************/
+    var conn = mongoose.createConnection("mongodb://localhost/duplexdb");
+    conn.on('open', function(){
+    conn.db.listCollections().toArray(function(err, names){
+        if(names.length==0){
+            defaultsExist = false;
+        }else{
+            defaultsExist = true;
+        }
+        conn.close();
+    });
+});
+/*******************************************************************************************/
 
 // SET PORT
 app.set('port', (process.env.PORT) || 5000);
@@ -95,6 +97,9 @@ passport.use('local', new localStrategy({
 ));
 
 // CALL CATCHES
+app.get('/checkDB', function(req, res){
+    res.send(defaultsExist);
+});
 app.use('/defaults', default_value)
 app.use('/submit', submit);
 app.use('/admin', admin);
