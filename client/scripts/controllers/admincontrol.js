@@ -15,23 +15,14 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
   $scope.selected = [];
   $scope.limitOptions = [5, 10, 15];
 
-  $scope.options = {
-    rowSelection: true,
-    multiSelect: true,
-    autoSelect: true,
-    decapitate: false,
-    largeEditDialog: false,
-    boundaryLinks: false,
-    limitSelect: true,
-    pageSelect: true
-  };
-
   $scope.query = {
-    order: 'name',
+    order: 'date',
     limit: 5,
     page: 1
   };
 
+//$scope.emailList is test information.  Will be deleted and replaced with info coming from server through factory.
+//count will have to come from a function which checks array length.
   $scope.emailList = {
     "count": 10,
     "data": [
@@ -102,59 +93,16 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
     ]
   };
 
-  $scope.editComment = function (event, dessert) {
-    event.stopPropagation(); // in case autoselect is enabled
-
-    var editDialog = {
-      modelValue: dessert.comment,
-      placeholder: 'Add a comment',
-      save: function (input) {
-        if(input.$modelValue === 'Donald Trump') {
-          input.$invalid = true;
-          return $q.reject();
-        }
-        if(input.$modelValue === 'Bernie Sanders') {
-          return dessert.comment = 'FEEL THE BERN!'
-        }
-        dessert.comment = input.$modelValue;
-      },
-      targetEvent: event,
-      title: 'Add a comment',
-      validators: {
-        'md-maxlength': 30
-      }
-    };
-
-    var promise;
-
-    if($scope.options.largeEditDialog) {
-      promise = $mdEditDialog.large(editDialog);
-    } else {
-      promise = $mdEditDialog.small(editDialog);
-    }
-
-    promise.then(function (ctrl) {
-      var input = ctrl.getInput();
-
-      input.$viewChangeListeners.push(function () {
-        input.$setValidity('test', input.$modelValue !== 'test');
-      });
-    });
-  };
 
   $scope.toggleLimitOptions = function () {
     $scope.limitOptions = $scope.limitOptions ? undefined : [5, 10, 15];
-  };
-
-  $scope.getTypes = function () {
-    return ['Candy', 'Ice cream', 'Other', 'Pastry'];
   };
 
   $scope.loadStuff = function () {
     $scope.promise = $timeout(function () {
       // loading
     }, 2000);
-  }
+  };
 
   $scope.logItem = function (item) {
     console.log(item.name, 'was selected');
@@ -167,7 +115,7 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
   $scope.logPagination = function (page, limit) {
     console.log('page: ', page);
     console.log('limit: ', limit);
-  }
+  };
 
 }]);
 
