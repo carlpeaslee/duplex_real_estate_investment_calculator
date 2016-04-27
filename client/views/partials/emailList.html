@@ -8,11 +8,11 @@
 </md-toolbar>
 
 <md-table-container>
-  <table md-table>
-    <thead md-head md-order="query.order" md-on-reorder="getEmailList">
+  <table md-table ng-model="selected" md-progress="promise">
+    <thead md-head md-order="date" md-on-reorder="getEmailList">
       <tr md-row>
         <th md-column md-order-by="date"><span>Date Submitted</span></th>
-        <th md-column md-numeric><span>Email Address</span></th>
+        <th md-column md-string><span>Email Address</span></th>
         <th md-column md-numeric>Zip Code</th>
         <th md-column md-numeric>Income</th>
         <th md-column md-numeric>Target Property Price</th>
