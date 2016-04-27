@@ -1,42 +1,47 @@
-chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientService',function($scope, $http, $window, ClientService) {
-  //Independent Variables
-  $scope.monthlyRentPersonal=1500; //max min default
-  $scope.monthlyRentTenant=1600; //max min default
-  $scope.targetPrice=300000;  //max min default
-  $scope.downPaymentPercentage=.5;  //max min default
-  $scope.mortgageRate=1000;  //max min default
-  $scope.yearsAmmoritized=500; //max min default
-  $scope.income=100;  //max min default
-  $scope.mortgageYears=30;  //max min default
-  $scope.vacancy=.05;  //max min default
-  $scope.propertyTaxPercentage=.0165  //max min default
-  $scope.assocDues=0;  //max min default
-  $scope.management=0; //max min default
-  $scope.misc=1000;  //max min default
-  $scope.insuranceRate=.01;  //max min default
-  $scope.utilsRate=.009;  //max min default
-  $scope.legalAccounting=100;  //max min default
-  $scope.taxBracket=.28;
+chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', 'ClientService',function($scope, $log, $http, $window, ClientService) {
+//Independent Variables
+$scope.inputData = {};
+$scope.inputData.monthlyRentPersonal=1500; //max min default
+$scope.inputData.monthlyRentTenant=1600; //max min default
+$scope.inputData.targetPrice=300000;  //max min default
+$scope.inputData.downPaymentPercentage=.5;  //max min default
+$scope.inputData.mortgageRate=1000;  //max min default
+$scope.inputData.yearsAmmoritized=500; //max min default
+$scope.inputData.income=100;  //max min default
+$scope.inputData.mortgageYears=30;  //max min default
+$scope.inputData.vacancy=.05;  //max min default
+$scope.inputData.propertyTaxPercentage=.0165  //max min default
+$scope.inputData.assocDues=0;  //max min default
+$scope.inputData.management=0; //max min default
+$scope.inputData.misc=1000;  //max min default
+$scope.inputData.insuranceRate=.01;  //max min default
+$scope.inputData.utilsRate=.009;  //max min default
+$scope.inputData.legalAccounting=100;  //max min default
+$scope.inputData.taxBracket=.28;
 
-  // $scope.maritalStatusBool = false;
-  $scope.maritalStatus = "Single";
+var service = ClientService;
+
+// $scope.inputData = 10;
+// $scope.outputData = $scope.inputData * 5;
+
+$scope.rentBar = 500;
+$scope.buyBar = 500;
+$scope.buyAndRentBar = 500;
+
+$scope.$watchCollection('inputData', function(newVal, oldVal){
+    console.log('Changed', newVal, oldVal);
 
 
-  // Sets the bool value for marital status to be sent to the DB
-  $scope.setStatus = function(){
-    console.log("I are tommy");
-    console.log($scope.maritalStatus);
 
-    // if ($scope.maritalStatus == 'Single'){
-    //   $scope.maritalStatusBool = false;
-    //   console.log("we are false");
-    //   console.log($scope.maritalStatus);
-    // } else {
-    //   $scope.maritalStatusBool = true;
-    //   console.log("we are true");
-    //   console.log($scope.maritalStatus);
-    // }
-  };
+
+
+
+
+
+    $scope.buy[1].v = $scope.buyBar;
+    $scope.rent[1].v = $scope.rentBar;
+    $scope.buyAndRent[1].v = $scope.buyAndRentBar;
+})
 
 
 //Dependent variables
@@ -84,27 +89,35 @@ chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientSe
 
     $scope.myChartObject = {};
 
-    $scope.myChartObject.type = "BarChart";
+    $scope.myChartObject.type = "ColumnChart";
 
     $scope.buy = [
         {v: "Buy"},
-        {v: 600},
+        {v: $scope.outputData},
+        {v: 'red'}
     ];
+
+    // $scope.$watch('monthlyRentPersonal', function(newVal, oldVal) {
+    //     $log.info newVal
+    // });
 
     $scope.rent = [
         {v: "Rent"},
-        {v: 600},
+        {v: 200},
+        {v: 'green'}
     ];
 
     $scope.buyAndRent = [
         {v: "Buy & Rent-out"},
         {v: 600},
+        {v: 'purple'}
     ];
 
     $scope.myChartObject.data = {
         "cols": [
-            {id: "t", label: "Topping", type: "string"},
-            {id: "s", label: "Slices", type: "number"}
+            {id: "options", label: "Options", type: "string"},
+            {id: "dollars", label: "Dollars", type: "number"},
+            {role: "style", type: "string"}
         ],
         "rows": [
             {c: $scope.buy},
@@ -114,10 +127,106 @@ chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientSe
     };
 
     $scope.myChartObject.options = {
-        'title': 'Buy vs Rent vs Buy & Rent-out'
+        'title': 'Buy vs Rent vs Buy & Rent-out',
+        animation:{
+            duration: 3000,
+            easing: 'out',
+        }
     };
 
 
+    //this is stuff for submiting the email
+    $scope.submit = {};
+    $scope.submit.followup = true;
 
+    $scope.submitEmail = function() {
+        console.log("submit was clicked", $scope.submit.email, $scope.submit.followup);
+        //POST to the server
+        $scope.submit.email = "";
+        $scope.fade = "";
+    }
+
+
+    //this is the hidden chart stuff
+
+
+    var buyValues = [10000,20000,30000,40000,50000];
+    var rentValues = [20000,40000,60000,40000,60000];
+    var buyAndRentValues = [60000,40000,50000,30000,20000];
+    var timeframe = 5;
+
+    var dynamicRows = [];
+    var populateDynamicRows = function(){
+        for (var i = 0; i < timeframe; i++) {
+            var newRow = {
+                            "c":
+                                [
+                                    {
+                                        "v": i+1
+                                    },
+                                    {
+                                        "v": buyValues[i]
+                                    },
+                                    {
+                                        "v": rentValues[i]
+                                    },
+                                    {
+                                        "v": buyAndRentValues[i]
+                                    }
+                                ]
+            }
+            dynamicRows.push(newRow);
+        }
+    }
+    populateDynamicRows();
+
+    $scope.hiddenChartObject = {
+        "type": "LineChart",
+        "data": {
+            "cols": [
+                {
+                    "id": "year",
+                    "label": "Years",
+                    "type": "string"
+                },
+                {
+                    "id": "buy-line",
+                    "label": "Buy",
+                    "type": "number"
+                },
+                {
+                    "id": "rent-line",
+                    "label": "Rent",
+                    "type": "number"
+                },
+                {
+                    "id": "buyAndRent-line",
+                    "label": "Buy & Rent-out",
+                    "type": "number"
+                }
+            ],
+            "rows": dynamicRows
+        },
+        "options": {
+            "title": "Long term Return on Investment",
+            "isStacked": "true",
+            "fill": 20,
+            "displayExactValues": true,
+            "vAxis": {
+                "title": "Return"
+            },
+            "hAxis": {
+                "title": "Years"
+            },
+            "animation":{
+                duration: 3000,
+                easing: 'out',
+            }
+        },
+        "formatters": {}
+    }
+
+
+    $scope.fade = "fade";
 
 }]);
