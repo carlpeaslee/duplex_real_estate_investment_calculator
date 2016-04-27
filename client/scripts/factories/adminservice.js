@@ -1,4 +1,4 @@
-chickApp.factory("AdminService", ["$http", function($http){
+chickAppAdmin.factory("AdminService", ["$http", function($http){
 
 
     var getDefaults = function(){
@@ -16,9 +16,11 @@ chickApp.factory("AdminService", ["$http", function($http){
     };
 
     var getContacts = function(){
-        $http.get("/admin/contacts").then(function(response){
-            admin.contacts = response.data;
-        });
+      admin.contacts = {};
+      console.log("Running getContacts!");
+      // $http.get("/admin/contacts").then(function(response){
+      //     admin.contacts = response.data;
+      // });
     };
 
     var admin = {};
