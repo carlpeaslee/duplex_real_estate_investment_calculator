@@ -1,4 +1,5 @@
 chickApp.factory("ClientService", ["$http", function($http){
+
     var client = {};
 
     var getDefaults = function(){

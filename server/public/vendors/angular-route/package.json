@@ -1,11 +1,11 @@
 {
   "_args": [
     [
-      "angular-route@^1.5.5",
-      "/Users/himynameisjeremy/Desktop/duplexchickcalculator"
+      "angular-route",
+      "/Users/poodle/Desktop/duplexchickcalculator"
     ]
   ],
-  "_from": "angular-route@>=1.5.5 <2.0.0",
+  "_from": "angular-route@latest",
   "_id": "angular-route@1.5.5",
   "_inCache": true,
   "_installable": true,
@@ -23,11 +23,11 @@
   "_phantomChildren": {},
   "_requested": {
     "name": "angular-route",
-    "raw": "angular-route@^1.5.5",
-    "rawSpec": "^1.5.5",
+    "raw": "angular-route",
+    "rawSpec": "",
     "scope": null,
-    "spec": ">=1.5.5 <2.0.0",
-    "type": "range"
+    "spec": "latest",
+    "type": "tag"
   },
   "_requiredBy": [
     "/"
@@ -35,8 +35,8 @@
   "_resolved": "https://registry.npmjs.org/angular-route/-/angular-route-1.5.5.tgz",
   "_shasum": "69349369209b1f34724a58145dc7ec6a4987a1e7",
   "_shrinkwrap": null,
-  "_spec": "angular-route@^1.5.5",
-  "_where": "/Users/himynameisjeremy/Desktop/duplexchickcalculator",
+  "_spec": "angular-route",
+  "_where": "/Users/poodle/Desktop/duplexchickcalculator",
   "author": {
     "email": "angular-core+npm@google.com",
     "name": "Angular Core Team"
