@@ -12,97 +12,162 @@ chickAppAdmin.controller('AdminController',  ['$scope', '$http', '$window','Admi
 chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, AdminService) {
   'use strict';
 
-  AdminService.getContacts();
-
   $scope.selected = [];
+  $scope.limitOptions = [5, 10, 15];
+
+  $scope.options = {
+    rowSelection: true,
+    multiSelect: true,
+    autoSelect: true,
+    decapitate: false,
+    largeEditDialog: false,
+    boundaryLinks: false,
+    limitSelect: true,
+    pageSelect: true
+  };
 
   $scope.query = {
-    order: 'date',
+    order: 'name',
     limit: 5,
     page: 1
   };
 
-  function success(emailList) {
-    // $scope.emailList = admin.contacts;
+  $scope.emailList = {
+    "count": 10,
+    "data": [
+      {
+        "date": "05/01/2001",
+        "maritalStatus": "Single",
+        "email": "tommy@chesterton.com",
+        "zipCode": 42342,
+        "income": 12311,
+        "targetPropertyPrice": 1231231
+      }, {
+        "date": "05/02/2001",
+        "maritalStatus": "Married",
+        "email": "tommy2@chesterton.com",
+        "zipCode": 42442,
+        "income": 12322,
+        "targetPropertyPrice": 12312
+      }, {
+        "date": "05/03/2001",
+        "maritalStatus": "Single",
+        "email": "tommy3@chesterton.com",
+        "zipCode": 11142,
+        "income": 11,
+        "targetPropertyPrice": 1231
+      }, {
+        "date": "05/04/2001",
+        "maritalStatus": "Single",
+        "email": "tommy4@chesterton.com",
+        "zipCode": 41111,
+        "income": 311,
+        "targetPropertyPrice": 31231
+      }, {
+        "date": "05/05/2001",
+        "maritalStatus": "Married",
+        "email": "tommy5@chesterton.com",
+        "zipCode": 42765,
+        "income": 123,
+        "targetPropertyPrice": 98234
+      }, {
+        "date": "05/06/2001",
+        "maritalStatus": "Single",
+        "email": "tommy6@chesterton.com",
+        "zipCode": 98765,
+        "income": 12323,
+        "targetPropertyPrice": 12313
+      }, {
+        "date": "05/07/2001",
+        "maritalStatus": "Single",
+        "email": "tommy7@chesterton.com",
+        "zipCode": 42555,
+        "income": 1,
+        "targetPropertyPrice": 12
+      }, {
+        "date": "05/08/2001",
+        "maritalStatus": "Single",
+        "email": "tommy8@chesterton.com",
+        "zipCode": 98765,
+        "income": 999876554,
+        "targetPropertyPrice": 99999999989
+      }, {
+        "date": "05/09/2001",
+        "maritalStatus": "Married",
+        "email": "tommy9@chesterton.com",
+        "zipCode": 44232,
+        "income": 12323213,
+        "targetPropertyPrice": 77656789
+      }
+    ]
+  };
+
+  $scope.editComment = function (event, dessert) {
+    event.stopPropagation(); // in case autoselect is enabled
+
+    var editDialog = {
+      modelValue: dessert.comment,
+      placeholder: 'Add a comment',
+      save: function (input) {
+        if(input.$modelValue === 'Donald Trump') {
+          input.$invalid = true;
+          return $q.reject();
+        }
+        if(input.$modelValue === 'Bernie Sanders') {
+          return dessert.comment = 'FEEL THE BERN!'
+        }
+        dessert.comment = input.$modelValue;
+      },
+      targetEvent: event,
+      title: 'Add a comment',
+      validators: {
+        'md-maxlength': 30
+      }
+    };
+
+    var promise;
+
+    if($scope.options.largeEditDialog) {
+      promise = $mdEditDialog.large(editDialog);
+    } else {
+      promise = $mdEditDialog.small(editDialog);
+    }
+
+    promise.then(function (ctrl) {
+      var input = ctrl.getInput();
+
+      input.$viewChangeListeners.push(function () {
+        input.$setValidity('test', input.$modelValue !== 'test');
+      });
+    });
+  };
+
+  $scope.toggleLimitOptions = function () {
+    $scope.limitOptions = $scope.limitOptions ? undefined : [5, 10, 15];
+  };
+
+  $scope.getTypes = function () {
+    return ['Candy', 'Ice cream', 'Other', 'Pastry'];
+  };
+
+  $scope.loadStuff = function () {
+    $scope.promise = $timeout(function () {
+      // loading
+    }, 2000);
   }
 
-  $scope.getEmailList = function () {
-    // $scope.promise = $nutrition.desserts.get($scope.query, success).$promise;
-    console.log("Geting Email List!");
+  $scope.logItem = function (item) {
+    console.log(item.name, 'was selected');
   };
-  //
-  $scope.emailList = [
-            {
-                date: "05/01/2001",
-                email: "tommy@chesterton.com",
-                zipCode: 42342,
-                income: 12311,
-                targetPropertyPrice: 1231231
-            },
-            {
-              date: "05/09/2001",
-              email: "tommy9@chesterton.com",
-              zipCode: 42342,
-              income: 1231231,
-              targetPropertyPrice: 1231234231
-            },
-            {
-              date: "05/07/2001",
-              email: "tommy8@chesterton.com",
-              zipCode: 42342,
-              income: 1231,
-              targetPropertyPrice: 123123545721
-            },
-            {
-              date: "05/06/2001",
-              email: "tommy7@chesterton.com",
-              zipCode: 42342,
-              income: 123122452331,
-              targetPropertyPrice: 1231231
-            },
-            {
-              date: "05/07/2001",
-              email: "tommy6@chesterton.com",
-              zipCode: 42342,
-              income: 122634231,
-              targetPropertyPrice: 1231231
-            },
-            {
-              date: "05/15/2001",
-              email: "tommy5@chesterton.com",
-              zipCode: 42342,
-              income: 1,
-              targetPropertyPrice: 1231231
-            },
-            {
-              date: "05/13/2001",
-              email: "tommy4@chesterton.com",
-              zipCode: 42342,
-              income: 125431,
-              targetPropertyPrice: 1231231
-            },
-            {
-              date: "05/12/2001",
-              email: "tommy3@chesterton.com",
-              zipCode: 42342,
-              income: 1231,
-              targetPropertyPrice: 1231231
-            },
-            {
-              date: "05/30/2001",
-              email: "tommy2@chesterton.com",
-              zipCode: 42342,
-              income: 1241,
-              targetPropertyPrice: 1231231
-            },
-            {
-              date: "05/12/2001",
-              email: "tommy1@chesterton.com",
-              zipCode: 42342,
-              income: 21,
-              targetPropertyPrice: 1231231
-            }
-        ];
+
+  $scope.logOrder = function (order) {
+    console.log('order: ', order);
+  };
+
+  $scope.logPagination = function (page, limit) {
+    console.log('page: ', page);
+    console.log('limit: ', limit);
+  }
 
 }]);
 
