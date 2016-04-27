@@ -10,12 +10,12 @@ $scope.inputData.yearsAmmoritized=500; //max min default
 $scope.inputData.income=100;  //max min default
 $scope.inputData.mortgageYears=30;  //max min default
 $scope.inputData.vacancy=.05;  //max min default
-$scope.inputData.propertyTaxPercentage=.0165  //max min default
+$scope.inputData.propertyTaxPercentage=1.65;  //max min default
 $scope.inputData.assocDues=0;  //max min default
 $scope.inputData.management=0; //max min default
 $scope.inputData.misc=1000;  //max min default
-$scope.inputData.insuranceRate=.01;  //max min default
-$scope.inputData.utilsRate=.009;  //max min default
+$scope.inputData.insuranceRate=1;  //max min default
+$scope.inputData.utilsRate=.9;  //max min default
 $scope.inputData.legalAccounting=100;  //max min default
 $scope.inputData.taxBracket=.28;
 $scope.inputData.years=5;
@@ -38,15 +38,17 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       //mortgageRate
       $scope.mortgageRateDecimal=newVal.mortgageRate/100
       //monthlyCost
-      $scope.montlyBuyTotal=$scope.owedAfterDown*($scope.mortgageRateDecimal/12)*Math.pow((1-$scope.mortgageRateDecimal/12),newVal.years)
-
-      $scope.buy[1].v = s;
+      $scope.montlyBuyTotal=($scope.owedAfterDown*($scope.mortgageRateDecimal/12)*Math.pow((1-$scope.mortgageRateDecimal/12),newVal.years))/((Math.pow((1+$scope.mortgageRateDecimal/12),(newVal.mortgageYears*12)))-1);
+      $scope.annualBuyTotal=($scope.monthlyBuyTotal)*12+(newVal.targetPrice*newVal.propertyTaxPercentage/100)+(newVal.targetPrice*newVal.utilsRate/100)
+      $scope.buy[1].v = $scope.annualBuyTotal*newVal.years;
     //Renting related
-    $scope.rent[1].v = newVal.monthlyRentPersonal;
+      $scope.rent[1].v = newVal.monthlyRentPersonal;
 
 
     //duplex related
-    $scope.buyAndRent[1].v = $scope.buyAndRentBar;
+      $scope.b
+
+      $scope.buyAndRent[1].v = ;
 })
 
 
