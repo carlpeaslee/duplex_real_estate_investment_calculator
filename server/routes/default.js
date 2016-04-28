@@ -16,43 +16,63 @@ router.route('/')
      */
     .post(function(req, res){
         var defaults = new Default({
-            monthly_rent_def: req.body.monthly_rent_def,
-            monthly_rent_min: req.body.monthly_rent_min,
-            monthly_rent_max: req.body.monthly_rent_max,
-            buying_budget_def: req.body.buying_budget_def,
-            buying_budget_min: req.body.buying_budget_min,
-            buying_budget_max: req.body.buying_budget_max,
-            estimated_rental_income_def: req.body.estimated_rental_income_def,
-            estimated_rental_income_min: req.body.estimated_rental_income_min,
-            estimated_rental_income_max: req.body.estimated_rental_income_max,
-            amortization_interest_rate_def: req.body.amortization_interest_rate_def,
-            amortization_interest_rate_min: req.body.amortization_interest_rate_min,
-            amortization_interest_rate_max: req.body.amortization_interest_rate_max,
-            downpayment_def: req.body.downpayment_def,
-            downpayment_min: req.body.downpayment_min,
-            downpayment_max: req.body.downpayment_max,
-            property_taxes_def: req.body.property_taxes_def,
-            property_taxes_min: req.body.property_taxes_min,
-            property_taxes_max: req.body.property_taxes_max,
-            toggle_married_or_single: req.body.toggle_married_or_single,
-            annual_income_def: req.body.annual_income_def,
-            annual_income_min: req.body.annual_income_min,
-            annual_income_max: req.body.annual_income_max,
-            maintainence_costs_def: req.body.maintainence_costs_def,
-            maintainence_costs_min: req.body.maintainence_costs_min,
-            maintainence_costs_max: req.body.maintainence_costs_max,
-            additional_monthly_expenses_def: req.body.additional_monthly_expenses_def,
-            additional_monthly_expenses_min: req.body.additional_monthly_expenses_min,
-            additional_monthly_expenses_max: req.body.additional_monthly_expenses_max,
-            home_value_increase_def: req.body.home_value_increase_def,
-            home_value_increase_min: req.body.home_value_increase_min,
-            home_value_increase_max: req.body.home_value_increase_max,
-            rental_increase_def: req.body.rental_increase_def,
-            rental_increase_min: req.body.rental_increase_min,
-            rental_increase_max: req.body.rental_increase_max,
-            auto_calc_depreciation_def: req.body.auto_calc_depreciation_def,
-            auto_calc_depreciation_min: req.body.auto_calc_depreciation_min,
-            auto_calc_depreciation_max: req.body.auto_calc_depreciation_max
+            monthlyRentTenantDef:req.body.monthlyRentTenantDef,
+            monthlyRentTenantMin:req.body.monthlyRentTenantMin,
+            monthlyRentTenantMax:req.body.monthlyRentTenantMax,
+            monthlyRentPersonalDef:req.body.monthlyRentPersonalDef,
+            monthlyRentPersonalMin:req.body.monthlyRentPersonalMin,
+            monthlyRentPersonalMax:req.body.monthlyRentPersonalMax,
+            targetPriceDef:req.body.targetPriceDef,
+            targetPriceMin:req.body.targetPriceMin,
+            targetPriceMax:req.body.targetPriceMax,
+            downPaymentPercentageDef:req.body.downPaymentPercentageDef,
+            downPaymentPercentageMin:req.body.downPaymentPercentageMin,
+            downPaymentPercentageMax:req.body.downPaymentPercentageMax,
+            mortgageRateDef:req.body.mortgageRateDef,
+            mortgageRateMin:req.body.mortgageRateMin,
+            mortgageRateMax:req.body.mortgageRateMax,
+            yearsAmmoritizedDef:req.body.yearsAmmoritizedDef,
+            yearsAmmoritizedMin:req.body.yearsAmmoritizedMin,
+            yearsAmmoritizedMax:req.body.yearsAmmoritizedMax,
+            incomeDef:req.body.incomeDef,
+            incomeMin:req.body.incomeMin,
+            incomeMax:req.body.incomeMax,
+            mortgageYearsDef:req.body.mortgageYearsDef,
+            mortgageYearsMin:req.body.mortgageYearsMin,
+            mortgageYearsMax:req.body.mortgageYearsMax,
+            vacancyDef:req.body.vacancyDef,
+            vacancyMin:req.body.vacancyMin,
+            vacancyMax:req.body.vacancyMax,
+            propertyTaxPercentageDef:req.body.propertyTaxPercentageDef,
+            propertyTaxPercentageMin:req.body.propertyTaxPercentageMin,
+            propertyTaxPercentageMax:req.body.propertyTaxPercentageMax,
+            assocDuesDef:req.body.assocDuesDef,
+            assocDuesMin:req.body.assocDuesMin,
+            assocDuesMax:req.body.assocDuesMax,
+            managementDef:req.body.managementDef,
+            managementMin:req.body.managementMin,
+            managementMax:req.body.managementMax,
+            miscDef:req.body.miscDef,
+            miscMin:req.body.miscMin,
+            miscMax:req.body.miscMax,
+            insuranceRateDef:req.body.insuranceRateDef,
+            insuranceRateMin:req.body.insuranceRateMin,
+            insuranceRateMax:req.body.insuranceRateMax,
+            utilsDef:req.body.utilsDef,
+            utilsMin:req.body.utilsMin,
+            utilsMax:req.body.utilsMax,
+            legalAccountingDef:req.body.legalAccountingDef,
+            legalAccountingMin:req.body.legalAccountingMin,
+            legalAccountingMax:req.body.legalAccountingMax,
+            taxBracketDef:req.body.taxBracketDef,
+            taxBracketMin:req.body.taxBracketMin,
+            taxBracketMax:req.body.taxBracketMax,
+            repairValueDef:req.body.repairValueDef,
+            repairValueMin:req.body.repairValueMin,
+            repairValueMax:req.body.repairValueMax,
+            yearsDef:req.body.yearsDef,
+            yearsMin:req.body.yearsMin,
+            yearsMax:req.body.yearsMax
         });
         defaults.save(function(err, defaults){
             if(err) console.log(err);
@@ -65,43 +85,63 @@ router.route('/')
             if(err) res.send(err);
             console.log(req.body);
 
-            defaults.monthly_rent_def = req.body.monthly_rent_def;
-            defaults.monthly_rent_min = req.body.monthly_rent_min;
-            defaults.monthly_rent_max = req.body.monthly_rent_max;
-            defaults.buying_budget_def = req.body.buying_budget_def;
-            defaults.buying_budget_min = req.body.buying_budget_min;
-            defaults.buying_budget_max = req.body.buying_budget_max;
-            defaults.estimated_rental_income_def = req.body.estimated_rental_income_def;
-            defaults.estimated_rental_income_min = req.body.estimated_rental_income_min;
-            defaults.estimated_rental_income_max = req.body.estimated_rental_income_max;
-            defaults.amortization_interest_rate_def = req.body.amortization_interest_rate_def;
-            defaults.amortization_interest_rate_min = req.body.amortization_interest_rate_min;
-            defaults.amortization_interest_rate_max = req.body.amortization_interest_rate_max;
-            defaults.downpayment_def = req.body.downpayment_def;
-            defaults.downpayment_min = req.body.downpayment_min;
-            defaults.downpayment_max = req.body.downpayment_max;
-            defaults.property_taxes_def = req.body.property_taxes_def;
-            defaults.property_taxes_min = req.body.property_taxes_min;
-            defaults.property_taxes_max = req.body.property_taxes_max;
-            defaults.toggle_married_or_single = req.body.toggle_married_or_single;
-            defaults.annual_income_def = req.body.annual_income_def;
-            defaults.annual_income_min = req.body.annual_income_min;
-            defaults.annual_income_max = req.body.annual_income_max;
-            defaults.maintainence_costs_def = req.body.maintainence_costs_def;
-            defaults.maintainence_costs_min = req.body.maintainence_costs_min;
-            defaults.maintainence_costs_max = req.body.maintainence_costs_max;
-            defaults.additional_monthly_expenses_def = req.body.additional_monthly_expenses_def;
-            defaults.additional_monthly_expenses_min = req.body.additional_monthly_expenses_min;
-            defaults.additional_monthly_expenses_max = req.body.additional_monthly_expenses_max;
-            defaults.home_value_increase_def = req.body.home_value_increase_def;
-            defaults.home_value_increase_min = req.body.home_value_increase_min;
-            defaults.home_value_increase_max = req.body.home_value_increase_max;
-            defaults.rental_increase_def = req.body.rental_increase_def;
-            defaults.rental_increase_min = req.body.rental_increase_min;
-            defaults.rental_increase_max = req.body.rental_increase_max;
-            defaults.auto_calc_depreciation_def = req.body.auto_calc_depreciation_def;
-            defaults.auto_calc_depreciation_min = req.body.auto_calc_depreciation_min;
-            defaults.auto_calc_depreciation_max = req.body.auto_calc_depreciation_max;
+            defaults.monthlyRentTenantDef = req.body.monthlyRentTenantDef;
+            defaults.monthlyRentTenantMin = req.body.monthlyRentTenantMin;
+            defaults.monthlyRentTenantMax = req.body.monthlyRentTenantMax;
+            defaults.monthlyRentPersonalDef = req.body.monthlyRentPersonalDef;
+            defaults.monthlyRentPersonalMin = req.body.monthlyRentPersonalMin;
+            defaults.monthlyRentPersonalMax = req.body.monthlyRentPersonalMax;
+            defaults.targetPriceDef = req.body.targetPriceDef;
+            defaults.targetPriceMin = req.body.targetPriceMin;
+            defaults.targetPriceMax = req.body.targetPriceMax;
+            defaults.downPaymentPercentageDef = req.body.downPaymentPercentageDef;
+            defaults.downPaymentPercentageMin = req.body.downPaymentPercentageMin;
+            defaults.downPaymentPercentageMax = req.body.downPaymentPercentageMax;
+            defaults.mortgageRateDef = req.body.mortgageRateDef;
+            defaults.mortgageRateMin = req.body.mortgageRateMin;
+            defaults.mortgageRateMax = req.body.mortgageRateMax;
+            defaults.yearsAmmoritizedDef = req.body.yearsAmmoritizedDef;
+            defaults.yearsAmmoritizedMin = req.body.yearsAmmoritizedMin;
+            defaults.yearsAmmoritizedMax = req.body.yearsAmmoritizedMax;
+            defaults.incomeDef = req.body.incomeDef;
+            defaults.incomeMin = req.body.incomeMin;
+            defaults.incomeMax = req.body.incomeMax;
+            defaults.mortgageYearsDef = req.body.mortgageYearsDef;
+            defaults.mortgageYearsMin = req.body.mortgageYearsMin;
+            defaults.mortgageYearsMax = req.body.mortgageYearsMax;
+            defaults.vacancyDef = req.body.vacancyDef;
+            defaults.vacancyMin = req.body.vacancyMin;
+            defaults.vacancyMax = req.body.vacancyMax;
+            defaults.propertyTaxPercentageDef = req.body.propertyTaxPercentageDef;
+            defaults.propertyTaxPercentageMin = req.body.propertyTaxPercentageMin;
+            defaults.propertyTaxPercentageMax = req.body.propertyTaxPercentageMax;
+            defaults.assocDuesDef = req.body.assocDuesDef;
+            defaults.assocDuesMin = req.body.assocDuesMin;
+            defaults.assocDuesMax = req.body.assocDuesMax;
+            defaults.managementDef = req.body.managementDef;
+            defaults.managementMin = req.body.managementMin;
+            defaults.managementMax = req.body.managementMax;
+            defaults.miscDef = req.body.miscDef;
+            defaults.miscMin = req.body.miscMin;
+            defaults.miscMax = req.body.miscMax;
+            defaults.insuranceRateDef = req.body.insuranceRateDef;
+            defaults.insuranceRateMin = req.body.insuranceRateMin;
+            defaults.insuranceRateMax = req.body.insuranceRateMax;
+            defaults.utilsDef = req.body.utilsDef;
+            defaults.utilsMin = req.body.utilsMin;
+            defaults.utilsMax = req.body.utilsMax;
+            defaults.legalAccountingDef = req.body.legalAccountingDef;
+            defaults.legalAccountingMin = req.body.legalAccountingMin;
+            defaults.legalAccountingMax = req.body.legalAccountingMax;
+            defaults.taxBracketDef = req.body.taxBracketDef;
+            defaults.taxBracketMin = req.body.taxBracketMin;
+            defaults.taxBracketMax = req.body.taxBracketMax;
+            defaults.repairValueDef = req.body.repairValueDef;
+            defaults.repairValueMin = req.body.repairValueMin;
+            defaults.repairValueMax = req.body.repairValueMax;
+            defaults.yearsDef = req.body.yearsDef;
+            defaults.yearsMin = req.body.yearsMin;
+            defaults.yearsMax = req.body.yearsMax;
 
             defaults.save(function(err){
                 if(err) res.send(err);

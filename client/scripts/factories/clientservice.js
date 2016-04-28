@@ -2,7 +2,9 @@ chickApp.factory("ClientService", ["$http", function($http){
     var client = {};
 
     var alterDefaults = function(object){
-        $http.put('/defaults/' + object._id, object);
+        $http.put('/defaults/' + object._id, object).then(function(){
+            getDefaults();
+        });
     };
 
     var getDefaults = function(){
@@ -20,45 +22,64 @@ chickApp.factory("ClientService", ["$http", function($http){
     /* the following variable and function are for loading initial values
     into the DB if there are none. there should be no need to include
     them into the return object for this factory. */
-
     var initialValues = {
-        monthly_rent_def: 999,
-        monthly_rent_min: 999,
-        monthly_rent_max: 999,
-        buying_budget_def: 999,
-        buying_budget_min: 999,
-        buying_budget_max: 999,
-        estimated_rental_income_def: 999,
-        estimated_rental_income_min: 999,
-        estimated_rental_income_max: 999,
-        amortization_interest_rate_def: 999,
-        amortization_interest_rate_min: 999,
-        amortization_interest_rate_max: 999,
-        downpayment_def: 999,
-        downpayment_min: 999,
-        downpayment_max: 999,
-        property_taxes_def: 999,
-        property_taxes_min: 999,
-        property_taxes_max: 999,
-        toggle_married_or_single: 'Single',
-        annual_income_def: 999,
-        annual_income_min: 999,
-        annual_income_max: 999,
-        maintainence_costs_def: 999,
-        maintainence_costs_min: 999,
-        maintainence_costs_max: 999,
-        additional_monthly_expenses_def: 999,
-        additional_monthly_expenses_min: 999,
-        additional_monthly_expenses_max: 999,
-        home_value_increase_def: 999,
-        home_value_increase_min: 999,
-        home_value_increase_max: 999,
-        rental_increase_def: 999,
-        rental_increase_min: 999,
-        rental_increase_max: 999,
-        auto_calc_depreciation_def: 999,
-        auto_calc_depreciation_min: 999,
-        auto_calc_depreciation_max: 999
+        monthlyRentTenantDef:1290,
+        monthlyRentTenantMin:100,
+        monthlyRentTenantMax:10000,
+        monthlyRentPersonalDef:1500,
+        monthlyRentPersonalMin:200,
+        monthlyRentPersonalMax:10000,
+        targetPriceDef:266000,
+        targetPriceMin:50000,
+        targetPriceMax:5000000,
+        downPaymentPercentageDef:3,
+        downPaymentPercentageMin:0,
+        downPaymentPercentageMax:100,
+        mortgageRateDef:4.25,
+        mortgageRateMin:0,
+        mortgageRateMax:20,
+        yearsAmmoritizedDef:10,
+        yearsAmmoritizedMin:0,
+        yearsAmmoritizedMax:100,
+        incomeDef:80000,
+        incomeMin:10000,
+        incomeMax:1000000,
+        mortgageYearsDef:30,
+        mortgageYearsMin:0,
+        mortgageYearsMax:100,
+        vacancyDef:5,
+        vacancyMin:0,
+        vacancyMax:100,
+        propertyTaxPercentageDef:1.65,
+        propertyTaxPercentageMin:0,
+        propertyTaxPercentageMax:100,
+        assocDuesDef:0,
+        assocDuesMin:0,
+        assocDuesMax:10000,
+        managementDef:0,
+        managementMin:0,
+        managementMax:10000,
+        miscDef:1000,
+        miscMin:0,
+        miscMax:100000,
+        insuranceRateDef:1,
+        insuranceRateMin:0,
+        insuranceRateMax:100,
+        utilsDef:100,
+        utilsMin:0,
+        utilsMax:10000,
+        legalAccountingDef:100,
+        legalAccountingMin:0,
+        legalAccountingMax:10000,
+        taxBracketDef:28,
+        taxBracketMin:39.9,
+        taxBracketMax:0,
+        repairValueDef:1400,
+        repairValueMin:0,
+        repairValueMax:100000,
+        yearsDef:5,
+        yearsMin:0,
+        yearsMax:100
     };
 
     var checkIfThereIsData = function(){
