@@ -1,11 +1,13 @@
 var chickApp = angular.module("chickApp", ['ngMaterial', 'ngMessages', 'ngRoute', 'googlechart']);
 
 chickApp.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider){
+
+}]);
+
+var chickAppAdmin = angular.module("chickAppAdmin", ['ngMaterial', 'ngMessages', 'ngRoute', 'md.data.table']);
+
+chickAppAdmin.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider){
     $routeProvider.
-    //     when("/", {
-    //         templateUrl: "/views/index.html",
-    //         controller: "InputController"
-        // }).
         when("/admin", {
             templateUrl: "/views/admin.html",
             controller: "AdminController"
