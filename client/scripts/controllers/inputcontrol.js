@@ -66,13 +66,13 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       $scope.annualDebtService=$scope.annualBuyPre-($scope.owedAfterDown*$scope.mortgageRateDecimal);
       //net operating income
       $scope.netOperatingIncome = $scope.rentTenantAnnual-$scope.propTax-$scope.propInsurance-newVal.repairValue-newVal.assocDues-newVal.management-newVal.misc-newVal.utils-newVal.legalAccounting;
-      $scope.interestNet = ($scope.owedAfterDown*$scope.mortgageRateDecimal)*-1;
+      $scope.interestNet = $scope.owedAfterDown*$scope.mortgageRateDecimal;
       $scope.depTot=$scope.depPersProp+$scope.depBuildingValue+$scope.depLandImprovVal;
-      $scope.taxableIncome=$scope.netOperatingIncome+$scope.interestNet+$scope.depTot;
+      $scope.taxableIncome=$scope.netOperatingIncome-$scope.interestNet-$scope.depTot;
       $scope.incomeTaxPay=$scope.taxableIncome*newVal.taxBracket/100;
 
 
-      $scope.buyAndRent[1].v = $scope.initialDuplex-$scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal;
+      $scope.buyAndRent[1].v = $scope.initialDuplex-$scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.incomeTaxPay;
 
 
 
