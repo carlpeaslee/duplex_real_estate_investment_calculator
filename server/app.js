@@ -98,6 +98,7 @@ passport.use('local', new localStrategy({
 
 // CALL CATCHES
 app.get('/checkDB', function(req, res){
+    console.log('defaultsExist =', defaultsExist);
     res.send(defaultsExist);
 });
 app.use('/defaults', default_value)
