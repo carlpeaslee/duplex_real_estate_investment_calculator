@@ -20,7 +20,9 @@ var index = require('./routes/index.js');
 var default_value = require('./routes/default.js');
 
 // DATABASE VARS
-var mongoURI = 'mongodb://localhost/duplexdb';
+var mongoURI =    process.env.MONGODB_URI ||
+   process.env.MONGOHQ_URL ||
+   'mongodb://localhost/rsjtest001';
 var mongoDB = mongoose.connect(mongoURI).connection;
 var defaultsExist = null;
 
