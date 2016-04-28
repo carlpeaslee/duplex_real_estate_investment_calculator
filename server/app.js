@@ -22,7 +22,7 @@ var default_value = require('./routes/default.js');
 // DATABASE VARS
 var mongoURI =    process.env.MONGODB_URI ||
    process.env.MONGOHQ_URL ||
-   'mongodb://localhost/rsjtest001';
+   "mongodb://localhost/duplexdb";
 var mongoDB = mongoose.connect(mongoURI).connection;
 var defaultsExist = null;
 
@@ -35,7 +35,7 @@ var defaultsExist = null;
         else if(err) {console.log('There was an error opening Mongo connection: ', err);}
     });
 /************* THIS CODE DOES THE ACTUAL DB CHECK FOR EXISTING COLLECTIONS *****************/
-    var conn = mongoose.createConnection("mongodb://localhost/duplexdb");
+    var conn = mongoose.createConnection(mongoURI);
     conn.on('open', function(){
     conn.db.listCollections().toArray(function(err, names){
         if(names.length==0){
