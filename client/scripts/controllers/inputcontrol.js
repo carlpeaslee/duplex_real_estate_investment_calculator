@@ -1,110 +1,123 @@
-chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientService',function($scope, $http, $window, ClientService) {
-  //Independent Variables
-  $scope.monthlyRentPersonal=1500; //max min default
-  $scope.monthlyRentTenant=1600; //max min default
-  $scope.targetPrice=300000;  //max min default
-  $scope.downPaymentPercentage=.5;  //max min default
-  $scope.mortgageRate=1000;  //max min default
-  $scope.yearsAmmoritized=500; //max min default
-  $scope.income=100;  //max min default
-  $scope.mortgageYears=30;  //max min default
-  $scope.vacancy=.05;  //max min default
-  $scope.propertyTaxPercentage=.0165  //max min default
-  $scope.assocDues=0;  //max min default
-  $scope.management=0; //max min default
-  $scope.misc=1000;  //max min default
-  $scope.insuranceRate=.01;  //max min default
-  $scope.utilsRate=.009;  //max min default
-  $scope.legalAccounting=100;  //max min default
-  $scope.taxBracket=.28;
+chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', 'ClientService',function($scope, $log, $http, $window, ClientService) {
+//Independent Variables
 
-  // $scope.maritalStatusBool = false;
-  $scope.maritalStatus = "Single";
+$scope.inputData = {};
+$scope.inputData.monthlyRentPersonal=1500; //max min default
+$scope.inputData.monthlyRentTenant=1290; //max min default
+$scope.inputData.targetPrice=266000;  //max min default
+$scope.inputData.downPaymentPercentage=3;  //max min default  putting 5% down would be 5 not .05
+$scope.inputData.mortgageRate=4.25;  //max min default
+$scope.inputData.yearsAmmoritized=500; //max min default
+$scope.inputData.income=100;  //max min default
+$scope.inputData.mortgageYears=30;  //max min default
+$scope.inputData.vacancy=5;  //max min default
+$scope.inputData.propertyTaxPercentage=1.65;  //max min default
+$scope.inputData.assocDues=0;  //max min default
+$scope.inputData.management=0; //max min default
+$scope.inputData.misc=1000;  //max min default
+$scope.inputData.insuranceRate=1;  //max min default
+$scope.inputData.utils=1000;  //TELL MILES TO CHANGE TODO
+$scope.inputData.legalAccounting=100;  //max min default
+$scope.inputData.taxBracket=28;
+$scope.inputData.repairValue=1400;
+$scope.inputData.years=5;
 
+var service = ClientService;
 
-  // Sets the bool value for marital status to be sent to the DB
-  $scope.setStatus = function(){
-    console.log("I are tommy");
-    console.log($scope.maritalStatus);
+$scope.$watchCollection('inputData', function(newVal, oldVal){
+    console.log('Changed', newVal, oldVal);
+    //effects all options
 
-    // if ($scope.maritalStatus == 'Single'){
-    //   $scope.maritalStatusBool = false;
-    //   console.log("we are false");
-    //   console.log($scope.maritalStatus);
-    // } else {
-    //   $scope.maritalStatusBool = true;
-    //   console.log("we are true");
-    //   console.log($scope.maritalStatus);
-    // }
-  };
+    //Buying not duplex
+      //after down value
+      $scope.owedAfterDown=newVal.targetPrice*(1-newVal.downPaymentPercentage/100);
+      //mortgageRate
+      $scope.mortgageRateDecimal=newVal.mortgageRate/100;
+      //mortgage rate year
+      $scope.mortgageRateDecimalMonthly=$scope.mortgageRateDecimal/12;
+      //monthly spending before normal expenses
+      $scope.monthlyBuyPre=$scope.owedAfterDown*($scope.mortgageRateDecimalMonthly)*Math.pow((1+$scope.mortgageRateDecimalMonthly),(newVal.mortgageYears*12))/(Math.pow((1+$scope.mortgageRateDecimalMonthly),(newVal.mortgageYears*12))-1);
+      //annual spending before expense
+      $scope.annualBuyPre=$scope.monthlyBuyPre*12;
+      //property tax
+      $scope.propTax = newVal.targetPrice*newVal.propertyTaxPercentage/100;
+      //Property insuranceRate
+      $scope.propInsurance = newVal.targetPrice*newVal.insuranceRate/100;
+      //adding up the costs
+        //first year:
+        $scope.firstYear=$scope.annualBuyPre+$scope.propTax+newVal.repairValue+newVal.assocDues+newVal.management+newVal.misc+$scope.propInsurance+newVal.utils+newVal.legalAccounting+(newVal.targetPrice*newVal.downPaymentPercentage/100);
+        //years after that:
+        $scope.otherYears=$scope.annualBuyPre+$scope.propTax+newVal.repairValue+newVal.assocDues+newVal.management+newVal.misc+$scope.propInsurance+newVal.utils+newVal.legalAccounting;
+        //actual yearwise
+        $scope.buy[1].v = $scope.firstYear+($scope.otherYears*(newVal.years-1));
 
-
-//Dependent variables
-  //basics
-  $scope.downPaymentValue=$scope.targetPrice*($scope.downPaymentPercentage/100);
-  $scope.monthlyCost=($scope.targetPrice-$scope.downPaymentValue)*($scope.mortgageRate/12)*Math.pow((1+$scope.mortgageRate/12),($scope.mortgageYears*12))/(Math.pow((1+$scope.mortgageRate/12),($scope.mortgageYears*12))-1);
-  $scope.annualCost=$scope.monthlyCost*12;
-  //predepreciation
-  $scope.landValue=$scope.targetPrice*0.25;
-  $scope.personalPropertyValue=$scope.targetPrice*0.05;
-  $scope.buildingValue=$scope.targetPrice*0.5;
-  $scope.landImprovementValue=$scope.targetPrice*0.2;
-
-  //decpreciation
-  $scope.personalPropertyDepreciation=$scope.personalPropertyValue*0.2;
-  $scope.buildingDepreciation=$scope.buildingValue*0.0348;
-  $scope.landImprovementDeprecation=$scope.landImprovementValue*0.05;
-  $scope.totalDepreciation=$scope.personalPropertyDepreciation+$scope.buildingDepreciation+$scope.landImprovementDeprecation;
-
-  //rent stuff
-  $scope.annualRent=$scope.monthlyRentTenant*12;
-  $scope.propertyTaxesActual=$scope.targetPrice*$scope.propertyTaxPercentage;
-
-  //annual operation expenses
-  $scope.realEstateTax=$scope.targetPrice*$scope.propertyTaxPercentage;
-  $scope.repairs=$scope.targetPrice*.0165;
-  $scope.insurance=$scope.targetPrice*$scope.insuranceRate;
-  $scope.utils=$scope.targetPrice*$scope.utilsRate;
-  $scope.totalOperatingExpenses=$scope.utils+$scope.insurance+$scope.repairs+$scope.realEstateTax+$scope.misc+$scope.management+$scope.assocDues;
-
-  //Operating income
-  $scope.grossOperatingIncome=$scope.annualRent*(1-$scope.vacancy);
-  $scope.afterExpenseOperatinIncome=$scope.grossOperatingIncome-$scope.totalOperatingExpenses;
+    //Renting related
+      $scope.rent[1].v = newVal.monthlyRentPersonal*12*newVal.years+newVal.utils;
 
 
-  //debt Service
-  $scope.principalReduction=$scope.annualCost-(($scope.targetPrice-$scope.downPaymentValue)*$scope.mortgageRate);
+    //duplex related
+      //initially the same as buying a house
+      $scope.initialDuplex=$scope.buy[1].v;
+      //rent tenenate
+      $scope.rentTenantAnnual=newVal.monthlyRentTenant*12*(1-newVal.vacancy/100);
+      //decpreciation values
+      $scope.depPersProp=newVal.targetPrice*0.05*0.2;
+      $scope.depBuildingValue=newVal.targetPrice*0.5*0.0348;
+      $scope.depLandImprovVal=newVal.targetPrice*0.05*0.2;
+      $scope.annualDebtService=$scope.annualBuyPre-($scope.owedAfterDown*$scope.mortgageRateDecimal);
+      //net operating income
+      $scope.netOperatingIncome = $scope.rentTenantAnnual-$scope.propTax-$scope.propInsurance-newVal.repairValue-newVal.assocDues-newVal.management-newVal.misc-newVal.utils-newVal.legalAccounting;
+      $scope.interestNet = $scope.owedAfterDown*$scope.mortgageRateDecimal;
+      $scope.depTot=$scope.depPersProp+$scope.depBuildingValue+$scope.depLandImprovVal;
+      $scope.taxableIncome=$scope.netOperatingIncome-$scope.interestNet-$scope.depTot;
+      $scope.incomeTaxPay=$scope.taxableIncome*newVal.taxBracket/100;
 
 
-  //
-  $scope.taxPaidOrSaved=(-1)*$scope.taxBracket*(($scope.targetPrice-$scope.downPaymentValue)+($scope.totalOperatingExpenses+$scope.grossOperatingIncome)+$scope.totalDepreciation);
+      $scope.buyAndRent[1].v = $scope.initialDuplex-$scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.incomeTaxPay;
+
+
+
+
+
+})
+
+
 
 
     ///chart stuffff
+    $scope.$watch.years=3;
 
     $scope.myChartObject = {};
 
-    $scope.myChartObject.type = "BarChart";
+    $scope.myChartObject.type = "ColumnChart";
 
     $scope.buy = [
         {v: "Buy"},
-        {v: 600},
+        {v: $scope.outputData},
+        {v: 'red'}
     ];
+
+    // $scope.$watch('monthlyRentPersonal', function(newVal, oldVal) {
+    //     $log.info newVal
+    // });
 
     $scope.rent = [
         {v: "Rent"},
-        {v: 600},
+        {v: 200},
+        {v: 'green'}
     ];
 
     $scope.buyAndRent = [
         {v: "Buy & Rent-out"},
         {v: 600},
+        {v: 'purple'}
     ];
 
     $scope.myChartObject.data = {
         "cols": [
-            {id: "t", label: "Topping", type: "string"},
-            {id: "s", label: "Slices", type: "number"}
+            {id: "options", label: "Options", type: "string"},
+            {id: "dollars", label: "Dollars", type: "number"},
+            {role: "style", type: "string"}
         ],
         "rows": [
             {c: $scope.buy},
@@ -114,10 +127,106 @@ chickApp.controller('InputController',  ['$scope', '$http', '$window', 'ClientSe
     };
 
     $scope.myChartObject.options = {
-        'title': 'Buy vs Rent vs Buy & Rent-out'
+        'title': 'Buy vs Rent vs Buy & Rent-out',
+        animation:{
+            duration: 3000,
+            easing: 'out',
+        }
     };
 
 
+    //this is stuff for submiting the email
+    $scope.submit = {};
+    $scope.submit.followup = true;
 
+    $scope.submitEmail = function() {
+        console.log("submit was clicked", $scope.submit.email, $scope.submit.followup);
+        //POST to the server
+        $scope.submit.email = "";
+        $scope.fade = "";
+    }
+
+
+    //this is the hidden chart stuff
+
+
+    var buyValues = [10000,20000,30000,40000,50000];
+    var rentValues = [20000,40000,60000,40000,60000];
+    var buyAndRentValues = [60000,40000,50000,30000,20000];
+    var timeframe = 5;
+
+    var dynamicRows = [];
+    var populateDynamicRows = function(){
+        for (var i = 0; i < timeframe; i++) {
+            var newRow = {
+                            "c":
+                                [
+                                    {
+                                        "v": i+1
+                                    },
+                                    {
+                                        "v": buyValues[i]
+                                    },
+                                    {
+                                        "v": rentValues[i]
+                                    },
+                                    {
+                                        "v": buyAndRentValues[i]
+                                    }
+                                ]
+            }
+            dynamicRows.push(newRow);
+        }
+    }
+    populateDynamicRows();
+
+    $scope.hiddenChartObject = {
+        "type": "LineChart",
+        "data": {
+            "cols": [
+                {
+                    "id": "year",
+                    "label": "Years",
+                    "type": "string"
+                },
+                {
+                    "id": "buy-line",
+                    "label": "Buy",
+                    "type": "number"
+                },
+                {
+                    "id": "rent-line",
+                    "label": "Rent",
+                    "type": "number"
+                },
+                {
+                    "id": "buyAndRent-line",
+                    "label": "Buy & Rent-out",
+                    "type": "number"
+                }
+            ],
+            "rows": dynamicRows
+        },
+        "options": {
+            "title": "Long term Return on Investment",
+            "isStacked": "true",
+            "fill": 20,
+            "displayExactValues": true,
+            "vAxis": {
+                "title": "Return"
+            },
+            "hAxis": {
+                "title": "Years"
+            },
+            "animation":{
+                duration: 3000,
+                easing: 'out',
+            }
+        },
+        "formatters": {}
+    }
+
+
+    $scope.fade = "fade";
 
 }]);

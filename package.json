@@ -15,6 +15,7 @@
     "angular-aria": "^1.5.5",
     "angular-google-chart": "^0.1.0",
     "angular-material": "^1.0.7",
+    "angular-material-data-table": "^0.10.8",
     "angular-messages": "^1.5.5",
     "angular-route": "^1.5.5",
     "angularjs-slider": "^2.11.0",
