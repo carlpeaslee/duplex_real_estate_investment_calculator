@@ -77,7 +77,9 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
 
 
+
 })
+
 
 
 
@@ -132,4 +134,100 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
             easing: 'out',
         }
     };
+
+
+    //this is stuff for submiting the email
+    $scope.submit = {};
+    $scope.submit.followup = true;
+
+    $scope.submitEmail = function() {
+        console.log("submit was clicked", $scope.submit.email, $scope.submit.followup);
+        //POST to the server
+        $scope.submit.email = "";
+        $scope.fade = "";
+    }
+
+
+    //this is the hidden chart stuff
+
+
+    var buyValues = [10000,20000,30000,40000,50000];
+    var rentValues = [20000,40000,60000,40000,60000];
+    var buyAndRentValues = [60000,40000,50000,30000,20000];
+    var timeframe = 5;
+
+    var dynamicRows = [];
+    var populateDynamicRows = function(){
+        for (var i = 0; i < timeframe; i++) {
+            var newRow = {
+                            "c":
+                                [
+                                    {
+                                        "v": i+1
+                                    },
+                                    {
+                                        "v": buyValues[i]
+                                    },
+                                    {
+                                        "v": rentValues[i]
+                                    },
+                                    {
+                                        "v": buyAndRentValues[i]
+                                    }
+                                ]
+            }
+            dynamicRows.push(newRow);
+        }
+    }
+    populateDynamicRows();
+
+    $scope.hiddenChartObject = {
+        "type": "LineChart",
+        "data": {
+            "cols": [
+                {
+                    "id": "year",
+                    "label": "Years",
+                    "type": "string"
+                },
+                {
+                    "id": "buy-line",
+                    "label": "Buy",
+                    "type": "number"
+                },
+                {
+                    "id": "rent-line",
+                    "label": "Rent",
+                    "type": "number"
+                },
+                {
+                    "id": "buyAndRent-line",
+                    "label": "Buy & Rent-out",
+                    "type": "number"
+                }
+            ],
+            "rows": dynamicRows
+        },
+        "options": {
+            "title": "Long term Return on Investment",
+            "isStacked": "true",
+            "fill": 20,
+            "displayExactValues": true,
+            "vAxis": {
+                "title": "Return"
+            },
+            "hAxis": {
+                "title": "Years"
+            },
+            "animation":{
+                duration: 3000,
+                easing: 'out',
+            }
+        },
+        "formatters": {}
+    }
+
+
+    $scope.fade = "fade";
+
 }]);
