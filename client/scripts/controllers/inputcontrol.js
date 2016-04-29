@@ -1,5 +1,21 @@
 chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', 'ClientService',function($scope, $log, $http, $window, ClientService) {
 //Independent Variables
+var clientService = ClientService;
+
+$scope.submitEmail = function(){
+    console.log("submit was clicked", $scope.submit.email, $scope.submit.followup);
+    var contactPackage = {
+        email: $scope.submit.email,
+        maritalStatus: $scope.inputData.maritalStatus,
+        zipCode: $scope.inputData.location,
+        income: $scope.inputData.income,
+        targetPropertyPrice: $scope.inputData.targetPrice,
+        followup: $scope.submit.followup
+    };
+    clientService.submitEmail(contactPackage);
+    $scope.submit.email = "";
+    $scope.fade = "";
+};
 
 $scope.inputData = {};
 $scope.inputData.monthlyRentPersonal=1500; //max min default
@@ -21,6 +37,7 @@ $scope.inputData.legalAccounting=100;  //max min default
 $scope.inputData.taxBracket=28;
 $scope.inputData.repairValue=1400;
 $scope.inputData.years=5;
+$scope.inputData.maritalStatus = false;
 
 var service = ClientService;
 
@@ -139,12 +156,6 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
     $scope.submit = {};
     $scope.submit.followup = true;
 
-    $scope.submitEmail = function() {
-        console.log("submit was clicked", $scope.submit.email, $scope.submit.followup);
-        //POST to the server
-        $scope.submit.email = "";
-        $scope.fade = "";
-    }
 
 
     //this is the hidden chart stuff

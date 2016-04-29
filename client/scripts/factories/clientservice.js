@@ -13,9 +13,9 @@ chickApp.factory("ClientService", ["$http", function($http){
         });
     };
 
-    var submitEmail = function(){
+    var submitEmail = function(data){
         $http.post("/submit", data).then(function(response){
-            //TODO what should happen next?
+            console.log("this was the response from the service submitemail", response);
         });
     };
 
