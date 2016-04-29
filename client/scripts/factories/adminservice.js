@@ -1,19 +1,21 @@
 chickAppAdmin.factory("AdminService", ["$http", function($http){
     var admin = {};
 
-    var getDefaults = function(){
-        admin.defaults = {};
-        $http.get("/defaults").then(function(response){
-            // console.log(response.data);
-            admin.defaults = response.data[0];
-            console.log("Inside get call: ", admin.defaults);
-        });
-        console.log("Outside get call: ", admin.defaults);
-    };
+
+    // //This is currently //'d out b/c could not get info from Factory to update view.
+    // var getDefaults = function(){
+    //     admin.defaults = {};
+    //     $http.get("/defaults").then(function(response){
+    //         // console.log(response.data);
+    //         admin.defaults = response.data[0];
+    //         console.log("Inside get call: ", admin.defaults);
+    //     });
+    //     console.log("Outside get call: ", admin.defaults);
+    // };
 
 
     var alterDefaults = function(object){
-        $http.put('/defaults/' + object._id, object).then(function(){
+        $http.put('/defaults/' + admin.defaults._id, object).then(function(){
             console.log(object);
         });
     };
@@ -35,7 +37,7 @@ chickAppAdmin.factory("AdminService", ["$http", function($http){
 
     return {
         admin: admin,
-        getDefaults: getDefaults,
+        // getDefaults: getDefaults,
         alterDefaults : alterDefaults,
         getContacts: getContacts
     };
