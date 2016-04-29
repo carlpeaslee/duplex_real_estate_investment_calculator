@@ -7,7 +7,7 @@ $scope.submitEmail = function(){
     var contactPackage = {
         email: $scope.submit.email,
         maritalStatus: $scope.inputData.maritalStatus,
-        zipCode: $scope.inputData.location,
+        zipCode: $scope.inputData.zipCode,
         income: $scope.inputData.income,
         targetPropertyPrice: $scope.inputData.targetPrice,
         followup: $scope.submit.followup
