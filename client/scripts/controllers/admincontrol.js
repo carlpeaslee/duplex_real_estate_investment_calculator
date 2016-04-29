@@ -21,13 +21,14 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
     page: 1
   };
 
-$scope.count = 3;
 // AdminService.getContacts();
 $scope.getContacts = function(){
   $http.get("/submit").then(function(response){
       $scope.emailList = response.data;
       console.log($scope.emailList);
+      $scope.count = $scope.emailList.length;
   });
+
 };
 $scope.getContacts();
 
