@@ -1,19 +1,29 @@
 chickAppAdmin.factory("AdminService", ["$http", function($http){
-
+    var admin = {};
 
     var getDefaults = function(){
         admin.defaults = {};
         $http.get("/defaults").then(function(response){
-            admin.defaults = response.data;
+            // console.log(response.data);
+            admin.defaults = response.data[0];
+            console.log("Inside get call: ", admin.defaults);
+        });
+        console.log("Outside get call: ", admin.defaults);
+    };
+
+
+    var alterDefaults = function(object){
+        $http.put('/defaults/' + object._id, object).then(function(){
+            console.log(object);
         });
     };
 
-    //Going to need this post in order to send variables to database.
-    var postDefaults = function(defaultVariables){
-      // $http.post("/admin/defaults", defaultVariables).then(function(request){
-        console.log(defaultVariables);
-      // });
-    };
+    // //Going to need this post in order to send variables to database.
+    // var postDefaults = function(defaultVariables){
+    //   // $http.post("/admin/defaults", defaultVariables).then(function(request){
+    //     console.log(defaultVariables);
+    //   // });
+    // };
 
     var getContacts = function(){
       admin.contacts = {};
@@ -23,11 +33,10 @@ chickAppAdmin.factory("AdminService", ["$http", function($http){
       // });
     };
 
-    var admin = {};
     return {
         admin: admin,
         getDefaults: getDefaults,
-        postDefaults : postDefaults,
+        alterDefaults : alterDefaults,
         getContacts: getContacts
     };
 }]);

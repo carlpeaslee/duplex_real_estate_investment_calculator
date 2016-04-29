@@ -121,13 +121,31 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
 
 
 chickAppAdmin.controller('SetVariablesController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, AdminService) {
-  AdminService.getDefaults();
-  $scope.defaultVariables = {};
-  $scope.defaultVariables = AdminService.admin.defaults;
+  var adminService = AdminService;
+
+$scope.getDefaults = function() {
+  $http.get("/defaults").then(function(response){
+      console.log(response.data);
+      $scope.defaultVariables = response.data[0];
+      console.log("Inside get call: ", $scope.defaultVariables);
+      AdminService.admin.defaults = $scope.defaultVariables;
+  });
+};
+
+$scope.getDefaults();
+
+  // //These did not work because even though factory was making get call it was not updating.
+  // AdminService.getDefaults();
+  // $scope.defaultVariables = {};
+  // $scope.defaultVariables = AdminService.admin.defaults;
+  // $scope.$watchCollection('inputData', function(newVal, oldVal){
+  //     console.log('Changed', newVal, oldVal);
+  //     $scope.defaultVariables = AdminService.admin.defaults;
+  // });
 
   $scope.setDefaultValues = function(defaultVariables){
     // console.log("Submitting default values: ", defaultVariables);
-    AdminService.postDefaults(defaultVariables);
+    AdminService.alterDefaults(defaultVariables);
   };
 
 
