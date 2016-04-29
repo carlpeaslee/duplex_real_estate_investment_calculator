@@ -26,27 +26,27 @@
               <tr md-row>
                 <th md-column md-order-by="date"><span>Date</span></th>
                 <th md-column md-order-by="email"><span>Email</span></th>
-                <th md-column md-numeric md-order-by="maritalStatus" md-desc><span>Marital Status</span></th>
+                <th md-column md-order-by="marital_status"><span>Marital Status</span></th>
                 <th md-column md-numeric md-order-by="zipCode"><span>Zip Code</span></th>
                 <th md-column md-numeric md-order-by="income"><span>Income</span></th>
-                <th md-column md-numeric md-order-by="targetPropertyPrice"><span>Target Property Price</span></th>
+                <th md-column md-numeric md-order-by="target_property_price"><span>Target Property Price</span></th>
               </tr>
             </thead>
             <tbody md-body>
-              <tr md-row ng-repeat="item in emailList.data | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+              <tr md-row ng-repeat="item in emailList | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
                 <td md-cell>{{item.date}}</td>
                 <td md-cell>
                   {{item.email}}
                 </td>
-                <td md-cell>{{item.maritalStatus}}</td>
+                <td md-cell>{{item.marital_status}}</td>
                 <td md-cell>{{item.zipCode}}</td>
                 <td md-cell>{{item.income}}</td>
-                <td md-cell>{{item.targetPropertyPrice}}</td>
+                <td md-cell>{{item.target_property_price}}</td>
               </tr>
             </tbody>
           </table>
         </md-table-container>
 
-        <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{emailList.count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
+        <md-table-pagination md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{count}}" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPagination"></md-table-pagination>
       </md-card>
     </md-content>

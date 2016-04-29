@@ -25,40 +25,8 @@ router.route('/')
         if(err){
           console.log(err);
         }
-        res.send("end of submit.creat", post);
+        res.send("end of submit.create", post);
       });
     });
-
-
-
-// router.post("/", function(req, res){
-//   console.log("User submitted this email: ", req.body);
-//   var newContact = new Submit({
-//       email: req.body.email,
-//       marital_status: req.body.maritalStatus,
-//       zip_code: req.body.zipCode,
-//       income: req.body.income,
-//       target_property_price: req.body.targetPropertyPrice,
-//       followup: req.body.followup
-//   });
-//   Submit.create(newContact, function(err, post){
-//     if(err){
-//       console.log(err);
-//     }
-//     res.send("end of submit.creat", post);
-//   });
-// });
-
-
-
-/*TODO
-    add date cteated to save alongside saved e-mails.
-
-
-
-
-*/
-
-
 
 module.exports = router;
