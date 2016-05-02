@@ -60,4 +60,12 @@ md-card:first-child {
 
 .adminLabel {
   font-weight: bold;
+  padding-left: 10px;
+}
+
+.adminSubmit {
+  display: block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
 }
