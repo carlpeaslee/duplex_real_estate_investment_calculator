@@ -43,6 +43,7 @@ var service = ClientService;
 
 $scope.$watchCollection('inputData', function(newVal, oldVal){
     console.log('Changed', newVal, oldVal);
+
     //effects all options
 
     //Buying not duplex
@@ -69,7 +70,10 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
         $scope.buy[1].v = $scope.firstYear+($scope.otherYears*(newVal.years-1));
 
     //Renting related
-      $scope.rent[1].v = newVal.monthlyRentPersonal*12*newVal.years+newVal.utils;
+
+      $scope.rentHold=newVal.monthlyRentPersonal*12+newVal.utils
+      $scope.rent[1].v = $scope.rentHold*newVal.years;
+
 
 
     //duplex related
@@ -94,6 +98,105 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
 
 
+      $scope.buyValues = [];
+      $scope.rentValues = [];
+      $scope.buyAndRentValues = [];
+      // var buyValues = [10000,20000,30000,40000,50000];
+      // var rentValues = [20000,40000,60000,40000,60000];
+      // var buyAndRentValues = [60000,40000,50000,30000,20000];
+      var rentFunction= function(){
+        for(var i=1;i<newVal.years+1;i++){
+          $scope.rentValues.push(i*$scope.rentHold);
+
+          if(i==1){
+            $scope.buyValues.push($scope.firstYear)
+          }else{
+            $scope.buyValues.push($scope.firstYear + (i*$scope.otherYears))
+          }
+
+          if(i==1){
+            $scope.buyAndRentValues.push($scope.buyValues[i-1]-$scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.incomeTaxPay)
+          }else{
+            $scope.buyAndRentValues.push($scope.buyValues[i-1]-($scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.incomeTaxPay)*i)
+          }
+
+
+
+        };
+      };
+
+      rentFunction();
+
+      var dynamicRows = [];
+      var populateDynamicRows = function(){
+          for (var i = 0; i < newVal.years; i++) {
+              var newRow = {
+                              "c":
+                                  [
+                                      {
+                                          "v": i+1
+                                      },
+                                      {
+                                          "v": $scope.buyValues[i]
+                                      },
+                                      {
+                                          "v": $scope.rentValues[i]
+                                      },
+                                      {
+                                          "v": $scope.buyAndRentValues[i]
+                                      }
+                                  ]
+              }
+              dynamicRows.push(newRow);
+          }
+      }
+      populateDynamicRows();
+
+      $scope.hiddenChartObject = {
+          "type": "LineChart",
+          "data": {
+              "cols": [
+                  {
+                      "id": "year",
+                      "label": "Years",
+                      "type": "string"
+                  },
+                  {
+                      "id": "buy-line",
+                      "label": "Buy",
+                      "type": "number"
+                  },
+                  {
+                      "id": "rent-line",
+                      "label": "Rent",
+                      "type": "number"
+                  },
+                  {
+                      "id": "buyAndRent-line",
+                      "label": "Buy & Rent-out",
+                      "type": "number"
+                  }
+              ],
+              "rows": dynamicRows
+          },
+          "options": {
+              "title": "Long term Return on Investment",
+              "isStacked": "true",
+              "fill": 20,
+              "displayExactValues": true,
+              "vAxis": {
+                  "title": "Return"
+              },
+              "hAxis": {
+                  "title": "Years"
+              },
+              "animation":{
+                  duration: 3000,
+                  easing: 'out',
+              }
+          },
+          "formatters": {}
+      }
 
 
 })
@@ -161,82 +264,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
     //this is the hidden chart stuff
 
 
-    var buyValues = [10000,20000,30000,40000,50000];
-    var rentValues = [20000,40000,60000,40000,60000];
-    var buyAndRentValues = [60000,40000,50000,30000,20000];
-    var timeframe = 5;
-
-    var dynamicRows = [];
-    var populateDynamicRows = function(){
-        for (var i = 0; i < timeframe; i++) {
-            var newRow = {
-                            "c":
-                                [
-                                    {
-                                        "v": i+1
-                                    },
-                                    {
-                                        "v": buyValues[i]
-                                    },
-                                    {
-                                        "v": rentValues[i]
-                                    },
-                                    {
-                                        "v": buyAndRentValues[i]
-                                    }
-                                ]
-            }
-            dynamicRows.push(newRow);
-        }
-    }
-    populateDynamicRows();
-
-    $scope.hiddenChartObject = {
-        "type": "LineChart",
-        "data": {
-            "cols": [
-                {
-                    "id": "year",
-                    "label": "Years",
-                    "type": "string"
-                },
-                {
-                    "id": "buy-line",
-                    "label": "Buy",
-                    "type": "number"
-                },
-                {
-                    "id": "rent-line",
-                    "label": "Rent",
-                    "type": "number"
-                },
-                {
-                    "id": "buyAndRent-line",
-                    "label": "Buy & Rent-out",
-                    "type": "number"
-                }
-            ],
-            "rows": dynamicRows
-        },
-        "options": {
-            "title": "Long term Return on Investment",
-            "isStacked": "true",
-            "fill": 20,
-            "displayExactValues": true,
-            "vAxis": {
-                "title": "Return"
-            },
-            "hAxis": {
-                "title": "Years"
-            },
-            "animation":{
-                duration: 3000,
-                easing: 'out',
-            }
-        },
-        "formatters": {}
-    }
-
+    
 
     $scope.fade = "fade";
 

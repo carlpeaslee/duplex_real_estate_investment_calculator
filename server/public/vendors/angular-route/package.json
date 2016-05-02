@@ -2,7 +2,7 @@
   "_args": [
     [
       "angular-route@^1.5.5",
-      "/Users/himynameisjeremy/Desktop/duplexchickcalculator"
+      "/Users/thomaschester/Desktop/duplexchickteam-duplexchickcalculator-23b7f040f2da"
     ]
   ],
   "_from": "angular-route@>=1.5.5 <2.0.0",
@@ -36,7 +36,7 @@
   "_shasum": "69349369209b1f34724a58145dc7ec6a4987a1e7",
   "_shrinkwrap": null,
   "_spec": "angular-route@^1.5.5",
-  "_where": "/Users/himynameisjeremy/Desktop/duplexchickcalculator",
+  "_where": "/Users/thomaschester/Desktop/duplexchickteam-duplexchickcalculator-23b7f040f2da",
   "author": {
     "email": "angular-core+npm@google.com",
     "name": "Angular Core Team"
