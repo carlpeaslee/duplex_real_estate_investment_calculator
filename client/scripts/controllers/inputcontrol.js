@@ -38,6 +38,7 @@ $scope.inputData.taxBracket=28;
 $scope.inputData.repairValue=1400;
 $scope.inputData.years=5;
 $scope.inputData.maritalStatus = false;
+$scope.inputData.zipCode = 50466;
 
 var service = ClientService;
 

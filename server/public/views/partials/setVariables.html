@@ -257,9 +257,21 @@
         <input type="number" step="any" name="legalAccountingMax" id="legalAccountingMax" ng-model="defaultVariables.legalAccountingMax" required>
       </div>
     </div>
+
+    <div layout="row" class="adminFormDiv odd">
+      <div flex="25">
+        <label class="adminLabel">ZIP Code</label>
+      </div>
+      <div flex="25">
+        <input type="number" step="any" name="zipCode" id="zipCode" ng-model="defaultVariables.zipCode" required>
+      </div>
+    </div>
+
     <div class="adminSubmit">
       <md-button class="md-raised md-primary" type="submit" value="Submit Default Values" ng-click="defaultValuesForm.$valid && setDefaultValues(defaultVariables)">Submit Default Values</md-button>
     </div>
+
+
 
   </form>
 </div>

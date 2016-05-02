@@ -72,7 +72,8 @@ router.route('/')
             repairValueMax:req.body.repairValueMax,
             yearsDef:req.body.yearsDef,
             yearsMin:req.body.yearsMin,
-            yearsMax:req.body.yearsMax
+            yearsMax:req.body.yearsMax,
+            zipCode: req.body.zipCode
         });
         defaults.save(function(err, defaults){
             if(err) console.log(err);
@@ -142,6 +143,7 @@ router.route('/')
             defaults.yearsDef = req.body.yearsDef;
             defaults.yearsMin = req.body.yearsMin;
             defaults.yearsMax = req.body.yearsMax;
+            defaults.zipCode = req.body.zipCode;
 
             defaults.save(function(err){
                 if(err) res.send(err);
