@@ -18,18 +18,21 @@ $scope.submitEmail = function(){
 };
 
 $scope.inputData = {};
+$scope.minMax = {};
 
 $scope.getDefaults = function() {
   $http.get("/defaults").then(function(response){
       defaultVariables = response.data[0];
       console.log("defaultVariables: ", defaultVariables);
+      $scope.minMax = defaultVariables;
+
       $scope.inputData.monthlyRentPersonal= defaultVariables.monthlyRentPersonalDef;
       $scope.inputData.monthlyRentTenant= defaultVariables.monthlyRentTenantDef;
       $scope.inputData.targetPrice= defaultVariables.targetPriceDef;
       $scope.inputData.downPaymentPercentage= defaultVariables.downPaymentPercentageDef;
       $scope.inputData.mortgageRate= defaultVariables.mortgageRateDef;
       $scope.inputData.yearsAmmoritized= defaultVariables.yearsAmmoritizedDef;
-      $scope.inputData.income= defaultVariables.targetPriceDef;
+      $scope.inputData.income= defaultVariables.incomeDef;
       $scope.inputData.mortgageYears= defaultVariables.mortgageYearsDef;
       $scope.inputData.vacancy= defaultVariables.vacancyDef;
       $scope.inputData.propertyTaxPercentage= defaultVariables.propertyTaxPercentageDef;
@@ -106,7 +109,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
 
 
-})
+});
 
 
 
@@ -195,10 +198,10 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
                                         "v": buyAndRentValues[i]
                                     }
                                 ]
-            }
+            };
             dynamicRows.push(newRow);
         }
-    }
+    };
     populateDynamicRows();
 
     $scope.hiddenChartObject = {
@@ -245,7 +248,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
             }
         },
         "formatters": {}
-    }
+    };
 
 
     $scope.fade = "fade";
