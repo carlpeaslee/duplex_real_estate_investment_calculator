@@ -38,13 +38,36 @@ $scope.inputData.taxBracket=28;
 $scope.inputData.repairValue=1400;
 $scope.inputData.years=5;
 $scope.inputData.maritalStatus = false;
+$scope.inputData.appreciationRate =5;
 
 var service = ClientService;
 
 $scope.$watchCollection('inputData', function(newVal, oldVal){
     console.log('Changed', newVal, oldVal);
 
-    //effects all options
+    //this is for finding the selling house value
+    var appreciationFunction= function(input){
+      //mortgage rate per month
+      $scope.mortMonth=newVal.mortgageRate/12/100;
+      $scope.mortYearMonth=newVal.mortgageYears*12;
+      $scope.principle=newVal.targetPrice-(newVal.targetPrice*newVal.downPaymentPercentage/100);
+
+      $scope.monthlyPayment=($scope.principle*($scope.mortMonth*Math.pow((1+$scope.mortMonth),$scope.mortYearMonth)))/(Math.pow((1+$scope.mortMonth),$scope.mortYearMonth)-1);
+      $scope.constant=Math.pow((1+$scope.mortMonth),$scope.mortYearMonth);
+      $scope.otherConstant=Math.pow((1+$scope.mortMonth),(input));
+      $scope.balance=$scope.principle*($scope.constant-$scope.otherConstant)/($scope.constant-1);
+
+
+      $scope.newHomeValue=$scope.principle*Math.pow(Math.E,input*newVal.appreciationRate/100/12);
+
+      $scope.valueGained=$scope.newHomeValue-$scope.principle;
+
+      return $scope.valueGained
+
+    };
+    appreciationFunction(newVal.years*12);
+    console.log("check", appreciationFunction(newVal.years*12) )
+
 
     //Buying not duplex
       //after down value
@@ -64,10 +87,13 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       //adding up the costs
         //first year:
         $scope.firstYear=$scope.annualBuyPre+$scope.propTax+newVal.repairValue+newVal.assocDues+newVal.management+newVal.misc+$scope.propInsurance+newVal.utils+newVal.legalAccounting+(newVal.targetPrice*newVal.downPaymentPercentage/100);
+
         //years after that:
         $scope.otherYears=$scope.annualBuyPre+$scope.propTax+newVal.repairValue+newVal.assocDues+newVal.management+newVal.misc+$scope.propInsurance+newVal.utils+newVal.legalAccounting;
+        $scope.monthPrice=$scope.otherYears/12
         //actual yearwise
-        $scope.buy[1].v = $scope.firstYear+($scope.otherYears*(newVal.years-1));
+        $scope.buy[1].v = $scope.firstYear+($scope.otherYears*(newVal.years-1))-$scope.valueGained;
+        console.log($scope.buy[1].v);
 
     //Renting related
 
@@ -98,43 +124,41 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
 
 
+
       $scope.buyValues = [];
       $scope.rentValues = [];
       $scope.buyAndRentValues = [];
       // var buyValues = [10000,20000,30000,40000,50000];
       // var rentValues = [20000,40000,60000,40000,60000];
       // var buyAndRentValues = [60000,40000,50000,30000,20000];
-      var rentFunction= function(){
-        for(var i=1;i<newVal.years+1;i++){
-          $scope.rentValues.push(i*$scope.rentHold);
+      var rentFunction= function(){ //TODO The other graph works, this one needs some seriously new
+        for(var i=0;i<newVal.years*12;i++){
+          if(i==0){
+            $scope.buyValues.push(newVal.targetPrice*newVal.downPaymentPercentage/100);
 
-          if(i==1){
-            $scope.buyValues.push($scope.firstYear)
-          }else{
-            $scope.buyValues.push($scope.firstYear + (i*$scope.otherYears))
           }
-
-          if(i==1){
-            $scope.buyAndRentValues.push($scope.buyValues[i-1]-$scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.incomeTaxPay)
-          }else{
-            $scope.buyAndRentValues.push($scope.buyValues[i-1]-($scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.incomeTaxPay)*i)
+          else{
+            $scope.buyValues.push($scope.monthPrice*i-appreciationFunction(i)+newVal.targetPrice*newVal.downPaymentPercentage/100);
           }
 
 
-
+          // $scope.buyValues.push(appreciationFunction(i));
         };
       };
 
       rentFunction();
 
+
+      console.log("duck",$scope.buyValues);
+
       var dynamicRows = [];
       var populateDynamicRows = function(){
-          for (var i = 0; i < newVal.years; i++) {
+          for (var i = 0; i < newVal.years*12; i++) {
               var newRow = {
                               "c":
                                   [
                                       {
-                                          "v": i+1
+                                          "v": i
                                       },
                                       {
                                           "v": $scope.buyValues[i]
@@ -264,7 +288,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
     //this is the hidden chart stuff
 
 
-    
+
 
     $scope.fade = "fade";
 
