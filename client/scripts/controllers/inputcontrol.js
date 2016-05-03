@@ -254,20 +254,25 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
               "rows": dynamicRows
           },
           "options": {
-              "title": "Long term Return on Investment",
-              "isStacked": "true",
+              "title": "Long term Cost on Investment",
+              "isStacked": true,
               "fill": 20,
               "displayExactValues": true,
               "vAxis": {
-                  "title": "Return"
+                  "title": "Return",
+                  viewWindowMode:'explicit',
+                  viewWindow:{
+                    min:0.0
+                  }
               },
               "hAxis": {
                   "title": "Years"
               },
               "animation":{
-                  duration: 3000,
+                  duration: 300,
                   easing: 'out',
               }
+
           },
           "formatters": {}
       }
