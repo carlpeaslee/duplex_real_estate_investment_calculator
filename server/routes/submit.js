@@ -19,7 +19,8 @@ router.route('/')
           income: req.body.income,
           target_property_price: req.body.targetPropertyPrice,
           followup: req.body.followup,
-          date: Date()
+          date: Date(),
+          status: "Not Contacted"
       });
       Submit.create(newContact, function(err, post){
         if(err){

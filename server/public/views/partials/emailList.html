@@ -26,20 +26,28 @@
               <tr md-row>
                 <th md-column md-order-by="date"><span>Date</span></th>
                 <th md-column md-order-by="email"><span>Email</span></th>
+                <th md-column md-order-by="followup"><span>Follow-up</span></th>
                 <th md-column md-order-by="marital_status"><span>Marital Status</span></th>
                 <th md-column md-numeric md-order-by="zip_code"><span>Zip Code</span></th>
                 <th md-column md-numeric md-order-by="income"><span>Income</span></th>
                 <th md-column md-numeric md-order-by="target_property_price"><span>Target Property Price</span></th>
+                <th md-column md-order-by="status">Status</th>
+                <th md-column>Change Status</th>
+                <th md-column>Delete</th>
               </tr>
             </thead>
             <tbody md-body>
               <tr md-row ng-repeat="item in emailList | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
                 <td md-cell>{{item.date}}</td>
                 <td md-cell>{{item.email}}</td>
+                <td md-cell>{{item.followup}}</td>
                 <td md-cell>{{item.marital_status}}</td>
                 <td md-cell>{{item.zip_code}}</td>
                 <td md-cell>{{item.income}}</td>
                 <td md-cell>{{item.target_property_price}}</td>
+                <td md-cell>{{item.status}}</td>
+                <td md-cell><button>Change Status</button></td>
+                <td md-cell><button>Delete Contact</button></td>
               </tr>
             </tbody>
           </table>
