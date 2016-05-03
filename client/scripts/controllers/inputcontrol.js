@@ -131,17 +131,52 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       // var buyValues = [10000,20000,30000,40000,50000];
       // var rentValues = [20000,40000,60000,40000,60000];
       // var buyAndRentValues = [60000,40000,50000,30000,20000];
+
+      count=0;
       var rentFunction= function(){ //TODO The other graph works, this one needs some seriously new
         for(var i=0;i<newVal.years*12;i++){
+          count++;
+
           if(i==0){
             $scope.buyValues.push(newVal.targetPrice*newVal.downPaymentPercentage/100);
-
           }
-          else{
+          else if(i<=newVal.mortgageYears*12){
             $scope.buyValues.push($scope.monthPrice*i-appreciationFunction(i)+newVal.targetPrice*newVal.downPaymentPercentage/100);
           }
+          else{
+            $scope.buyValues.push($scope.monthPrice*newVal.mortgageYears*12-appreciationFunction(i)+newVal.targetPrice*newVal.downPaymentPercentage/100);
+          }
 
 
+          if(count>newVal.targetPrice/$scope.depPersProp){
+              $scope.depPersProp=0;
+          }
+
+          if(count>newVal.targetPrice/$scope.depLandImprovVal){
+              $scope.depLandImprovVal=0;
+          }
+
+          if(count>newVal.targetPrice/$scope.depBuildingValue){
+              $scope.depBuildingValue=0;
+          }
+
+          $scope.depPersProp=0/12;
+          $scope.depLandImprovVal=0/12;
+          $scope.depBuildingValue=0/12;
+
+          $scope.totDepMonth=$scope.depBuildingValue+$scope.depLandImprovVal+$scope.depPersProp;
+
+          if(i==0){
+            $scope.buyAndRentValues.push(newVal.targetPrice*newVal.downPaymentPercentage/100-($scope.rentTenantAnnual/12));
+          }
+          else if(i<newVal.mortgageYears*12){
+            $scope.buyAndRentValues.push($scope.monthPrice*i-appreciationFunction(i)+(newVal.targetPrice*newVal.downPaymentPercentage/100)-($scope.rentTenantAnnual/12)-$scope.totDepMonth*i);
+          }
+          else{
+            $scope.buyAndRentValues.push($scope.monthPrice*newVal.mortgageYears*12-appreciationFunction(i)+newVal.targetPrice*newVal.downPaymentPercentage/100-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.depPersProp);
+          }
+
+          $scope.rentValues.push(newVal.monthlyRentPersonal*i)
           // $scope.buyValues.push(appreciationFunction(i));
         };
       };
