@@ -18,27 +18,42 @@ $scope.submitEmail = function(){
 };
 
 $scope.inputData = {};
-$scope.inputData.monthlyRentPersonal=1500; //max min default
-$scope.inputData.monthlyRentTenant=1290; //max min default
-$scope.inputData.targetPrice=266000;  //max min default
-$scope.inputData.downPaymentPercentage=3;  //max min default  putting 5% down would be 5 not .05
-$scope.inputData.mortgageRate=4.25;  //max min default
-$scope.inputData.yearsAmmoritized=500; //max min default
-$scope.inputData.income=100;  //max min default
-$scope.inputData.mortgageYears=30;  //max min default
-$scope.inputData.vacancy=5;  //max min default
-$scope.inputData.propertyTaxPercentage=1.65;  //max min default
-$scope.inputData.assocDues=0;  //max min default
-$scope.inputData.management=0; //max min default
-$scope.inputData.misc=1000;  //max min default
-$scope.inputData.insuranceRate=1;  //max min default
-$scope.inputData.utils=1000;  //TELL MILES TO CHANGE TODO
-$scope.inputData.legalAccounting=100;  //max min default
-$scope.inputData.taxBracket=28;
-$scope.inputData.repairValue=1400;
-$scope.inputData.years=5;
-$scope.inputData.maritalStatus = false;
-$scope.inputData.appreciationRate =5;
+
+$scope.minMax = {};
+
+$scope.getDefaults = function() {
+  $http.get("/defaults").then(function(response){
+      defaultVariables = response.data[0];
+      console.log("defaultVariables: ", defaultVariables);
+      $scope.minMax = defaultVariables;
+
+      $scope.inputData.monthlyRentPersonal= defaultVariables.monthlyRentPersonalDef;
+      $scope.inputData.monthlyRentTenant= defaultVariables.monthlyRentTenantDef;
+      $scope.inputData.targetPrice= defaultVariables.targetPriceDef;
+      $scope.inputData.downPaymentPercentage= defaultVariables.downPaymentPercentageDef;
+      $scope.inputData.mortgageRate= defaultVariables.mortgageRateDef;
+      $scope.inputData.yearsAmmoritized= defaultVariables.yearsAmmoritizedDef;
+      $scope.inputData.income= defaultVariables.incomeDef;
+      $scope.inputData.mortgageYears= defaultVariables.mortgageYearsDef;
+      $scope.inputData.vacancy= defaultVariables.vacancyDef;
+      $scope.inputData.propertyTaxPercentage= defaultVariables.propertyTaxPercentageDef;
+      $scope.inputData.assocDues= defaultVariables.assocDuesDef;
+      $scope.inputData.management= defaultVariables.managementDef;
+      $scope.inputData.misc= defaultVariables.miscDef;
+      $scope.inputData.insuranceRate= defaultVariables.insuranceRateDef;
+      $scope.inputData.utils= defaultVariables.utilsDef;
+      $scope.inputData.legalAccounting= defaultVariables.legalAccountingDef;
+      $scope.inputData.taxBracket= defaultVariables.taxBracketDef;
+      $scope.inputData.repairValue= defaultVariables.repairValueDef;
+      $scope.inputData.years= defaultVariables.yearsDef;
+      $scope.inputData.maritalStatus = false;
+      $scope.inputData.zipCode = defaultVariables.zipCode;
+      $scope.inputData.appreciationRate =5;
+
+  });
+};
+$scope.getDefaults();
+
 
 var service = ClientService;
 
@@ -258,7 +273,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       }
 
 
-})
+});
 
 
 
@@ -322,6 +337,83 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
     //this is the hidden chart stuff
 
+
+
+    var buyValues = [10000,20000,30000,40000,50000];
+    var rentValues = [20000,40000,60000,40000,60000];
+    var buyAndRentValues = [60000,40000,50000,30000,20000];
+    var timeframe = 5;
+
+    var dynamicRows = [];
+    var populateDynamicRows = function(){
+        for (var i = 0; i < timeframe; i++) {
+            var newRow = {
+                            "c":
+                                [
+                                    {
+                                        "v": i+1
+                                    },
+                                    {
+                                        "v": buyValues[i]
+                                    },
+                                    {
+                                        "v": rentValues[i]
+                                    },
+                                    {
+                                        "v": buyAndRentValues[i]
+                                    }
+                                ]
+            };
+            dynamicRows.push(newRow);
+        }
+    };
+    populateDynamicRows();
+
+    $scope.hiddenChartObject = {
+        "type": "LineChart",
+        "data": {
+            "cols": [
+                {
+                    "id": "year",
+                    "label": "Years",
+                    "type": "string"
+                },
+                {
+                    "id": "buy-line",
+                    "label": "Buy",
+                    "type": "number"
+                },
+                {
+                    "id": "rent-line",
+                    "label": "Rent",
+                    "type": "number"
+                },
+                {
+                    "id": "buyAndRent-line",
+                    "label": "Buy & Rent-out",
+                    "type": "number"
+                }
+            ],
+            "rows": dynamicRows
+        },
+        "options": {
+            "title": "Long term Return on Investment",
+            "isStacked": "true",
+            "fill": 20,
+            "displayExactValues": true,
+            "vAxis": {
+                "title": "Return"
+            },
+            "hAxis": {
+                "title": "Years"
+            },
+            "animation":{
+                duration: 3000,
+                easing: 'out',
+            }
+        },
+        "formatters": {}
+    };
 
 
 

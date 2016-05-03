@@ -35,9 +35,7 @@
             <tbody md-body>
               <tr md-row ng-repeat="item in emailList | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
                 <td md-cell>{{item.date}}</td>
-                <td md-cell>
-                  {{item.email}}
-                </td>
+                <td md-cell>{{item.email}}</td>
                 <td md-cell>{{item.marital_status}}</td>
                 <td md-cell>{{item.zip_code}}</td>
                 <td md-cell>{{item.income}}</td>

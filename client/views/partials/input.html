@@ -12,7 +12,7 @@
         <input flex type="number" ng-model="$parent.inputData.years">
         <br>
         <md-slider-container>
-          <md-slider flex min="1" max="100"  ng-model="$parent.inputData.years">
+          <md-slider flex min="{{$parent.minMax.yearsMin}}" max="{{$parent.minMax.yearsMax}}"  ng-model="$parent.inputData.years">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -23,7 +23,8 @@
         <input flex type="number" ng-model="$parent.inputData.monthlyRentPersonal">
         <br>
         <md-slider-container>
-          <md-slider flex step="50" min="0" max="10000"  ng-model="$parent.inputData.monthlyRentPersonal">
+          <!-- <md-slider flex step="50" min="10" max="100000"  ng-model="$parent.inputData.monthlyRentPersonal"> -->
+          <md-slider flex step="50" min="{{$parent.minMax.monthlyRentPersonalMin}}" max="{{$parent.minMax.monthlyRentPersonalMax}}"  ng-model="$parent.inputData.monthlyRentPersonal">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -36,7 +37,7 @@
           <input flex type="number" ng-model="$parent.inputData.targetPrice">
           <br>
 
-          <md-slider flex min="0" max="1000000" ng-model="$parent.inputData.targetPrice">
+          <md-slider min="{{$parent.minMax.targetPriceMin}}" max="{{$parent.minMax.targetPriceMax}}" ng-model="$parent.inputData.targetPrice">
 
           </md-slider>
         </md-slider-container>
@@ -49,7 +50,7 @@
         <input flex type="number" ng-model="$parent.inputData.downPaymentPercentage">
         <br>
         <md-slider-container>
-          <md-slider flex step=".1" min="0" max="100" ng-model="$parent.inputData.downPaymentPercentage">
+          <md-slider flex step=".1" min="{{$parent.minMax.downPaymentPercentageMin}}" max="{{$parent.minMax.downPaymentPercentageMax}}" ng-model="$parent.inputData.downPaymentPercentage">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -59,7 +60,7 @@
         <input flex type="number" ng-model="$parent.inputData.mortgageRate">
         <br>
         <md-slider-container>
-          <md-slider flex step=".1" min="0" max="100" ng-model="$parent.inputData.mortgageRate">
+          <md-slider flex step=".1" min="{{$parent.minMax.mortgageRateMin}}" max="{{$parent.minMax.mortgageRateMax}}" ng-model="$parent.inputData.mortgageRate">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -69,7 +70,7 @@
         <input flex type="number" ng-model="$parent.inputData.mortgageYears">
         <br>
         <md-slider-container>
-          <md-slider flex step="5" min="0" max="30" ng-model="$parent.inputData.mortgageYears">
+          <md-slider flex step="5" min="{{$parent.minMax.mortgageYearsMin}}" max="{{$parent.minMax.mortgageYearsMax}}" ng-model="$parent.inputData.mortgageYears">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -79,17 +80,7 @@
         <input flex type="number" ng-model="$parent.inputData.insuranceRate">
         <br>
         <md-slider-container>
-          <md-slider flex step=".1" min="0" max="100" ng-model="$parent.inputData.insuranceRate">
-          </md-slider>
-        </md-slider-container>
-      </md-input-container>
-
-      <md-input-container>
-        <label>Insurance Rate </label>
-        <input flex type="number" ng-model="$parent.inputData.insuranceRate">
-        <br>
-        <md-slider-container>
-          <md-slider flex step=".1" min="0" max="100" ng-model="$parent.inputData.insuranceRate">
+          <md-slider flex step=".1" min="{{$parent.minMax.insuranceRateMin}}" max="{{$parent.minMax.insuranceRateMax}}" ng-model="$parent.inputData.insuranceRate">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -100,7 +91,7 @@
         <input flex type="number" ng-model="$parent.inputData.yearsAmmoritized">
         <br>
         <md-slider-container>
-          <md-slider flex step="1" min="0" max="150" ng-model="$parent.inputData.yearsAmmoritized">
+          <md-slider flex step="1" min="{{$parent.minMax.yearsAmmoritizedMin}}" max="{{$parent.minMax.yearsAmmoritizedMax}}" ng-model="$parent.inputData.yearsAmmoritized">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -111,7 +102,7 @@
         <input flex type="number" ng-model="$parent.inputData.monthlyRentTenant">
         <br>
         <md-slider-container>
-          <md-slider flex step="50" min="0" max="10000" ng-model="$parent.inputData.monthlyRentTenant">
+          <md-slider flex step="50" min="{{$parent.minMax.monthlyRentTenantMin}}" max="{{$parent.minMax.monthlyRentTenantMax}}" ng-model="$parent.inputData.monthlyRentTenant">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -122,7 +113,7 @@
         <input flex type="number" ng-model="$parent.inputData.vacancy">
         <br>
         <md-slider-container>
-          <md-slider flex step="1" min="0" max="100" ng-model="$parent.inputData.vacancy">
+          <md-slider flex step="1" min="{{$parent.minMax.vacancyMin}}" max="{{$parent.minMax.vacancyMax}}" ng-model="$parent.inputData.vacancy">
           </md-slider>
         </md-slider-container>
       </md-input-container>
@@ -135,7 +126,7 @@
         <input flex type="number" ng-model="$parent.inputData.income">
         <br>
         <md-slider-container>
-          <md-slider flex step="10000" min="0" max="1000000" ng-model="$parent.inputData.income">
+          <md-slider flex step="10000" min="{{$parent.minMax.incomeMin}}" max="{{$parent.minMax.incomeMax}}" ng-model="$parent.inputData.income">
           </md-slider>
         </md-slider-container>
       </md-input-container>
