@@ -1,6 +1,10 @@
-chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', 'ClientService',function($scope, $log, $http, $window, ClientService) {
+chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', '$mdSidenav', 'ClientService',function($scope, $log, $http, $window, $mdSidenav, ClientService) {
 //Independent Variables
 var clientService = ClientService;
+
+$scope.toggleMenu = function() {
+    $mdSidenav('left').toggle();
+  };
 
 $scope.submitEmail = function(){
     console.log("submit was clicked", $scope.submit.email, $scope.submit.followup);
