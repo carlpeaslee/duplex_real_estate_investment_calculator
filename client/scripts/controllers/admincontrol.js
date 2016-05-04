@@ -12,6 +12,7 @@ chickAppAdmin.controller('AdminController',  ['$scope', '$http', '$window','Admi
 chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, AdminService) {
   'use strict';
 
+  $scope.removed = false;
   $scope.selected = [];
   $scope.limitOptions = [5, 10, 15];
 
@@ -54,6 +55,22 @@ $scope.logOrder = function (order) {
 $scope.logPagination = function (page, limit) {
   console.log('page: ', page);
   console.log('limit: ', limit);
+};
+
+$scope.changeStatus = function(id){
+  console.log("Changing status of contact with id: ", id);
+};
+
+$scope.deleteContact = function(id){
+  console.log("Deleting contact with id: ", id);
+  // var deleteId = {"_id": id._id};
+  AdminService.deleteTheContact(id);
+};
+
+$scope.changeStatus = function(id){
+  console.log("Changing status on contact with ID: ", id);
+  AdminService.updateTheContact(id);
+  $scope.getContacts();
 };
 
 }]);
