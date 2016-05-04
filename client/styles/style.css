@@ -78,3 +78,8 @@ md-card:first-child {
   display: none;
   visibility: hidden;
 }
+
+.linkInAdmin {
+  color: inherit;
+  text-decoration: none;
+}
