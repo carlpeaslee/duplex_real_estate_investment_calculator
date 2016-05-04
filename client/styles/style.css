@@ -87,3 +87,7 @@ md-card:first-child {
   color: inherit;
   text-decoration: none;
 }
+
+.admin1stH5 {
+  padding-left: 10px;
+}
