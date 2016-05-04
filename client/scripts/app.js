@@ -24,3 +24,15 @@ chickAppAdmin.config(["$routeProvider", "$locationProvider", function($routeProv
             redirectTo: '/emailList'
         });
 }]);
+
+var chickAppRegistration = angular.module("chickAppRegistration", ['ngMaterial', 'ngRoute']);
+
+chickAppRegistration.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider){
+
+}]);
+
+var chickAppLogin = angular.module("chickAppLogin", ['ngMaterial', 'ngRoute']);
+
+chickAppLogin.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider){
+
+}]);
