@@ -46,8 +46,8 @@
                 <td md-cell>{{item.income}}</td>
                 <td md-cell>{{item.target_property_price}}</td>
                 <td md-cell>{{item.status}}</td>
-                <td md-cell><button ng-click="changeStatus(item)">Change Status</button></td>
-                <td md-cell><button ng-click="deleteContact(item)">Delete Contact</button></td>
+                <td md-cell><md-button class="md-raised" ng-click="changeStatus(item)">Change Status</md-button></td>
+                <td md-cell><md-button class="md-raised md-warn" ng-click="deleteContact(item)">Delete Contact</md-button></td>
               </tr>
             </tbody>
           </table>

@@ -74,6 +74,10 @@ md-card:first-child {
   background-color: #e3f2fd;
 }
 
+.Not {
+  background-color: inherit;
+}
+
 .Deleted {
   display: none;
   visibility: hidden;
