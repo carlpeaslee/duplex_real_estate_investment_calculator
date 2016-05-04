@@ -2,7 +2,7 @@
   "_args": [
     [
       "angular-google-chart@^0.1.0",
-      "/Users/himynameisjeremy/Desktop/duplexchickcalculator"
+      "/Users/thomaschester/Desktop/duplexchickteam-duplexchickcalculator-23b7f040f2da"
     ]
   ],
   "_from": "angular-google-chart@>=0.1.0 <0.2.0",
@@ -32,7 +32,7 @@
   "_shasum": "ccfcee5aeb8e02f230730fd75f996f5410ca19d0",
   "_shrinkwrap": null,
   "_spec": "angular-google-chart@^0.1.0",
-  "_where": "/Users/himynameisjeremy/Desktop/duplexchickcalculator",
+  "_where": "/Users/thomaschester/Desktop/duplexchickteam-duplexchickcalculator-23b7f040f2da",
   "bugs": {
     "url": "https://github.com/angular-google-chart/angular-google-chart/issues"
   },
