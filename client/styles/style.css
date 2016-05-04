@@ -69,3 +69,12 @@ md-card:first-child {
   padding-bottom: 5px;
   text-align: center;
 }
+
+.Contacted {
+  background-color: #e3f2fd;
+}
+
+.Deleted {
+  display: none;
+  visibility: hidden;
+}

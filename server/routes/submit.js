@@ -28,6 +28,35 @@ router.route('/')
         }
         res.send("end of submit.create", post);
       });
+
+
+    });
+
+
+    router.route('/delete/:id').put(function(req, res){
+      console.log(req.body);
+
+        Submit.findOneAndUpdate({_id: req.body._id}, {
+          status: "Deleted"
+        }, function(err, doc){
+          if(err){
+            console.log(err);
+          }
+          res.json();
+        });
+    });
+
+    router.route('/statusChange/:id').put(function(req, res){
+      console.log(req.body);
+
+        Submit.findOneAndUpdate({_id: req.body._id}, {
+          status: "Contacted"
+        }, function(err, doc){
+          if(err){
+            console.log(err);
+          }
+          res.json();
+        });
     });
 
 module.exports = router;

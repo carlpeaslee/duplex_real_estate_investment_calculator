@@ -37,7 +37,7 @@
               </tr>
             </thead>
             <tbody md-body>
-              <tr md-row ng-repeat="item in emailList | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+              <tr md-row class="{{item.status}}" ng-repeat="item in emailList | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
                 <td md-cell>{{item.date}}</td>
                 <td md-cell>{{item.email}}</td>
                 <td md-cell>{{item.followup}}</td>
@@ -46,8 +46,8 @@
                 <td md-cell>{{item.income}}</td>
                 <td md-cell>{{item.target_property_price}}</td>
                 <td md-cell>{{item.status}}</td>
-                <td md-cell><button>Change Status</button></td>
-                <td md-cell><button>Delete Contact</button></td>
+                <td md-cell><button ng-click="changeStatus(item)">Change Status</button></td>
+                <td md-cell><button ng-click="deleteContact(item)">Delete Contact</button></td>
               </tr>
             </tbody>
           </table>
