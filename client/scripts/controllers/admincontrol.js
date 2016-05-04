@@ -22,14 +22,13 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
     page: 1
   };
 
-// AdminService.getContacts();
+AdminService.getContacts();
 $scope.getContacts = function(){
   $http.get("/submit").then(function(response){
       $scope.emailList = response.data;
       console.log($scope.emailList);
       $scope.count = $scope.emailList.length;
   });
-
 };
 $scope.getContacts();
 
@@ -80,11 +79,25 @@ $scope.deleteContact = function(id) {
     });
   };
 
-$scope.changeStatus = function(id){
-  console.log("Changing status on contact with ID: ", id);
-  AdminService.updateTheContact(id);
-  $scope.getContacts();
-};
+// $scope.changeStatus = function(id){
+//   console.log("Changing status on contact with ID: ", id);
+//   AdminService.updateTheContact(id);
+//   $scope.getContacts();
+// };
+
+$scope.changeStatus = function(id) {
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to mark contact as "Contacted"?')
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      console.log("Yes");
+      AdminService.updateTheContact(id);
+      $scope.getContacts();
+    }, function() {
+      console.log("No");
+    });
+  };
 
 }]);
 
