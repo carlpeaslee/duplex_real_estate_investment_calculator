@@ -40,8 +40,16 @@
               <tr md-row class="{{item.status}}" ng-repeat="item in emailList | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
                 <td md-cell>{{item.date}}</td>
                 <td md-cell>{{item.email}}</td>
-                <td md-cell>{{item.followup}}</td>
-                <td md-cell>{{item.marital_status}}</td>
+                <td md-cell ng-switch on="item.followup">
+                  <p ng-switch-when="false">No</p>
+                  <p ng-switch-when="true">Yes</p>
+                </td>
+                <!-- <td md-cell>{{item.followup}}</td> -->
+                <td md-cell ng-switch on="item.marital_status">
+                  <p ng-switch-when="false">Single</p>
+                  <p ng-switch-when="true">Married</p>
+                </td>
+                <!-- <td md-cell>{{item.marital_status}}</td> -->
                 <td md-cell>{{item.zip_code}}</td>
                 <td md-cell>{{item.income}}</td>
                 <td md-cell>{{item.target_property_price}}</td>

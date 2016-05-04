@@ -12,7 +12,6 @@ chickAppAdmin.controller('AdminController',  ['$scope', '$http', '$window','Admi
 chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService', '$mdDialog',function($scope, $http, $window, AdminService, $mdDialog) {
   'use strict';
 
-  $scope.removed = false;
   $scope.selected = [];
   $scope.limitOptions = [5, 10, 15];
 
