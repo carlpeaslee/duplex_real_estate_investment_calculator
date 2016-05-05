@@ -36,10 +36,26 @@ chickAppAdmin.factory("AdminService", ["$http", function($http){
       });
     };
 
+    var deleteTheContact = function(deleteId){
+      console.log("deleteTheContact deleteID: ", deleteId);
+      $http.put("/submit/delete/:id", deleteId).then(function(){
+        getContacts();
+      });
+    };
+
+    var updateTheContact = function(change){
+      console.log("deleteTheContact deleteID: ", change);
+      $http.put("/submit/statusChange/:id", change).then(function(){
+        getContacts();
+      });
+    };
+
     return {
         admin: admin,
         // getDefaults: getDefaults,
         alterDefaults : alterDefaults,
-        getContacts: getContacts
+        getContacts: getContacts,
+        deleteTheContact: deleteTheContact,
+        updateTheContact: updateTheContact
     };
 }]);

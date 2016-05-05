@@ -2,12 +2,20 @@ var express = require('express');
 var router = express.Router();
 var Submit = require("../models/contact.js");
 
+// router.route('/')
+//     .get(function(req, res){
+//         Submit.find(function(err, defaults){
+//             if(err){console.log(err);}
+//             res.send(defaults);
+//         });
+//     })
+
 router.route('/')
-    .get(function(req, res){
-        Submit.find(function(err, defaults){
-            if(err){console.log(err);}
-            res.send(defaults);
-        });
+    .get(function(req,res){
+      Submit.find({status: {$ne: 'Deleted'}}, function(err, defaults){
+        if(err){console.log(err);}
+        res.send(defaults);
+      });
     })
 
     .post(function(req, res){
@@ -19,7 +27,8 @@ router.route('/')
           income: req.body.income,
           target_property_price: req.body.targetPropertyPrice,
           followup: req.body.followup,
-          date: Date()
+          date: Date(),
+          status: "Not Contacted"
       });
       Submit.create(newContact, function(err, post){
         if(err){
@@ -27,6 +36,35 @@ router.route('/')
         }
         res.send("end of submit.create", post);
       });
+
+
+    });
+
+
+    router.route('/delete/:id').put(function(req, res){
+      console.log(req.body);
+
+        Submit.findOneAndUpdate({_id: req.body._id}, {
+          status: "Deleted"
+        }, function(err, doc){
+          if(err){
+            console.log(err);
+          }
+          res.json();
+        });
+    });
+
+    router.route('/statusChange/:id').put(function(req, res){
+      console.log(req.body);
+
+        Submit.findOneAndUpdate({_id: req.body._id}, {
+          status: "Contacted"
+        }, function(err, doc){
+          if(err){
+            console.log(err);
+          }
+          res.json();
+        });
     });
 
 module.exports = router;

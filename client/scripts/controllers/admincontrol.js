@@ -9,7 +9,7 @@ chickAppAdmin.controller('AdminController',  ['$scope', '$http', '$window','Admi
 }]);
 
 
-chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, AdminService) {
+chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService', '$mdDialog',function($scope, $http, $window, AdminService, $mdDialog) {
   'use strict';
 
   $scope.selected = [];
@@ -21,14 +21,13 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
     page: 1
   };
 
-// AdminService.getContacts();
+AdminService.getContacts();
 $scope.getContacts = function(){
   $http.get("/submit").then(function(response){
       $scope.emailList = response.data;
       console.log($scope.emailList);
       $scope.count = $scope.emailList.length;
   });
-
 };
 $scope.getContacts();
 
@@ -55,6 +54,49 @@ $scope.logPagination = function (page, limit) {
   console.log('page: ', page);
   console.log('limit: ', limit);
 };
+
+$scope.changeStatus = function(id){
+  console.log("Changing status of contact with id: ", id);
+};
+
+// $scope.deleteContact = function(id){
+//   console.log("Deleting contact with id: ", id);
+//   AdminService.deleteTheContact(id);
+// };
+
+$scope.deleteContact = function(id) {
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to elete this contact?')
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      console.log("Yes");
+      AdminService.deleteTheContact(id);
+      $scope.getContacts();
+    }, function() {
+      console.log("No");
+    });
+  };
+
+// $scope.changeStatus = function(id){
+//   console.log("Changing status on contact with ID: ", id);
+//   AdminService.updateTheContact(id);
+//   $scope.getContacts();
+// };
+
+$scope.changeStatus = function(id) {
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to mark contact as "Contacted"?')
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      console.log("Yes");
+      AdminService.updateTheContact(id);
+      $scope.getContacts();
+    }, function() {
+      console.log("No");
+    });
+  };
 
 }]);
 

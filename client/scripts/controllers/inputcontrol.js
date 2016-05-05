@@ -53,12 +53,54 @@ $scope.getDefaults = function() {
   });
 };
 $scope.getDefaults();
-
+console.log($scope.inputData.taxBracket, "scope")
 
 var service = ClientService;
 
 $scope.$watchCollection('inputData', function(newVal, oldVal){
     console.log('Changed', newVal, oldVal);
+    console.log(newVal, "newval")
+
+    var incomeTaxBracket =function(income){
+      if(newVal.maritalStatus==false){
+        if(newVal.income<=9225){
+          incomeTax=10
+        }else if(newVal.income<=37450){
+          incomeTax=15
+        }else if(newVal.income<=90750){
+          incomeTax=25
+        }else if(newVal.income<=189300){
+          incomeTax=28
+        }else if(newVal.income<=411500){
+          incomeTax=33
+        }else if(newVal.income<=411500){
+          incomeTax=33
+        }else if(newVal.income<=413200){
+          incomeTax=35
+        }else{
+          incomeTax=39.6
+        }
+      }else{
+        if(newVal.income<=18450){
+          incomeTax=10
+        }else if(newVal.income<=37450*2){
+          incomeTax=15
+        }else if(newVal.income<=90750*2){
+          incomeTax=25
+        }else if(newVal.income<=189300*2){
+          incomeTax=28
+        }else if(newVal.income<=411500*2){
+          incomeTax=33
+        }else if(newVal.income<=411500*2){
+          incomeTax=33
+        }else if(newVal.income<=413200*2){
+          incomeTax=35
+        }else{
+          incomeTax=39.6
+        }
+      }
+      return incomeTax;
+    }
 
     //this is for finding the selling house value
     var appreciationFunction= function(input){
