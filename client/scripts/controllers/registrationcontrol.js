@@ -5,7 +5,7 @@ chickAppRegistration.controller('RegistrationController',  ['$scope', '$log', '$
 
   $scope.submit = function(){
     console.log("Register Button Works");
-    console.log($scope.username_register);
-    console.log($scope.password_register);
+    console.log($watch.$scope.username_register);
+    console.log($watch.$scope.password_register);
   }
 }]);
