@@ -61,7 +61,8 @@ var Default_Values = new Schema({
       repairValueMax: {type: Number},
       yearsDef: {type: Number},
       yearsMin: {type: Number},
-      yearsMax: {type: Number}
+      yearsMax: {type: Number},
+      zipCode: {type: Number}
 });
 
 module.exports = mongoose.model("Default_Values", Default_Values);

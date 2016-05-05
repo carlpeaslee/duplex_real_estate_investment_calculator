@@ -1,3 +1,5 @@
 .DS_STORE/
 node_modules/
 npm-debug.log/
+server/public/vendors/angular-route/package.json
+server/public/scripts/app.min.js

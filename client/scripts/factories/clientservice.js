@@ -79,7 +79,8 @@ chickApp.factory("ClientService", ["$http", function($http){
         repairValueMax:100000,
         yearsDef:5,
         yearsMin:0,
-        yearsMax:100
+        yearsMax:100,
+        zipCode: 50466
     };
 
     var checkIfThereIsData = function(){
