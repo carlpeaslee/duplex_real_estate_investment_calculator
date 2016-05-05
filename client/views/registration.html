@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="chickAppLogin">
+<html ng-app="chickAppRegistration">
   <head>
     <meta charset="utf-8">
     <title>Duplex Chick Calculator</title>
@@ -21,17 +21,16 @@
     <link rel="stylesheet" href="../styles/style.css">
   </head>
   <body>
-    <div ng-controller="LoginController">
+    <div ng-controller="RegistrationController">
 
         <md-toolbar>
           <h1>Duplex Chick Rent Vs Buy Vs Buy Duplex</h1>
-          <a href = "/views/admin.html">Admin Page</a>
-          <a href = "/views/registration.html">Register New Admin</a>
+          <a href = "/views/login.html">Login Page</a>
         </md-toolbar>
 
           <!-- Keeps main content next to one another -->
           <div layout="column">
-            <ng-include src="'/views/partials/loginForm.html'"></ng-include>
+            <ng-include src="'/views/partials/registrationForm.html'"></ng-include>
           </div>
       </div>
   </body>
