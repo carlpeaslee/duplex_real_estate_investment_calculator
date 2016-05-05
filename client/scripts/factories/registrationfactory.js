@@ -3,8 +3,11 @@ chickAppRegistration.factory('RegisterFactory', ['$http', function($http){
   var data = {};
 
   var postData = function(username, password){
-    $http.post('/admin/reg', username, password).success(function(response){
-
+    var registerObject = {};
+    registerObject.username = username;
+    registerObject.password = password;
+    $http.post('/admin', registerObject).success(function(response){
+      console.log("We Dun Did It");
     });
   }
 
