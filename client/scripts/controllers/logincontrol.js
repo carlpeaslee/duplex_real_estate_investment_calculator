@@ -8,6 +8,6 @@ chickAppLogin.controller('LoginController',  ['$scope', '$log', '$http', '$windo
     console.log(username);
     console.log(password);
 
-    $
+    
   }
 }]);
