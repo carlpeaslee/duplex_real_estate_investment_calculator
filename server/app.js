@@ -1,6 +1,7 @@
 // INITIAL VARS
 var express = require('express');
 var app = express();
+//var router = express.Router();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
