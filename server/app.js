@@ -18,6 +18,7 @@ var admin = require('./routes/admin.js');
 var submit = require('./routes/submit.js');
 var index = require('./routes/index.js');
 var default_value = require('./routes/default.js');
+var register = require('./routes/register.js');
 
 // DATABASE VARS
 var mongoURI =    process.env.MONGODB_URI ||
@@ -103,7 +104,8 @@ app.get('/checkDB', function(req, res){
     console.log('defaultsExist =', defaultsExist);
     res.send(defaultsExist);
 });
-app.use('/defaults', default_value)
+app.use('/reg', register);
+app.use('/defaults', default_value);
 app.use('/submit', submit);
 app.use('/admin', admin);
 app.use('/', index);
