@@ -9,6 +9,6 @@ chickAppRegistration.factory('RegisterFactory', ['$http', function($http){
   }
 
   return {
-
+    postData : postData
   };
 }]);
