@@ -24,7 +24,6 @@ $scope.minMax = {};
 $scope.getDefaults = function() {
   $http.get("/defaults").then(function(response){
       defaultVariables = response.data[0];
-      console.log("defaultVariables: ", defaultVariables);
       $scope.minMax = defaultVariables;
 
       $scope.inputData.monthlyRentPersonal= defaultVariables.monthlyRentPersonalDef;
@@ -36,11 +35,11 @@ $scope.getDefaults = function() {
       $scope.inputData.income= defaultVariables.incomeDef;
       $scope.inputData.mortgageYears= defaultVariables.mortgageYearsDef;
       $scope.inputData.vacancy= defaultVariables.vacancyDef;
-      $scope.inputData.propertyTaxPercentage= defaultVariables.propertyTaxPercentageDef;
+      $scope.inputData.propertyTax= defaultVariables.propertyTaxDef;
       $scope.inputData.assocDues= defaultVariables.assocDuesDef;
       $scope.inputData.management= defaultVariables.managementDef;
       $scope.inputData.misc= defaultVariables.miscDef;
-      $scope.inputData.insuranceRate= defaultVariables.insuranceRateDef;
+      $scope.inputData.insuranceAnnual= defaultVariables.insuranceAnnualDef;
       $scope.inputData.utils= defaultVariables.utilsDef;
       $scope.inputData.legalAccounting= defaultVariables.legalAccountingDef;
       $scope.inputData.taxBracket= defaultVariables.taxBracketDef;
@@ -48,19 +47,18 @@ $scope.getDefaults = function() {
       $scope.inputData.years= defaultVariables.yearsDef;
       $scope.inputData.maritalStatus = false;
       $scope.inputData.zipCode = defaultVariables.zipCode;
-      $scope.inputData.appreciationRate =5;
+      $scope.inputData.appreciationRate =defaultVariables.appreciationRateDef;
+      $scope.inputData.renterInsurance = defaultVariables.renterInsuranceDef;
 
   });
 };
 $scope.getDefaults();
-console.log($scope.inputData.taxBracket, "scope")
+
 
 var service = ClientService;
 
 $scope.$watchCollection('inputData', function(newVal, oldVal){
-    console.log('Changed', newVal, oldVal);
     console.log(newVal, "newval")
-
     var incomeTaxBracket =function(income){
       if(newVal.maritalStatus==false){
         if(newVal.income<=9225){
@@ -101,147 +99,166 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       }
       return incomeTax;
     }
+  var capitalGainsTax= function(){
+    var iTB=incomeTaxBracket();
+    if(iTB==10){
+      cGT=10
+    }else if(iTB==15){
+      cGT=15
+    }else{
+      cGT=25;
+    }
+    return cGT
+}
+  //calculate Principle
+  var principle = function(){
+    var hold=newVal.targetPrice-(newVal.targetPrice*newVal.downPaymentPercentage/100);
+    return hold
+  };
 
-    //this is for finding the selling house value
-    var appreciationFunction= function(input){
-      //mortgage rate per month
-      $scope.mortMonth=newVal.mortgageRate/12/100;
-      $scope.mortYearMonth=newVal.mortgageYears*12;
-      $scope.principle=newVal.targetPrice-(newVal.targetPrice*newVal.downPaymentPercentage/100);
-
-      $scope.monthlyPayment=($scope.principle*($scope.mortMonth*Math.pow((1+$scope.mortMonth),$scope.mortYearMonth)))/(Math.pow((1+$scope.mortMonth),$scope.mortYearMonth)-1);
-      $scope.constant=Math.pow((1+$scope.mortMonth),$scope.mortYearMonth);
-      $scope.otherConstant=Math.pow((1+$scope.mortMonth),(input));
-      $scope.balance=$scope.principle*($scope.constant-$scope.otherConstant)/($scope.constant-1);
 
 
-      $scope.newHomeValue=$scope.principle*Math.pow(Math.E,input*newVal.appreciationRate/100/12);
+  //calculate monthly mortgage payments
+  var mortgageMonthlyPayments=function(mortgageTerm){
+    hold= (newVal.mortgageRate/12/100)*principle();
+    var interestRateTerm=Math.pow((1+newVal.mortgageRate/12/100),(mortgageTerm*-1));
+    monthPay= hold/(1-(interestRateTerm));
+    return monthPay
+  };
 
-      $scope.valueGained=$scope.newHomeValue-$scope.principle;
+  var monthlyOperatingExpenses=function(){
+    var repairs=.006*newVal.targetPrice;
+    var legal = 100;
+    var total= newVal.propertyTax+repairs+newVal.utils+legal+newVal.insuranceAnnual;
+    return total/12;
+  }
 
-      return $scope.valueGained
 
+    var balanceFunction = function(howMuchTime){
+      var rateIncrease=1+newVal.mortgageRate/12/100;
+      var rateTime= Math.pow(rateIncrease,howMuchTime);
+      var principleRateTime=principle()*rateTime;
+      var payment = mortgageMonthlyPayments(newVal.mortgageYears*12);
+      var rateTimeMinusOne=rateTime-1;
+      var monthRate= newVal.mortgageRate/12/100;
+      var minusBal= (rateTimeMinusOne/monthRate)*payment;
+      var balance = principleRateTime-minusBal
+      return balance;
     };
-    appreciationFunction(newVal.years*12);
-    console.log("check", appreciationFunction(newVal.years*12) )
 
+    //continous appreciation
+    var appreciationFunction = function(howMuchTime){
+      var p=principle();
+      var a=1+newVal.appreciationRate/12/100
+      var t=howMuchTime;
+      var part=p*Math.pow(a,t);
+      part=part-principle();
 
-    //Buying not duplex
-      //after down value
-      $scope.owedAfterDown=newVal.targetPrice*(1-newVal.downPaymentPercentage/100);
-      //mortgageRate
-      $scope.mortgageRateDecimal=newVal.mortgageRate/100;
-      //mortgage rate year
-      $scope.mortgageRateDecimalMonthly=$scope.mortgageRateDecimal/12;
-      //monthly spending before normal expenses
-      $scope.monthlyBuyPre=$scope.owedAfterDown*($scope.mortgageRateDecimalMonthly)*Math.pow((1+$scope.mortgageRateDecimalMonthly),(newVal.mortgageYears*12))/(Math.pow((1+$scope.mortgageRateDecimalMonthly),(newVal.mortgageYears*12))-1);
-      //annual spending before expense
-      $scope.annualBuyPre=$scope.monthlyBuyPre*12;
-      //property tax
-      $scope.propTax = newVal.targetPrice*newVal.propertyTaxPercentage/100;
-      //Property insuranceRate
-      $scope.propInsurance = newVal.targetPrice*newVal.insuranceRate/100;
-      //adding up the costs
-        //first year:
-        $scope.firstYear=$scope.annualBuyPre+$scope.propTax+newVal.repairValue+newVal.assocDues+newVal.management+newVal.misc+$scope.propInsurance+newVal.utils+newVal.legalAccounting+(newVal.targetPrice*newVal.downPaymentPercentage/100);
-
-        //years after that:
-        $scope.otherYears=$scope.annualBuyPre+$scope.propTax+newVal.repairValue+newVal.assocDues+newVal.management+newVal.misc+$scope.propInsurance+newVal.utils+newVal.legalAccounting;
-        $scope.monthPrice=$scope.otherYears/12
-        //actual yearwise
-        $scope.buy[1].v = $scope.firstYear+($scope.otherYears*(newVal.years-1))-$scope.valueGained;
-        console.log($scope.buy[1].v);
-
-    //Renting related
-
-      $scope.rentHold=newVal.monthlyRentPersonal*12+newVal.utils
-      $scope.rent[1].v = $scope.rentHold*newVal.years;
+      return part;
+    };
 
 
 
-    //duplex related
-      //initially the same as buying a house
-      $scope.initialDuplex=$scope.buy[1].v;
-      //rent tenenate
-      $scope.rentTenantAnnual=newVal.monthlyRentTenant*12*(1-newVal.vacancy/100);
-      //decpreciation values
-      $scope.depPersProp=newVal.targetPrice*0.05*0.2;
-      $scope.depBuildingValue=newVal.targetPrice*0.5*0.0348;
-      $scope.depLandImprovVal=newVal.targetPrice*0.05*0.2;
-      $scope.annualDebtService=$scope.annualBuyPre-($scope.owedAfterDown*$scope.mortgageRateDecimal);
-      //net operating income
-      $scope.netOperatingIncome = $scope.rentTenantAnnual-$scope.propTax-$scope.propInsurance-newVal.repairValue-newVal.assocDues-newVal.management-newVal.misc-newVal.utils-newVal.legalAccounting;
-      $scope.interestNet = $scope.owedAfterDown*$scope.mortgageRateDecimal;
-      $scope.depTot=$scope.depPersProp+$scope.depBuildingValue+$scope.depLandImprovVal;
-      $scope.taxableIncome=$scope.netOperatingIncome-$scope.interestNet-$scope.depTot;
-      $scope.incomeTaxPay=$scope.taxableIncome*newVal.taxBracket/100;
+    var saleFunction = function(howMuchTime){
+      var tot=appreciationFunction(howMuchTime)-balanceFunction(howMuchTime);
+      tot=tot*(1-capitalGainsTax()/100);
+      return tot;
+  };
+
+  //depreciation total over the time
+    var decpreciationFunction= function(howMuchTime){
+      var personalPropertyDep=howMuchTime*newVal.targetPrice*(.05*.2);
+        if (personalPropertyDep>=newVal.targetPrice*.05){
+          personalPropertyDep=newVal.targetPrice*.05
+        }
+
+      var buildingValueDep=howMuchTime*newVal.targetPrice*(.5*.0348);
+        if (buildingValueDep>=newVal.targetPrice*.5){
+          buildingValueDep=newVal.targetPrice*.5
+        }
+
+      var landImprovementDep=howMuchTime*newVal.targetPrice*(.05*.2);
+        if (landImprovementDep>=newVal.targetPrice*.2){
+          landImprovementDep=newVal.targetPrice*.2
+        }
+
+      var totDep=landImprovementDep+buildingValueDep+personalPropertyDep;
+      var totDep=totDep/12/2;
 
 
-      $scope.buyAndRent[1].v = $scope.initialDuplex-$scope.rentTenantAnnual-$scope.depPersProp-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.incomeTaxPay;
+      return totDep;
+    };
+
+    //rental information over whole time TODO NOT WORKING
+    var rentFunction= function(howMuchTime){
+      rent=newVal.monthlyRentTenant*howMuchTime;
+
+      insurance=newVal.renterInsurance*howMuchTime;
+
+      rentTot=rent+insurance+newVal.utils*howMuchTime;
+      return rentTot
+    };
+    console.log(rentFunction(newVal.years*12), "Test")
+
+    //buy function over all time
+    var buyFunctionMonthCostDuringMortgageTerm= function(){
+        var monthCost=mortgageMonthlyPayments(newVal.mortgageYears*12);
+        var operatingCosts=monthlyOperatingExpenses()
+        var tot=operatingCosts+monthCost;
+        return tot
+    }
+
+    var buyFunctionMonthCostPostMortgageTerm=function(){
+      var tot=monthlyOperatingExpenses();
+      return tot
+    }
 
 
+    var totalBuy=function(howMuchTime){
+      downPayment=newVal.downPaymentPercentage/100*newVal.targetPrice;
+      if(howMuchTime<=newVal.mortgageYears*12){
+        normalPay=buyFunctionMonthCostDuringMortgageTerm()*howMuchTime
+      }else{
+        firstPart=buyFunctionMonthCostDuringMortgageTerm()*newVal.mortgageYears*12
+        secondPart=(newVal.mortgageYears*12-howMuchTime)*buyFunctionMonthCostPostMortgageTerm();
+        normalPay=firstPart+secondPart;
+      }
+      totalPay=normalPay+downPayment-appreciationFunction(howMuchTime);
+      return totalPay;
+    }
+
+    var totDuplex=function(howMuchTime){
+      var buySame=totalBuy(howMuchTime);
+      var dep = decpreciationFunction(howMuchTime);
+      var tot= buySame-dep;
+      return tot
+    }
+
+      $scope.buy[1].v =totalBuy(newVal.years*12);
+      $scope.rent[1].v = rentFunction(newVal.years*12);
+      $scope.buyAndRent[1].v = totDuplex(newVal.years*12);
 
 
       $scope.buyValues = [];
       $scope.rentValues = [];
       $scope.buyAndRentValues = [];
-      // var buyValues = [10000,20000,30000,40000,50000];
-      // var rentValues = [20000,40000,60000,40000,60000];
-      // var buyAndRentValues = [60000,40000,50000,30000,20000];
 
       count=0;
-      var rentFunction= function(){ //TODO The other graph works, this one needs some seriously new
+      var absoluteFunction= function(){
         for(var i=0;i<newVal.years*12;i++){
           count++;
-
-          if(i==0){
-            $scope.buyValues.push(newVal.targetPrice*newVal.downPaymentPercentage/100);
-          }
-          else if(i<=newVal.mortgageYears*12){
-            $scope.buyValues.push($scope.monthPrice*i-appreciationFunction(i)+newVal.targetPrice*newVal.downPaymentPercentage/100);
-          }
-          else{
-            $scope.buyValues.push($scope.monthPrice*newVal.mortgageYears*12-appreciationFunction(i)+newVal.targetPrice*newVal.downPaymentPercentage/100);
-          }
-
-
-          if(count>newVal.targetPrice/$scope.depPersProp){
-              $scope.depPersProp=0;
-          }
-
-          if(count>newVal.targetPrice/$scope.depLandImprovVal){
-              $scope.depLandImprovVal=0;
-          }
-
-          if(count>newVal.targetPrice/$scope.depBuildingValue){
-              $scope.depBuildingValue=0;
-          }
-
-          $scope.depPersProp=0/12;
-          $scope.depLandImprovVal=0/12;
-          $scope.depBuildingValue=0/12;
-
-          $scope.totDepMonth=$scope.depBuildingValue+$scope.depLandImprovVal+$scope.depPersProp;
-
-          if(i==0){
-            $scope.buyAndRentValues.push(newVal.targetPrice*newVal.downPaymentPercentage/100-($scope.rentTenantAnnual/12));
-          }
-          else if(i<newVal.mortgageYears*12){
-            $scope.buyAndRentValues.push($scope.monthPrice*i-appreciationFunction(i)+(newVal.targetPrice*newVal.downPaymentPercentage/100)-($scope.rentTenantAnnual/12)-$scope.totDepMonth*i);
-          }
-          else{
-            $scope.buyAndRentValues.push($scope.monthPrice*newVal.mortgageYears*12-appreciationFunction(i)+newVal.targetPrice*newVal.downPaymentPercentage/100-$scope.depBuildingValue-$scope.depLandImprovVal-$scope.depPersProp);
-          }
-
-          $scope.rentValues.push(newVal.monthlyRentPersonal*i)
-          // $scope.buyValues.push(appreciationFunction(i));
+          $scope.buyValues.push(totalBuy(i));
+          $scope.buyAndRentValues.push(totDuplex(i));
+          $scope.rentValues.push(rentFunction(i));
         };
       };
 
-      rentFunction();
 
 
-      console.log("duck",$scope.buyValues);
+      absoluteFunction();
+
+
+
 
       var dynamicRows = [];
       var populateDynamicRows = function(){
