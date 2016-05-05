@@ -2,14 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Submit = require("../models/contact.js");
 
-// router.route('/')
-//     .get(function(req, res){
-//         Submit.find(function(err, defaults){
-//             if(err){console.log(err);}
-//             res.send(defaults);
-//         });
-//     })
-
 router.route('/')
     .get(function(req,res){
       Submit.find({status: {$ne: 'Deleted'}}, function(err, defaults){
