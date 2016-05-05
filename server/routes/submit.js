@@ -67,4 +67,17 @@ router.route('/')
         });
     });
 
+    router.route('/statusChangeBack/:id').put(function(req, res){
+      console.log(req.body);
+
+        Submit.findOneAndUpdate({_id: req.body._id}, {
+          status: "Not Contacted"
+        }, function(err, doc){
+          if(err){
+            console.log(err);
+          }
+          res.json();
+        });
+    });
+
 module.exports = router;

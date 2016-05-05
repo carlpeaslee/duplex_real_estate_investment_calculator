@@ -97,6 +97,20 @@ $scope.changeStatus = function(id) {
       console.log("No");
     });
   };
+  $scope.changeStatusBack = function(id) {
+      var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to mark contact as "Not Contacted"?')
+            .ok('Yes')
+            .cancel('No');
+      $mdDialog.show(confirm).then(function() {
+        console.log("Yes");
+        AdminService.updateTheContactBack(id);
+        $scope.getContacts();
+      }, function() {
+        console.log("No");
+      });
+    };
+
 
 }]);
 
