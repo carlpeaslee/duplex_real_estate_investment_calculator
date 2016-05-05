@@ -9,7 +9,7 @@ var localStrategy = require('passport-local');
 var mongoose = require('mongoose');
 
 // MODELS
-var adminModel = require('./models/admin.js');
+var Admin = require('./models/admin.js');
 var contactModel = require('./models/contact.js');
 var defaultModel = require('./models/default.js');
 
