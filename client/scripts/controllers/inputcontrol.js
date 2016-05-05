@@ -1,21 +1,32 @@
-chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', 'ClientService',function($scope, $log, $http, $window, ClientService) {
-//Independent Variables
-var clientService = ClientService;
+chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', '$mdSidenav', "$mdDialog", "$mdMedia", 'ClientService',function($scope, $log, $http, $window, $mdSidenav, $mdDialog, $mdMedia, ClientService) {
+    //Independent Variables
+    var clientService = ClientService;
 
-$scope.submitEmail = function(){
-    console.log("submit was clicked", $scope.submit.email, $scope.submit.followup);
-    var contactPackage = {
-        email: $scope.submit.email,
-        maritalStatus: $scope.inputData.maritalStatus,
-        zipCode: $scope.inputData.zipCode,
-        income: $scope.inputData.income,
-        targetPropertyPrice: $scope.inputData.targetPrice,
-        followup: $scope.submit.followup
+    // $scope.showAlert = function(ev) {
+    //     $mdDialog.show(
+    //       $mdDialog.alert()
+    //         .parent(angular.element(document.querySelector('#all')))
+    //         // .openFrom(angular.element(document.querySelector('#zip-code')))
+    //         // .closeTo(angular.element(document.querySelector('#zip-code')))
+    //         .clickOutsideToClose(true)
+    //         .title("Let's get started!")
+    //         .textContent('You can specify some description text in here.')
+    //         .ariaLabel('Alert Dialog Demo')
+    //         .ok('Got it!')
+    //         .targetEvent(ev)
+    //     );
+    // };
+    //
+    // $scope.showAlert();
+
+    $scope.toggleMenu = function() {
+        $mdSidenav('left').toggle();
     };
-    clientService.submitEmail(contactPackage);
-    $scope.submit.email = "";
-    $scope.fade = "";
-};
+
+    // clientService.submitEmail(contactPackage);
+    // $scope.submit.email = "";
+    // $scope.fade = "";
+
 
 $scope.inputData = {};
 
@@ -227,6 +238,8 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       return totalPay;
     }
 
+
+
     var totDuplex=function(howMuchTime){
       var buySame=totalBuy(howMuchTime);
       var dep = decpreciationFunction(howMuchTime);
@@ -237,6 +250,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       $scope.buy[1].v =totalBuy(newVal.years*12);
       $scope.rent[1].v = rentFunction(newVal.years*12);
       $scope.buyAndRent[1].v = totDuplex(newVal.years*12);
+
 
 
       $scope.buyValues = [];
@@ -393,7 +407,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
     };
 
 
-  
+
     $scope.submit = {};
     $scope.submit.followup = true;
 

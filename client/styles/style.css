@@ -3,13 +3,31 @@
   height: 100%;
 }
 
-.email-box {
-    background-color: powderblue;
-    z-index: 3;
+.top-text {
+    max-width: 60%;
 }
 
+.chick-chart {
+    min-width: 90%;
+    min-height: 400px;
+}
 
+.email-box {
+    background-color: powderblue;
+    min-width: 85%;
+    height: 100px;
+}
 
+#admin-link {
+    width: 85%;
+    font-size: .5em;
+    text-align: right;
+}
+
+.chick-input {
+    border: 1px;
+    padding: 2px;
+}
 /*
 Copyright 2016 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
