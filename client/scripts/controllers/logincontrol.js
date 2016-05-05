@@ -7,5 +7,7 @@ chickAppLogin.controller('LoginController',  ['$scope', '$log', '$http', '$windo
     console.log("Login Button Works");
     console.log(username);
     console.log(password);
+
+    $
   }
 }]);
