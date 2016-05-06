@@ -271,7 +271,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
       absoluteFunction();
 
-
+      console.log($scope.buyValues)
 
 
       var dynamicRows = [];
@@ -339,7 +339,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
                   }
               },
               "hAxis": {
-                  "title": "Years"
+                  "title": "Months"
               },
               "animation":{
                   duration: 300,
