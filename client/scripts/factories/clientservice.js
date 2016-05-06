@@ -26,7 +26,7 @@ chickApp.factory("ClientService", ["$http", function($http){
         monthlyRentTenantDef:1290,
         monthlyRentTenantMin:100,
         monthlyRentTenantMax:10000,
-        monthlyRentPersonalDef:1500,
+        monthlyRentPersonalDef:800,
         monthlyRentPersonalMin:200,
         monthlyRentPersonalMax:10000,
         targetPriceDef:266000,
@@ -50,9 +50,9 @@ chickApp.factory("ClientService", ["$http", function($http){
         vacancyDef:5,
         vacancyMin:0,
         vacancyMax:100,
-        propertyTaxPercentageDef:1.65,
-        propertyTaxPercentageMin:0,
-        propertyTaxPercentageMax:100,
+        propertyTaxDef:1500,
+        propertyTaxMin:0,
+        propertyTaxMax:10000,
         assocDuesDef:0,
         assocDuesMin:0,
         assocDuesMax:10000,
@@ -62,9 +62,9 @@ chickApp.factory("ClientService", ["$http", function($http){
         miscDef:1000,
         miscMin:0,
         miscMax:100000,
-        insuranceRateDef:1,
-        insuranceRateMin:0,
-        insuranceRateMax:100,
+        insuranceAnnualDef:1000,
+        insuranceAnnualMin:0,
+        insuranceAnnualMax:10000,
         utilsDef:100,
         utilsMin:0,
         utilsMax:10000,
@@ -80,13 +80,21 @@ chickApp.factory("ClientService", ["$http", function($http){
         yearsDef:5,
         yearsMin:0,
         yearsMax:100,
-        zipCode: 50466
+        zipCode: 50466,
+        renterInsuranceDef:50,
+        renterInsuranceMin:0,
+        renterInsuranceMax:4000,
+        appreciationRateDef:4,
+        appreciationRateMin:0,
+        appreciationRateMax:100
+
+
     };
 
     var checkIfThereIsData = function(){
         $http.get('/checkDB').then(function(response){
             var bool = response.data;
-            if(bool == false){
+            if(bool === false){
                 $http.post('/defaults', initialValues).then(function(response){
                     getDefaults();
                 });

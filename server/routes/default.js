@@ -43,9 +43,9 @@ router.route('/')
             vacancyDef:req.body.vacancyDef,
             vacancyMin:req.body.vacancyMin,
             vacancyMax:req.body.vacancyMax,
-            propertyTaxPercentageDef:req.body.propertyTaxPercentageDef,
-            propertyTaxPercentageMin:req.body.propertyTaxPercentageMin,
-            propertyTaxPercentageMax:req.body.propertyTaxPercentageMax,
+            propertyTaxDef:req.body.propertyTaxDef,
+            propertyTaxMin:req.body.propertyTaxMin,
+            propertyTaxMax:req.body.propertyTaxMax,
             assocDuesDef:req.body.assocDuesDef,
             assocDuesMin:req.body.assocDuesMin,
             assocDuesMax:req.body.assocDuesMax,
@@ -55,9 +55,9 @@ router.route('/')
             miscDef:req.body.miscDef,
             miscMin:req.body.miscMin,
             miscMax:req.body.miscMax,
-            insuranceRateDef:req.body.insuranceRateDef,
-            insuranceRateMin:req.body.insuranceRateMin,
-            insuranceRateMax:req.body.insuranceRateMax,
+            insuranceAnnualDef:req.body.insuranceAnnualDef,
+            insuranceAnnualMin:req.body.insuranceAnnualMin,
+            insuranceAnnualMax:req.body.insuranceAnnualMax,
             utilsDef:req.body.utilsDef,
             utilsMin:req.body.utilsMin,
             utilsMax:req.body.utilsMax,
@@ -73,7 +73,13 @@ router.route('/')
             yearsDef:req.body.yearsDef,
             yearsMin:req.body.yearsMin,
             yearsMax:req.body.yearsMax,
-            zipCode: req.body.zipCode
+            zipCode: req.body.zipCode,
+            renterInsuranceDef: req.body.renterInsuranceDef,
+            renterInsuranceMin: req.body.renterInsuranceMin,
+            renterInsuranceMax:req.body.renterInsuranceMax,
+            appreciationRateDef:req.body.appreciationRateDef,
+            appreciationRateMin:req.body.appreciationRateMin,
+            appreciationRateMax:req.body.appreciationRateMax
         });
         defaults.save(function(err, defaults){
             if(err) console.log(err);
@@ -113,9 +119,9 @@ router.route('/')
             defaults.vacancyDef = req.body.vacancyDef;
             defaults.vacancyMin = req.body.vacancyMin;
             defaults.vacancyMax = req.body.vacancyMax;
-            defaults.propertyTaxPercentageDef = req.body.propertyTaxPercentageDef;
-            defaults.propertyTaxPercentageMin = req.body.propertyTaxPercentageMin;
-            defaults.propertyTaxPercentageMax = req.body.propertyTaxPercentageMax;
+            defaults.propertyTaxDef = req.body.propertyTaxDef;
+            defaults.propertyTaxMin = req.body.propertyTaxMin;
+            defaults.propertyTaxMax = req.body.propertyTaxMax;
             defaults.assocDuesDef = req.body.assocDuesDef;
             defaults.assocDuesMin = req.body.assocDuesMin;
             defaults.assocDuesMax = req.body.assocDuesMax;
@@ -125,9 +131,9 @@ router.route('/')
             defaults.miscDef = req.body.miscDef;
             defaults.miscMin = req.body.miscMin;
             defaults.miscMax = req.body.miscMax;
-            defaults.insuranceRateDef = req.body.insuranceRateDef;
-            defaults.insuranceRateMin = req.body.insuranceRateMin;
-            defaults.insuranceRateMax = req.body.insuranceRateMax;
+            defaults.insuranceAnnualDef = req.body.insuranceAnnualDef;
+            defaults.insuranceAnnualMin = req.body.insuranceAnnualMin;
+            defaults.insuranceAnnualMax = req.body.insuranceAnnualMax;
             defaults.utilsDef = req.body.utilsDef;
             defaults.utilsMin = req.body.utilsMin;
             defaults.utilsMax = req.body.utilsMax;
@@ -144,6 +150,12 @@ router.route('/')
             defaults.yearsMin = req.body.yearsMin;
             defaults.yearsMax = req.body.yearsMax;
             defaults.zipCode = req.body.zipCode;
+            defaults.renterInsuranceDef= req.body.renterInsuranceDef;
+            defaults.renterInsuranceMin =req.body.renterInsuranceMin;
+            defaults.renterInsuranceMax =req.body.renterInsuranceMax;
+            defaults.appreciationRateDef=req.body.appreciationRateDef;
+            defaults.appreciationRateMin=req.body.appreciationRateMin;
+            defaults.appreciationRateMax=req.body.appreciationRateMax;
 
             defaults.save(function(err){
                 if(err) res.send(err);

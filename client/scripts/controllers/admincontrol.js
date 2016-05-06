@@ -9,7 +9,7 @@ chickAppAdmin.controller('AdminController',  ['$scope', '$http', '$window','Admi
 }]);
 
 
-chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService',function($scope, $http, $window, AdminService) {
+chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','AdminService', '$mdDialog',function($scope, $http, $window, AdminService, $mdDialog) {
   'use strict';
 
   $scope.selected = [];
@@ -21,14 +21,12 @@ chickAppAdmin.controller('EmailController',  ['$scope', '$http', '$window','Admi
     page: 1
   };
 
-// AdminService.getContacts();
 $scope.getContacts = function(){
   $http.get("/submit").then(function(response){
       $scope.emailList = response.data;
       console.log($scope.emailList);
       $scope.count = $scope.emailList.length;
   });
-
 };
 $scope.getContacts();
 
@@ -39,7 +37,6 @@ $scope.toggleLimitOptions = function () {
 
 $scope.loadStuff = function () {
   $scope.promise = $timeout(function () {
-    // loading
   }, 2000);
 };
 
@@ -56,6 +53,52 @@ $scope.logPagination = function (page, limit) {
   console.log('limit: ', limit);
 };
 
+$scope.changeStatus = function(id){
+  console.log("Changing status of contact with id: ", id);
+};
+
+$scope.deleteContact = function(id) {
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to delete this contact?')
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      console.log("Yes");
+      AdminService.deleteTheContact(id);
+      $scope.getContacts();
+    }, function() {
+      console.log("No");
+    });
+  };
+
+$scope.changeStatus = function(id) {
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to mark contact as "Contacted"?')
+          .ok('Yes')
+          .cancel('No');
+    $mdDialog.show(confirm).then(function() {
+      console.log("Yes");
+      AdminService.updateTheContact(id);
+      $scope.getContacts();
+    }, function() {
+      console.log("No");
+    });
+  };
+  $scope.changeStatusBack = function(id) {
+      var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to mark contact as "Not Contacted"?')
+            .ok('Yes')
+            .cancel('No');
+      $mdDialog.show(confirm).then(function() {
+        console.log("Yes");
+        AdminService.updateTheContactBack(id);
+        $scope.getContacts();
+      }, function() {
+        console.log("No");
+      });
+    };
+
+
 }]);
 
 
@@ -64,26 +107,14 @@ chickAppAdmin.controller('SetVariablesController',  ['$scope', '$http', '$window
 
 $scope.getDefaults = function() {
   $http.get("/defaults").then(function(response){
-      console.log(response.data);
       $scope.defaultVariables = response.data[0];
-      console.log("Inside get call: ", $scope.defaultVariables);
       AdminService.admin.defaults = $scope.defaultVariables;
   });
 };
 
 $scope.getDefaults();
 
-  // //These did not work because even though factory was making get call it was not updating.
-  // AdminService.getDefaults();
-  // $scope.defaultVariables = {};
-  // $scope.defaultVariables = AdminService.admin.defaults;
-  // $scope.$watchCollection('inputData', function(newVal, oldVal){
-  //     console.log('Changed', newVal, oldVal);
-  //     $scope.defaultVariables = AdminService.admin.defaults;
-  // });
-
   $scope.setDefaultValues = function(defaultVariables){
-    // console.log("Submitting default values: ", defaultVariables);
     AdminService.alterDefaults(defaultVariables);
   };
 
