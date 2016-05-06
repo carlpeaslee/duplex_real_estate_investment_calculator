@@ -79,7 +79,10 @@ router.route('/')
             renterInsuranceMax:req.body.renterInsuranceMax,
             appreciationRateDef:req.body.appreciationRateDef,
             appreciationRateMin:req.body.appreciationRateMin,
-            appreciationRateMax:req.body.appreciationRateMax
+            appreciationRateMax:req.body.appreciationRateMax,
+            duplexBuyDef:req.body.duplexBuyDef,
+            duplexBuyMin:req.body.duplexBuyMin,
+            duplexBuyMax:req.body.duplexBuyMax
         });
         defaults.save(function(err, defaults){
             if(err) console.log(err);
@@ -156,6 +159,9 @@ router.route('/')
             defaults.appreciationRateDef=req.body.appreciationRateDef;
             defaults.appreciationRateMin=req.body.appreciationRateMin;
             defaults.appreciationRateMax=req.body.appreciationRateMax;
+            defaults.duplexBuyDef=req.body.duplexBuyDef,
+            defaults.duplexBuyMin=req.body.duplexBuyMin,
+            defaults.duplexBuyMax=req.body.duplexBuyMax
 
             defaults.save(function(err){
                 if(err) res.send(err);

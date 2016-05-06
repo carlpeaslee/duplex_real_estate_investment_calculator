@@ -68,7 +68,10 @@ var Default_Values = new Schema({
       renterInsuranceMax:{type: Number},
       appreciationRateDef:{type: Number},
       appreciationRateMin:{type: Number},
-      appreciationRateMax:{type: Number}
+      appreciationRateMax:{type: Number},
+      duplexBuyDef:{type: Number},
+      duplexBuyMin:{type: Number},
+      duplexBuyMax:{type: Number}
 });
 
 module.exports = mongoose.model("Default_Values", Default_Values);

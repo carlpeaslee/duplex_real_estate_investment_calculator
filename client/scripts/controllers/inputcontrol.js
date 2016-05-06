@@ -60,6 +60,7 @@ $scope.getDefaults = function() {
       $scope.inputData.zipCode = defaultVariables.zipCode;
       $scope.inputData.appreciationRate =defaultVariables.appreciationRateDef;
       $scope.inputData.renterInsurance = defaultVariables.renterInsuranceDef;
+      $scope.inputData.duplexBuy = defaultVariables.duplexBuy;
 
   });
 };

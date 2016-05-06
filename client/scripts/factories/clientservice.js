@@ -86,7 +86,10 @@ chickApp.factory("ClientService", ["$http", function($http){
         renterInsuranceMax:4000,
         appreciationRateDef:4,
         appreciationRateMin:0,
-        appreciationRateMax:100
+        appreciationRateMax:100,
+        duplexBuyDef:266000,
+        duplexBuyMin:50000,
+        duplexBuyMax:5000000
 
 
     };
