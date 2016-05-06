@@ -271,7 +271,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
 
       absoluteFunction();
 
-      console.log($scope.buyValues)
+      console.log($scope.buyValues.length)
 
 
       var dynamicRows = [];
