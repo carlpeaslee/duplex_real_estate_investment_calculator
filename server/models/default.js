@@ -32,9 +32,9 @@ var Default_Values = new Schema({
       vacancyDef: {type: Number},
       vacancyMin: {type: Number},
       vacancyMax: {type: Number},
-      propertyTaxPercentageDef: {type: Number},
-      propertyTaxPercentageMin: {type: Number},
-      propertyTaxPercentageMax: {type: Number},
+      propertyTaxDef: {type: Number},
+      propertyTaxMin: {type: Number},
+      propertyTaxMax: {type: Number},
       assocDuesDef: {type: Number},
       assocDuesMin: {type: Number},
       assocDuesMax: {type: Number},
@@ -44,9 +44,9 @@ var Default_Values = new Schema({
       miscDef: {type: Number},
       miscMin: {type: Number},
       miscMax: {type: Number},
-      insuranceRateDef: {type: Number},
-      insuranceRateMin: {type: Number},
-      insuranceRateMax: {type: Number},
+      insuranceAnnualDef: {type: Number},
+      insuranceAnnualMin: {type: Number},
+      insuranceAnnualMax: {type: Number},
       utilsDef: {type: Number},
       utilsMin: {type: Number},
       utilsMax: {type: Number},
@@ -62,7 +62,13 @@ var Default_Values = new Schema({
       yearsDef: {type: Number},
       yearsMin: {type: Number},
       yearsMax: {type: Number},
-      zipCode: {type: Number}
+      zipCode: {type: Number},
+      renterInsuranceDef:{type: Number},
+      renterInsuranceMin:{type: Number},
+      renterInsuranceMax:{type: Number},
+      appreciationRateDef:{type: Number},
+      appreciationRateMin:{type: Number},
+      appreciationRateMax:{type: Number}
 });
 
 module.exports = mongoose.model("Default_Values", Default_Values);
