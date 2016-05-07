@@ -98,29 +98,43 @@
                                 </md-slider>
                             </md-slider-container>
                         </md-input-container>
-
                         <md-input-container class="md-block">
-                            <label>Monthly Insurance Costs</label>
-                            <input flex type="number" ng-model="inputData.insuranceRate" aria-label="monthly insurance costs">
+                            <label>Home Appreciation Rate</label>
+                            <input flex type="number" ng-model="inputData.appreciationRateHome" aria-label="home appreciation rate">
                             <br>
                             <md-slider-container>
-                                <md-slider flex step=".1" min="{{minMax.insuranceRateMin}}" aria-label="monthly insurance costs" max="{{minMax.insuranceRateMax}}" ng-model="inputData.insuranceRate">
+                                <md-slider flex step=".1" min="{{minMax.appreciationRateHomeMin}}" aria-label="home appreciation rate" max="{{minMax.appreciationRateHomeMax}}" ng-model="inputData.appreciationRateHome">
                                 </md-slider>
                             </md-slider-container>
                         </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <label>Monthly Insurance Costs</label>
+                            <input flex type="number" ng-model="inputData.insuranceAnnual" aria-label="monthly insurance costs">
+                            <br>
+                            <md-slider-container>
+                                <md-slider flex step="10" min="{{minMax.insuranceAnnualMin}}" aria-label="monthly insurance costs" max="{{minMax.insuranceAnnualMax}}" ng-model="inputData.insuranceAnnual">
+                                </md-slider>
+                            </md-slider-container>
+                        </md-input-container>
+
+
+
 
                         <h2>Duplex</h2>
                         <label>Different Duplex Purchase Price?</label>
                         <md-switch ng-model="inputData.differentDuplexPurchasePrice" aria-label="use a different duplex purchase price" class="md-primary">
                         </md-switch>
+
+
                         <md-input-container ng-show="inputData.differentDuplexPurchasePrice === true">
-                            <md-slider-container>
-                                <label>Duplex Purchase Price</label>
-                                <input flex type="number" ng-model="inputData.duplexPurchasePrice" aria-label="duplex purchase price">
-                                <br>
-                                <md-slider min="{{minMax.duplexPurchasePrice}}" aria-label="duplex purchase price" max="{{minMax.duplexPurchasePrice}}" ng-model="inputData.duplexPurchasePrice">
-                                </md-slider>
-                            </md-slider-container>
+                          <label>Duplex Purchase Price</label>
+                          <input flex type="number" ng-model="inputData.duplexBuy" aria-label="duplex buy">
+                          <br>
+                          <md-slider-container>
+                              <md-slider flex step="50" min="{{minMax.duplexBuyMin}}" aria-label="duplex buy" max="{{minMax.duplexBuyMax}}" ng-model="inputData.duplexBuy">
+                              </md-slider>
+                          </md-slider-container>
                         </md-input-container>
 
                         <md-input-container class="md-block">
@@ -134,16 +148,16 @@
                         </md-input-container>
 
                         <md-input-container class="md-block">
-                            <label>Home Appreciation Rate</label>
-                            <input flex type="number" ng-model="inputData.homeAppreciation" aria-label="home appreciation rate">
+                            <label>Duplex Appreciation Rate</label>
+                            <input flex type="number" ng-model="inputData.appreciationRate" aria-label="home appreciation rate">
                             <br>
                             <md-slider-container>
-                                <md-slider flex step=".1" min="{{minMax.homeAppreciation}}" aria-label="home appreciation rate" max="{{minMax.homeAppreciation}}" ng-model="inputData.homeAppreciation">
+                                <md-slider flex step=".1" min="{{minMax.appreciationRateMin}}" aria-label="home appreciation rate" max="{{minMax.appreciationRateMax}}" ng-model="inputData.appreciationRate">
                                 </md-slider>
                             </md-slider-container>
                         </md-input-container>
                         <md-input-container class="md-block">
-                            <label>Vacancy Percent</label>
+                            <label>Vacancy Percentage</label>
                             <input flex type="number" ng-model="inputData.vacancy" aria-label="vacancy percent">
                             <br>
                             <md-slider-container>
@@ -152,11 +166,11 @@
                             </md-slider-container>
                         </md-input-container>
                         <md-input-container class="md-block">
-                            <label>Property Tax</label>
-                            <input flex type="number" ng-model="inputData.propertyTax" aria-label="property tax">
+                            <label>property Tax</label>
+                            <input flex type="number" ng-model="inputData.propertyTax" aria-label="vacancy percent">
                             <br>
                             <md-slider-container>
-                                <md-slider flex step="1" min="{{minMax.propertyTax}}" aria-label="property tax" max="{{minMax.propertyTax}}" ng-model="inputData.propertyTax">
+                                <md-slider flex step="1" min="{{minMax.propertyTaxMin}}" aria-label="vacancy percent" max="{{minMax.propertyTaxMax}}" ng-model="inputData.propertyTax">
                                 </md-slider>
                             </md-slider-container>
                         </md-input-container>
