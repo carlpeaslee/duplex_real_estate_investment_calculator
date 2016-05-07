@@ -69,6 +69,9 @@ var Default_Values = new Schema({
       appreciationRateDef:{type: Number},
       appreciationRateMin:{type: Number},
       appreciationRateMax:{type: Number},
+      appreciationRateHomeDef:{type: Number},
+      appreciationRateHomeMin:{type: Number},
+      appreciationRateHomeMax:{type: Number},
       duplexBuyDef:{type: Number},
       duplexBuyMin:{type: Number},
       duplexBuyMax:{type: Number}

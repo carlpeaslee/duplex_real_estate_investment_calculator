@@ -59,18 +59,20 @@ $scope.getDefaults = function() {
       $scope.inputData.maritalStatus = false;
       $scope.inputData.zipCode = defaultVariables.zipCode;
       $scope.inputData.appreciationRate =defaultVariables.appreciationRateDef;
+      $scope.inputData.appreciationRateHome =defaultVariables.appreciationRateHomeDef;
       $scope.inputData.renterInsurance = defaultVariables.renterInsuranceDef;
-      $scope.inputData.duplexBuy = defaultVariables.duplexBuy;
+      $scope.inputData.duplexBuy = defaultVariables.duplexBuyDef;
 
   });
 };
 $scope.getDefaults();
-
+console.log("duplexBuy", $scope.inputData.duplexBuy)
 
 var service = ClientService;
 
 $scope.$watchCollection('inputData', function(newVal, oldVal){
-    console.log(newVal, "newval")
+    console.log(newVal, "newval");
+    console.log("duplexBuy", $scope.inputData.duplexBuy);
     var incomeTaxBracket =function(income){
       if(newVal.maritalStatus==false){
         if(newVal.income<=9225){
@@ -122,35 +124,37 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
     }
     return cGT
 }
+
+console.log(capitalGainsTax(), "asd" )
   //calculate Principle
-  var principle = function(){
-    var hold=newVal.targetPrice-(newVal.targetPrice*newVal.downPaymentPercentage/100);
+  var principle = function(whichKind){
+    var hold=whichKind-(whichKind*newVal.downPaymentPercentage/100);
     return hold
   };
 
 
 
   //calculate monthly mortgage payments
-  var mortgageMonthlyPayments=function(mortgageTerm){
-    hold= (newVal.mortgageRate/12/100)*principle();
+  var mortgageMonthlyPayments=function(mortgageTerm,whichKind){
+    hold= (newVal.mortgageRate/12/100)*principle(whichKind);
     var interestRateTerm=Math.pow((1+newVal.mortgageRate/12/100),(mortgageTerm*-1));
     monthPay= hold/(1-(interestRateTerm));
     return monthPay
   };
 
-  var monthlyOperatingExpenses=function(){
-    var repairs=.006*newVal.targetPrice;
+  var monthlyOperatingExpenses=function(whichKind){
+    var repairs=.006*whichKind;
     var legal = 100;
     var total= newVal.propertyTax+repairs+newVal.utils+legal+newVal.insuranceAnnual;
     return total/12;
   }
 
 
-    var balanceFunction = function(howMuchTime){
+    var balanceFunction = function(howMuchTime,whichKind){
       var rateIncrease=1+newVal.mortgageRate/12/100;
       var rateTime= Math.pow(rateIncrease,howMuchTime);
-      var principleRateTime=principle()*rateTime;
-      var payment = mortgageMonthlyPayments(newVal.mortgageYears*12);
+      var principleRateTime=principle(whichKind)*rateTime;
+      var payment = mortgageMonthlyPayments(newVal.mortgageYears*12,whichKind);
       var rateTimeMinusOne=rateTime-1;
       var monthRate= newVal.mortgageRate/12/100;
       var minusBal= (rateTimeMinusOne/monthRate)*payment;
@@ -159,39 +163,41 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
     };
 
     //continous appreciation
-    var appreciationFunction = function(howMuchTime){
-      var p=principle();
-      var a=1+newVal.appreciationRate/12/100
+    var appreciationFunction = function(howMuchTime,whichKind,whichKindRate){
+      var p=principle(whichKind);
+
+
+        var a=1+whichKindRate/12/100
+
       var t=howMuchTime;
       var part=p*Math.pow(a,t);
-      part=part-principle();
+      part=part-principle(whichKind);
 
       return part;
     };
 
 
-
-    var saleFunction = function(howMuchTime){
-      var tot=appreciationFunction(howMuchTime)-balanceFunction(howMuchTime);
+    var saleFunction = function(howMuchTime,whichKind,whichKindRate){
+      var tot=appreciationFunction(howMuchTime,whichKind,whichKindRate)-balanceFunction(howMuchTime,whichKind);
       tot=tot*(1-capitalGainsTax()/100);
       return tot;
   };
 
   //depreciation total over the time
     var decpreciationFunction= function(howMuchTime){
-      var personalPropertyDep=howMuchTime*newVal.targetPrice*(.05*.2);
-        if (personalPropertyDep>=newVal.targetPrice*.05){
-          personalPropertyDep=newVal.targetPrice*.05
+      var personalPropertyDep=howMuchTime*newVal.duplexBuy*(.05*.2);
+        if (personalPropertyDep>=newVal.duplexBuy*.05){
+          personalPropertyDep=newVal.duplexBuy*.05
         }
 
-      var buildingValueDep=howMuchTime*newVal.targetPrice*(.5*.0348);
-        if (buildingValueDep>=newVal.targetPrice*.5){
-          buildingValueDep=newVal.targetPrice*.5
+      var buildingValueDep=howMuchTime*newVal.duplexBuy*(.5*.0348);
+        if (buildingValueDep>=newVal.duplexBuy*.5){
+          buildingValueDep=newVal.duplexBuy*.5
         }
 
-      var landImprovementDep=howMuchTime*newVal.targetPrice*(.05*.2);
-        if (landImprovementDep>=newVal.targetPrice*.2){
-          landImprovementDep=newVal.targetPrice*.2
+      var landImprovementDep=howMuchTime*newVal.duplexBuy*(.05*.2);
+        if (landImprovementDep>=newVal.duplexBuy*.2){
+          landImprovementDep=newVal.duplexBuy*.2
         }
 
       var totDep=landImprovementDep+buildingValueDep+personalPropertyDep;
@@ -202,7 +208,7 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
     };
 
     //rental information over whole time TODO NOT WORKING
-    var rentFunction= function(howMuchTime){
+    var rentFunctionTenant= function(howMuchTime){
       rent=newVal.monthlyRentTenant*howMuchTime;
 
       insurance=newVal.renterInsurance*howMuchTime;
@@ -210,47 +216,62 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       rentTot=rent+insurance+newVal.utils*howMuchTime;
       return rentTot
     };
-    console.log(rentFunction(newVal.years*12), "Test")
+
+    var rentFunction= function(howMuchTime){
+      rent=newVal.monthlyRentTenant*howMuchTime;
+      rent=rent*(1-incomeTaxBracket()/100)
+
+      return rent
+    };
+    console.log(rentFunction(newVal.years), "rentFunction")
+
+
+
 
     //buy function over all time
-    var buyFunctionMonthCostDuringMortgageTerm= function(){
-        var monthCost=mortgageMonthlyPayments(newVal.mortgageYears*12);
-        var operatingCosts=monthlyOperatingExpenses()
+    var buyFunctionMonthCostDuringMortgageTerm= function(whichKind){
+        var monthCost=mortgageMonthlyPayments(newVal.mortgageYears*12,whichKind);
+        var operatingCosts=monthlyOperatingExpenses(whichKind)
         var tot=operatingCosts+monthCost;
         return tot
     }
 
-    var buyFunctionMonthCostPostMortgageTerm=function(){
-      var tot=monthlyOperatingExpenses();
+    var buyFunctionMonthCostPostMortgageTerm=function(whichKind){
+      var tot=monthlyOperatingExpenses(whichKind);
       return tot
     }
 
 
-    var totalBuy=function(howMuchTime){
-      downPayment=newVal.downPaymentPercentage/100*newVal.targetPrice;
+    var totalBuy=function(howMuchTime,whichKind,whichKindRate){
+      downPayment=newVal.downPaymentPercentage/100*whichKind;
       if(howMuchTime<=newVal.mortgageYears*12){
-        normalPay=buyFunctionMonthCostDuringMortgageTerm()*howMuchTime
+        normalPay=buyFunctionMonthCostDuringMortgageTerm(whichKind)*howMuchTime
       }else{
-        firstPart=buyFunctionMonthCostDuringMortgageTerm()*newVal.mortgageYears*12
-        secondPart=(newVal.mortgageYears*12-howMuchTime)*buyFunctionMonthCostPostMortgageTerm();
+        firstPart=buyFunctionMonthCostDuringMortgageTerm(whichKind)*newVal.mortgageYears*12
+        secondPart=(newVal.mortgageYears*12-howMuchTime)*buyFunctionMonthCostPostMortgageTerm(whichKind);
         normalPay=firstPart+secondPart;
       }
-      totalPay=normalPay+downPayment-appreciationFunction(howMuchTime);
+      totalPay=normalPay+downPayment-appreciationFunction(howMuchTime,whichKind,whichKindRate);
       return totalPay;
     }
 
 
 
-    var totDuplex=function(howMuchTime){
-      var buySame=totalBuy(howMuchTime);
+    var totDuplex=function(howMuchTime,whichKind,whichKindRate){
+      var buySame=totalBuy(howMuchTime,whichKind,whichKindRate);
       var dep = decpreciationFunction(howMuchTime);
-      var tot= buySame-dep;
+      var rent= rentFunction(howMuchTime);
+      var tot= buySame-dep-rent;
       return tot
     }
+    console.log(totDuplex(newVal.years*12,newVal.duplexBuy,newVal.appreciationRate), "duplex Function")
 
-      $scope.buy[1].v =totalBuy(newVal.years*12);
-      $scope.rent[1].v = rentFunction(newVal.years*12);
-      $scope.buyAndRent[1].v = totDuplex(newVal.years*12);
+      $scope.buy[1].v =totalBuy(newVal.years*12,newVal.targetPrice,newVal.appreciationRateHome);
+      console.log($scope.buy[1].v, "buy");
+      $scope.rent[1].v = rentFunctionTenant(newVal.years*12);
+      console.log($scope.rent[1].v, "rent");
+      $scope.buyAndRent[1].v = totDuplex(newVal.years*12,newVal.duplexBuy,newVal.appreciationRate);
+      console.log($scope.buyAndRent[1].v, "duplex");
 
 
 
@@ -262,17 +283,16 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
       var absoluteFunction= function(){
         for(var i=0;i<newVal.years*12;i++){
           count++;
-          $scope.buyValues.push(totalBuy(i));
-          $scope.buyAndRentValues.push(totDuplex(i));
+          $scope.buyValues.push(totalBuy(i,newVal.targetPrice,newVal.appreciationRateHome));
+          $scope.buyAndRentValues.push(totDuplex(i,newVal.duplexBuy,newVal.appreciationRate));
           $scope.rentValues.push(rentFunction(i));
         };
       };
 
 
-
       absoluteFunction();
 
-      console.log($scope.buyValues.length)
+      console.log($scope.buyValues)
 
 
       var dynamicRows = [];
@@ -285,10 +305,10 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
                                           "v": i
                                       },
                                       {
-                                          "v": $scope.buyValues[i]
+                                          "v": $scope.rentValues[i]
                                       },
                                       {
-                                          "v": $scope.rentValues[i]
+                                          "v": $scope.buyValues[i]
                                       },
                                       {
                                           "v": $scope.buyAndRentValues[i]
@@ -311,17 +331,17 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
                   },
                   {
                       "id": "buy-line",
-                      "label": "Buy",
-                      "type": "number"
-                  },
-                  {
-                      "id": "rent-line",
                       "label": "Rent",
                       "type": "number"
                   },
                   {
+                      "id": "rent-line",
+                      "label": "Buy",
+                      "type": "number"
+                  },
+                  {
                       "id": "buyAndRent-line",
-                      "label": "Buy & Rent-out",
+                      "label": "Duplex",
                       "type": "number"
                   }
               ],
@@ -333,11 +353,8 @@ $scope.$watchCollection('inputData', function(newVal, oldVal){
               "fill": 20,
               "displayExactValues": true,
               "vAxis": {
-                  "title": "Return",
-                  viewWindowMode:'explicit',
-                  viewWindow:{
-                    min:0.0
-                  }
+                  "title": "Return"
+
               },
               "hAxis": {
                   "title": "Months"

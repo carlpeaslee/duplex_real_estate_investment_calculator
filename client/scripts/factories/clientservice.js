@@ -23,7 +23,7 @@ chickApp.factory("ClientService", ["$http", function($http){
     into the DB if there are none. there should be no need to include
     them into the return object for this factory. */
     var initialValues = {
-        monthlyRentTenantDef:1290,
+        monthlyRentTenantDef:600,
         monthlyRentTenantMin:100,
         monthlyRentTenantMax:10000,
         monthlyRentPersonalDef:800,
@@ -64,7 +64,7 @@ chickApp.factory("ClientService", ["$http", function($http){
         miscMax:100000,
         insuranceAnnualDef:1000,
         insuranceAnnualMin:0,
-        insuranceAnnualMax:10000,
+        insuranceAnnualMax:5000,
         utilsDef:100,
         utilsMin:0,
         utilsMax:10000,
@@ -84,9 +84,12 @@ chickApp.factory("ClientService", ["$http", function($http){
         renterInsuranceDef:50,
         renterInsuranceMin:0,
         renterInsuranceMax:4000,
-        appreciationRateDef:4,
+        appreciationRateDef:3,
         appreciationRateMin:0,
         appreciationRateMax:100,
+        appreciationRateHomeDef:4,
+        appreciationRateHomeMin:0,
+        appreciationRateHomeMax:100,
         duplexBuyDef:266000,
         duplexBuyMin:50000,
         duplexBuyMax:5000000
