@@ -292,8 +292,6 @@ console.log(capitalGainsTax(), "asd" )
 
       absoluteFunction();
 
-      console.log($scope.buyValues)
-
 
       var dynamicRows = [];
       var populateDynamicRows = function(){
@@ -348,7 +346,7 @@ console.log(capitalGainsTax(), "asd" )
               "rows": dynamicRows
           },
           "options": {
-              "title": "Long term Cost on Investment",
+              "title": "Cost Of Investment Over Time",
               "isStacked": true,
               "fill": 20,
               "displayExactValues": true,
@@ -381,11 +379,7 @@ console.log(capitalGainsTax(), "asd" )
 
     $scope.myChartObject.type = "ColumnChart";
 
-    $scope.buy = [
-        {v: "Buy"},
-        {v: $scope.outputData},
-        {v: 'red'}
-    ];
+
 
     // $scope.$watch('monthlyRentPersonal', function(newVal, oldVal) {
     //     $log.info newVal
@@ -395,6 +389,12 @@ console.log(capitalGainsTax(), "asd" )
         {v: "Rent"},
         {v: 200},
         {v: 'green'}
+    ];
+
+    $scope.buy = [
+        {v: "Buy"},
+        {v: $scope.outputData},
+        {v: 'red'}
     ];
 
     $scope.buyAndRent = [
@@ -410,16 +410,16 @@ console.log(capitalGainsTax(), "asd" )
             {role: "style", type: "string"}
         ],
         "rows": [
-            {c: $scope.buy},
             {c: $scope.rent},
+            {c: $scope.buy},
             {c: $scope.buyAndRent}
         ]
     };
 
     $scope.myChartObject.options = {
-        'title': 'Buy vs Rent vs Buy & Rent-out',
+        'title': 'Cost Comparison',
         animation:{
-            duration: 3000,
+            duration: 1000,
             easing: 'out',
         }
     };
