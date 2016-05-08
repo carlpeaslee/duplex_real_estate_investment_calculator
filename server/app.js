@@ -80,7 +80,7 @@ passport.deserializeUser(function(id, done){
 });
 passport.use('local', new localStrategy({
     passReqToCallback: true,
-    usernameFeild: 'username'
+    usernameField: 'username'
     },
     function(req, username, password, done){
         Admin.findOne({username: username}, function(err, user){

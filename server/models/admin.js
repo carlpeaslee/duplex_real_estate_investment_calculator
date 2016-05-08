@@ -24,6 +24,7 @@ Admin.pre('save', function(next){
 Admin.methods.comparePassword = function(canidatePassword, cb){
    bcrypt.compare(canidatePassword, this.password, function(err, isMatch){
        if(err) return cb(err);
+       cb(null, isMatch);
      });
 };
 
