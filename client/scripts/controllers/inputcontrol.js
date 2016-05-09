@@ -2,6 +2,7 @@ chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', '
     //Independent Variables
     var clientService = ClientService;
 
+
     // $scope.showAlert = function(ev) {
     //     $mdDialog.show(
     //       $mdDialog.alert()
@@ -274,6 +275,22 @@ console.log(capitalGainsTax(), "asd" )
       console.log($scope.buyAndRent[1].v, "duplex");
 
 
+      var messageShow = function(){
+          console.log("horse hockey");
+          console.log($scope.buy,$scope.rent,$scope.buyAndRent);
+          if ($scope.buy[1].v < $scope.rent[1] && $scope.buy[1].v < $scope.buyAndRent[1].v) {
+              $scope.topMessage = "save money by buying.";
+          }
+          if ($scope.rent[1].v < $scope.buy[1].v && $scope.rent[1].v < $scope.buyAndRent[1].v) {
+              $scope.topMessage = "save money by renting.";
+
+          }
+          if ($scope.buyAndRent[1].v < $scope.rent[1].v && $scope.buyAndRent[1].v < $scope.buy[1].v) {
+              $scope.topMessage = "earn $" + Math.floor($scope.buyAndRent[1].v)*(-1) + " by investing in a duplex!"
+          }
+      };
+      messageShow();
+
 
       $scope.buyValues = [];
       $scope.rentValues = [];
@@ -360,7 +377,8 @@ console.log(capitalGainsTax(), "asd" )
               "animation":{
                   duration: 300,
                   easing: 'out',
-              }
+              },
+              "colors":['lightblue', 'blue', 'rgb(255,64,129)']
 
           },
           "formatters": {}
@@ -388,19 +406,19 @@ console.log(capitalGainsTax(), "asd" )
     $scope.rent = [
         {v: "Rent"},
         {v: 200},
-        {v: 'green'}
+        {v: 'lightblue'}
     ];
 
     $scope.buy = [
         {v: "Buy"},
         {v: $scope.outputData},
-        {v: 'red'}
+        {v: 'blue'}
     ];
 
     $scope.buyAndRent = [
         {v: "Duplex"},
         {v: 600},
-        {v: 'purple'}
+        {v: 'rgb(255,64,129)'}
     ];
 
     $scope.myChartObject.data = {
@@ -422,7 +440,8 @@ console.log(capitalGainsTax(), "asd" )
         animation:{
             duration: 1000,
             easing: 'out',
-        }
+        },
+        legend: "none"
     };
 
 
