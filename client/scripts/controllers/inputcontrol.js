@@ -24,7 +24,7 @@ chickApp.controller('InputController',  ['$scope', '$log', '$http', '$window', '
         $mdSidenav('left').toggle();
     };
 
-    // clientService.submitEmail(contactPackage);
+    // $scope.submitEmail(contactPackage);
     // $scope.submit.email = "";
     // $scope.fade = "";
 
@@ -286,7 +286,7 @@ console.log(capitalGainsTax(), "asd" )
 
           }
           if ($scope.buyAndRent[1].v < $scope.rent[1].v && $scope.buyAndRent[1].v < $scope.buy[1].v) {
-              $scope.topMessage = "earn $" + Math.floor($scope.buyAndRent[1].v)*(-1) + " by investing in a duplex!"
+              $scope.topMessage = "earn $" + Math.floor($scope.buyAndRent[1].v)*(-1) + " by investing in a duplex!";
           }
       };
       messageShow();
@@ -445,12 +445,18 @@ console.log(capitalGainsTax(), "asd" )
     };
 
 
-
-    $scope.submit = {};
-    $scope.submit.followup = true;
-
-
-
+    $scope.submitEmail = function() {
+        data = {
+            email: $scope.submit.email,
+            maritalStatus: $scope.inputData.maritalStatus,
+            zipCode: $scope.inputData.zipCode,
+            income: $scope.inputData.income,
+            targetPropertyPrice: $scope.inputData.targetPropertyPrice,
+            followup: ""
+        };
+        clientService.submitEmail(data);
+        $scope.submit.email = "";
+    }
 
 
 }]);
