@@ -218,7 +218,7 @@ console.log(capitalGainsTax(), "asd" )
     };
 
     var rentFunction= function(howMuchTime){
-      rent=newVal.monthlyRentTenant*howMuchTime;
+      rent=newVal.monthlyRentPersonal*howMuchTime;
       rent=rent*(1-incomeTaxBracket()/100)
 
       return rent
@@ -260,7 +260,7 @@ console.log(capitalGainsTax(), "asd" )
     var totDuplex=function(howMuchTime,whichKind,whichKindRate){
       var buySame=totalBuy(howMuchTime,whichKind,whichKindRate);
       var dep = decpreciationFunction(howMuchTime);
-      var rent= rentFunction(howMuchTime);
+      var rent= rentFunctionTenant(howMuchTime);
       var tot= buySame-dep-rent;
       return tot
     }
@@ -268,7 +268,7 @@ console.log(capitalGainsTax(), "asd" )
 
       $scope.buy[1].v =totalBuy(newVal.years*12,newVal.targetPrice,newVal.appreciationRateHome);
       console.log($scope.buy[1].v, "buy");
-      $scope.rent[1].v = rentFunctionTenant(newVal.years*12);
+      $scope.rent[1].v = rentFunction(newVal.years*12);
       console.log($scope.rent[1].v, "rent");
       $scope.buyAndRent[1].v = totDuplex(newVal.years*12,newVal.duplexBuy,newVal.appreciationRate);
       console.log($scope.buyAndRent[1].v, "duplex");
@@ -398,7 +398,7 @@ console.log(capitalGainsTax(), "asd" )
     ];
 
     $scope.buyAndRent = [
-        {v: "Buy & Rent-out"},
+        {v: "Duplex"},
         {v: 600},
         {v: 'purple'}
     ];
@@ -410,6 +410,7 @@ console.log(capitalGainsTax(), "asd" )
             {role: "style", type: "string"}
         ],
         "rows": [
+
             {c: $scope.rent},
             {c: $scope.buy},
             {c: $scope.buyAndRent}
