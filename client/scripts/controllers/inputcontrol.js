@@ -267,11 +267,11 @@ console.log(capitalGainsTax(), "asd" )
     }
     console.log(totDuplex(newVal.years*12,newVal.duplexBuy,newVal.appreciationRate), "duplex Function")
 
-      $scope.buy[1].v =totalBuy(newVal.years*12,newVal.targetPrice,newVal.appreciationRateHome);
+      $scope.buy[1].v = Math.floor(totalBuy(newVal.years*12,newVal.targetPrice,newVal.appreciationRateHome));
       console.log($scope.buy[1].v, "buy");
-      $scope.rent[1].v = rentFunction(newVal.years*12);
+      $scope.rent[1].v = Math.floor(rentFunction(newVal.years*12));
       console.log($scope.rent[1].v, "rent");
-      $scope.buyAndRent[1].v = totDuplex(newVal.years*12,newVal.duplexBuy,newVal.appreciationRate);
+      $scope.buyAndRent[1].v = Math.floor(totDuplex(newVal.years*12,newVal.duplexBuy,newVal.appreciationRate));
       console.log($scope.buyAndRent[1].v, "duplex");
 
 
