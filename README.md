@@ -1,5 +1,7 @@
-The extras folder contains files that should be removed before launching this
-application. registration.html and registrationForm.html are to be used to give
-the client a username and password. upon completion of this task they should be
-removed so no one can manually navigate to them in an attempt to gain admin
-permissions.
+Duplex Real Estate Investment Calculater
+
+Feel free to checkou the demo: https://ancient-sands-24557.herokuapp.com/
+
+I built this application with a small team to help out a local real estate agent who wanted to create a single page web application she could host on her site that would help her bring in new clients interested in buying a duplex. 
+
+We used the MEAN stack as well as Angular-Google-Charts and Angular materials. We were asked to implement a minimalist styling so that when she updated her site in the next few months, they could easily make revisions. 
